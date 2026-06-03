@@ -8,7 +8,7 @@
   --foreground: #FFFFFF;
   --card: #111111;
   --card-foreground: #FFFFFF;
-  --primary: #E8390E;
+  --primary: #F90202;
   --primary-foreground: #FFFFFF;
   --secondary: #1A1A1A;
   --secondary-foreground: #FFFFFF;
@@ -18,13 +18,13 @@
   --accent-foreground: #0A0A0A;
   --border: #2A2A2A;
   --input: #1A1A1A;
-  --ring: #E8390E;
+  --ring: #F90202;
   --radius: 0.5rem;
   
   /* Custom colors */
-  --racing-red: #E8390E;
+  --racing-red: #F90202;
   --champagne-gold: #C9A84C;
-  --monaco-red: #E8390E;
+  --monaco-red: #F90202;
   --singapore-blue: #0EA5E9;
   --abudhabi-gold: #C9A84C;
 }
@@ -55,6 +55,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 @layer base {
@@ -62,7 +63,16 @@ html {
     @apply border-border;
   }
   body {
-    @apply bg-[#0A0A0A] text-white;
+    @apply bg-[#0A0A0A] text-white overflow-x-clip;
+  }
+}
+
+/* Prevent iOS zoom on form focus while keeping 16px+ inputs */
+@media (max-width: 767px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
   }
 }
 
@@ -81,7 +91,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #E8390E;
+  background: #F90202;
 }
 
 /* Marquee Animation */
@@ -95,16 +105,17 @@ html {
 }
 
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 40s linear infinite;
+  width: max-content;
 }
 
 /* Pulse glow animation for CTA */
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(232, 57, 14, 0.4);
+    box-shadow: 0 0 20px rgba(249, 2, 2, 0.4);
   }
   50% {
-    box-shadow: 0 0 40px rgba(232, 57, 14, 0.8);
+    box-shadow: 0 0 40px rgba(249, 2, 2, 0.8);
   }
 }
 
@@ -152,7 +163,7 @@ html {
 
 /* Gradient text */
 .text-gradient {
-  background: linear-gradient(135deg, #E8390E 0%, #C9A84C 100%);
+  background: linear-gradient(135deg, #F90202 0%, #C9A84C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -160,7 +171,7 @@ html {
 
 /* Card hover glow effects */
 .card-glow-red:hover {
-  box-shadow: 0 0 40px rgba(232, 57, 14, 0.3);
+  box-shadow: 0 0 40px rgba(249, 2, 2, 0.3);
 }
 
 .card-glow-blue:hover {
@@ -187,7 +198,7 @@ html {
     45deg,
     transparent,
     transparent 10px,
-    rgba(232, 57, 14, 0.03) 10px,
-    rgba(232, 57, 14, 0.03) 20px
+    rgba(249, 2, 2, 0.03) 10px,
+    rgba(249, 2, 2, 0.03) 20px
   );
 }

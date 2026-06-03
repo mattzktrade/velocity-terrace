@@ -1,11 +1,13 @@
 import { notFound, redirect } from 'next/navigation'
+import { CrawlableFaqBlock } from '@/components/seo/crawlable-faq'
 import { RaceJsonLd } from '@/components/seo/json-ld'
+import { RACE_FAQS } from '@/lib/seo/faqs'
 import { racePageMetadata } from '@/lib/seo/metadata'
-import { RACE_SLUGS, type RaceSlug } from '@/lib/seo/site'
+import { RACE_SLUGS, PUBLISHED_RACE_PAGES, type RaceSlug } from '@/lib/seo/site'
 import RaceLandingClient from './race-landing-client'
 
 export function generateStaticParams() {
-  return RACE_SLUGS.map((race) => ({ race }))
+  return PUBLISHED_RACE_PAGES.map((race) => ({ race }))
 }
 
 export async function generateMetadata({
@@ -31,9 +33,16 @@ export default async function RacePage({
     redirect('/monacoprogramme')
   }
 
+  if (race === 'abu-dhabi') {
+    redirect('/?section=contact')
+  }
+
+  const faqs = RACE_FAQS[race] ?? []
+
   return (
     <>
       <RaceJsonLd slug={race} />
+      {faqs.length > 0 ? <CrawlableFaqBlock faqs={faqs} /> : null}
       <RaceLandingClient race={race} />
     </>
   )

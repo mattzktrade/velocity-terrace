@@ -1,8 +1,11 @@
 'use client'
 
+import { MarqueeTicker } from '@/components/marquee-ticker'
+import { RACE_FAQS } from '@/lib/seo/faqs'
+import { CONTACT_EMAIL } from '@/lib/seo/site'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import { ChevronRight, Mail, MapPin, Menu, MessageCircle, Play, X } from 'lucide-react'
+import { ChevronRight, MapPin, Menu, Play, X } from 'lucide-react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
 type RaceSlug = 'monaco' | 'singapore' | 'abu-dhabi'
@@ -11,17 +14,33 @@ type MediaItem =
   | { kind: 'image'; src: string; alt: string }
   | { kind: 'video'; src: string; poster?: string; alt: string }
 
+type ExpectationTile = {
+  src: string
+  alt: string
+  title: string
+  subtitle: string
+}
+
 type RaceConfig = {
   slug: RaceSlug
   name: string
   city: string
+  venue?: string
   eventName: string
   accent: string
   heroImage: string
   heroVideo?: string
   heroPoster?: string
+  heroEyebrow?: string
+  heroHeadline?: [string, string]
   packageDaysLabel: string
   heroSubtext: string
+  whatToExpectIntro?: string
+  expectationGallery?: ExpectationTile[]
+  expectationFooterTile?: ExpectationTile
+  marqueeItems?: string[]
+  mediaSectionIntro?: string
+  scheduleBackgrounds?: string[]
   schedule: Array<{
     dayLabel: string
     items: Array<{ time: string; title: string; desc?: string }>
@@ -44,13 +63,24 @@ const MONACO_ASSETS = {
   gridWalk: '/monaco/page6-img28.png',
 } as const
 
+const SINGAPORE_ASSETS = {
+  mbsView: '/singapore/VT%20MBS%20view.png',
+  nightOutside: '/singapore/VT%20night%20outside.jpg',
+  insideOutside: '/singapore/VT%20inside%20outisde%20view.png',
+  inside1: '/singapore/VT%20SIngapore%20inside%201.jpg',
+  outdoor: '/singapore/VTS%20-%20Outdoor%201.jpg',
+  champagne: '/singapore/VT%20Champagne.jpg',
+  food: '/singapore/VT%20Food.jpg',
+  image2: '/singapore/image-2.jpg',
+} as const
+
 const RACES: Record<RaceSlug, RaceConfig> = {
   monaco: {
     slug: 'monaco',
     name: 'Monaco',
     city: 'Monte Carlo',
     eventName: 'Monaco Grand Prix',
-    accent: '#E8390E',
+    accent: '#F90202',
     heroImage: MONACO_ASSETS.terrace,
     heroVideo: MONACO_ASSETS.heroVideo,
     heroPoster: MONACO_ASSETS.heroPoster,
@@ -162,69 +192,120 @@ const RACES: Record<RaceSlug, RaceConfig> = {
     slug: 'singapore',
     name: 'Singapore',
     city: 'Marina Bay',
-    eventName: 'Singapore Grand Prix',
+    venue: 'National Gallery Rooftop · Padang Deck',
+    eventName: 'Singapore',
     accent: '#0EA5E9',
-    heroImage: '/singapore.jpg',
-    packageDaysLabel: '3-day package (Fri–Sun)',
-    heroSubtext: 'Three days. The night race. Front-row views. Open bar energy. Late moments. A weekend you’ll talk about forever.',
+    heroImage: SINGAPORE_ASSETS.mbsView,
+    heroEyebrow: 'Velocity Terrace · October 9–11, 2026',
+    heroHeadline: ['Rooftop luxury,', 'Marina Bay standard.'],
+    packageDaysLabel: '3-day & single-day packages (Fri–Sun)',
+    heroSubtext:
+      'An exclusive VIP rooftop experience on the Padang Deck of the National Gallery — premium hospitality, world-class catering, open bar, live DJs and an elite guest profile across just 150 guests.',
+    scheduleBackgrounds: [
+      SINGAPORE_ASSETS.outdoor,
+      SINGAPORE_ASSETS.nightOutside,
+      SINGAPORE_ASSETS.inside1,
+    ],
     schedule: [
       {
         dayLabel: 'Friday',
         items: [
-          { time: '12:00', title: 'Arrival · Welcome drinks' },
-          { time: '14:00', title: 'Practice sessions + terrace warm-up' },
-          { time: '18:00', title: 'Night-race atmosphere starts to build' },
-          { time: '21:00', title: 'Late set · Marina Bay energy' },
+          { time: '12:00', title: 'Doors open · Welcome drinks' },
+          { time: '14:00', title: 'Practice sessions · Rooftop atmosphere' },
+          { time: '18:00', title: 'Sunset over Marina Bay', desc: 'Historic architecture meets the skyline as the evening builds.' },
+          { time: '21:00', title: 'DJs · Evening entertainment' },
         ],
       },
       {
         dayLabel: 'Saturday',
         items: [
-          { time: '12:00', title: 'Doors open · Open bar begins' },
+          { time: '12:00', title: 'Open bar · Hospitality begins' },
           { time: '15:00', title: 'Qualifying build-up' },
-          { time: '20:00', title: 'Qualifying', desc: 'Night lights, loud crowd, full send.' },
-          { time: '22:00', title: 'After-hours' },
+          { time: '20:00', title: 'Qualifying under the lights', desc: 'Peak energy as the city comes alive after dark.' },
+          { time: '22:00', title: 'After-hours · Marina Bay vibe' },
         ],
       },
       {
         dayLabel: 'Sunday',
         items: [
-          { time: '12:00', title: 'Final day · settle in' },
-          { time: '18:00', title: 'Race build-up' },
-          { time: '20:00', title: 'Race', desc: 'The night race — done properly.' },
-          { time: '22:00', title: 'Finale afters' },
+          { time: '12:00', title: 'Final day · Settle in' },
+          { time: '18:00', title: 'Main event build-up' },
+          { time: '20:00', title: 'Main event', desc: 'The headline moment — done properly from the rooftop.' },
+          { time: '22:00', title: 'Finale celebrations' },
         ],
       },
     ],
     inclusions: [
-      'Trackside party hospitality for all 3 days (Fri–Sun)',
-      'Open bar throughout each day',
-      'Gourmet dining across the day',
-      'DJs/entertainment built for the night race energy',
-      'Signature after-hours experience',
-      'A premium crowd and “no corporate” vibe',
+      'Prime rooftop views over the Marina Bay skyline',
+      'World-class catering & all-day open bar',
+      'Live entertainment, DJs & vibrant atmosphere',
+      'National Gallery Padang Deck — exclusive 150-guest capacity',
+      'Seamless access outside main road closures',
+      'Strategic networking with C-suite, HNW & global brands',
+      'Flexible packages: 3-day, 2-day (Sat–Sun), or single-day options',
     ],
     whatToExpect: [
-      'A 3-day run (Fri–Sun) built for the night race and the city’s energy.',
-      'More late moments — the vibe peaks after dark.',
-      'A “party-first” feel without losing the racing obsession.',
+      'An elite hospitality venue designed for corporate entertaining and high-net-worth guests.',
+      'Historic National Gallery architecture blended with Marina Bay skyline views.',
+      'A social, high-energy environment — ideal for brands, finance, tech & lifestyle clients.',
+      'Rare premium hospitality outside the Paddock Club — polished, but never corporate.',
+      'Limited capacity (150 guests) — exclusive and in high demand.',
     ],
+    whatToExpectIntro:
+      'A premium rooftop setup with the energy turned up: skyline views, open bar, world-class catering, live entertainment, and after-dark moments that feel closer to a private members’ club than standard hospitality.',
+    expectationGallery: [
+      {
+        src: SINGAPORE_ASSETS.mbsView,
+        alt: 'Marina Bay skyline views from Velocity Terrace Singapore',
+        title: 'Marina Bay views',
+        subtitle: 'Prime rooftop position overlooking the skyline from the National Gallery.',
+      },
+      {
+        src: SINGAPORE_ASSETS.champagne,
+        alt: 'Champagne and open bar at Velocity Terrace Singapore',
+        title: 'Open bar',
+        subtitle: 'Premium champagne, spirits, wine, beer and soft drinks flowing all day.',
+      },
+      {
+        src: SINGAPORE_ASSETS.food,
+        alt: 'World-class catering at Velocity Terrace Singapore',
+        title: 'World-class catering',
+        subtitle: 'Premium hospitality with exceptional food standards throughout.',
+      },
+      {
+        src: SINGAPORE_ASSETS.nightOutside,
+        alt: 'Velocity Terrace Singapore rooftop at night',
+        title: 'Live entertainment',
+        subtitle: 'DJs and vibrant atmosphere as Marina Bay lights up after dark.',
+      },
+    ],
+    expectationFooterTile: {
+      src: SINGAPORE_ASSETS.outdoor,
+      alt: 'Velocity Terrace outdoor rooftop at National Gallery Singapore',
+      title: 'Day to night',
+      subtitle: 'One seamless experience from first arrival to after-dark atmosphere.',
+    },
+    marqueeItems: [
+      'SINGAPORE',
+      'NATIONAL GALLERY ROOFTOP',
+      'MARINA BAY',
+      'OPEN BAR',
+      '150 GUESTS',
+      'VELOCITY TERRACE',
+    ],
+    mediaSectionIntro:
+      'A glimpse of the sophistication, the skyline and the unforgettable moments that make Velocity Terrace Singapore exceptional.',
     media: [
-      { kind: 'image', src: '/singapore.jpg', alt: 'Singapore Grand Prix night race skyline' },
-      { kind: 'image', src: MONACO_ASSETS.openBar, alt: 'Open bar experience' },
-      { kind: 'image', src: MONACO_ASSETS.gourmet, alt: 'Gourmet hospitality dining' },
-      { kind: 'image', src: MONACO_ASSETS.party, alt: 'DJ and party atmosphere' },
-      { kind: 'image', src: MONACO_ASSETS.terraceCrowd, alt: 'Trackside crowd energy' },
+      { kind: 'image', src: SINGAPORE_ASSETS.mbsView, alt: 'Marina Bay skyline from Velocity Terrace rooftop' },
+      { kind: 'image', src: SINGAPORE_ASSETS.outdoor, alt: 'Velocity Terrace outdoor rooftop at National Gallery' },
+      { kind: 'image', src: SINGAPORE_ASSETS.inside1, alt: 'Velocity Terrace Singapore interior hospitality' },
+      { kind: 'image', src: SINGAPORE_ASSETS.insideOutside, alt: 'Velocity Terrace inside and outside views' },
+      { kind: 'image', src: SINGAPORE_ASSETS.nightOutside, alt: 'Velocity Terrace Singapore at night' },
+      { kind: 'image', src: SINGAPORE_ASSETS.champagne, alt: 'Champagne service at Velocity Terrace Singapore' },
+      { kind: 'image', src: SINGAPORE_ASSETS.food, alt: 'Premium catering at Velocity Terrace Singapore' },
+      { kind: 'image', src: SINGAPORE_ASSETS.image2, alt: 'Velocity Terrace Singapore hospitality experience' },
     ],
-    faqs: [
-      { q: 'Is Singapore 3 days?', a: 'Yes — Singapore is a 3-day package (Friday to Sunday).' },
-      { q: 'Will timings change?', a: 'They can, based on the official timetable. We confirm final times closer to the event.' },
-      { q: 'What should I wear?', a: 'Smart, comfortable, and ready to be photographed. Think: luxury party, not grandstand casual.' },
-      { q: 'What’s included in the package?', a: 'Trackside experience, open bar, gourmet food, DJs/entertainment, and after-hours energy across all 3 days. Exact details are confirmed at booking.' },
-      { q: 'Can we do group bookings?', a: 'Yes — send your group size in the enquiry and we’ll come back with options.' },
-      { q: 'Is this suitable if we’re big F1 fans?', a: 'Yes — the whole point is serious views with a party atmosphere. You’re not stuck in a corporate room missing the action.' },
-      { q: 'Are there age limits?', a: 'This is an adult experience. Exact entry policies can vary by venue — we’ll confirm on booking.' },
-    ],
+    faqs: RACE_FAQS.singapore,
   },
   'abu-dhabi': {
     slug: 'abu-dhabi',
@@ -320,7 +401,7 @@ function RaceNav({ accent }: { accent: string }) {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10 md:hidden">
+        <div className="absolute top-full left-0 right-0 z-30 max-h-[min(70vh,28rem)] overflow-y-auto overscroll-contain bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10 md:hidden">
           <div className="flex flex-col p-6 gap-4">
             {['Overview', 'Schedule', 'What to Expect', 'FAQ', 'Enquire'].map((item) => (
               <a
@@ -395,7 +476,7 @@ function ScheduleDayCard({
   items: Array<{ time: string; title: string; desc?: string }>
 }) {
   return (
-    <div className="relative h-full min-h-[390px] bg-[#0F0F0F] border border-white/10 rounded-2xl p-6 sm:p-7 overflow-hidden">
+    <div className="relative h-full min-h-[320px] sm:min-h-[390px] bg-[#0F0F0F] border border-white/10 rounded-2xl p-5 sm:p-7 overflow-hidden">
       <img
         src={backgroundImage}
         alt=""
@@ -443,18 +524,31 @@ function ScheduleDayCard({
   )
 }
 
-function EnquirySection({ accent }: { accent: string }) {
+function EnquirySection({ accent, raceName }: { accent: string; raceName: string }) {
   const [formState, setFormState] = useState({ name: '', email: '', phone: '', message: '' })
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Race page enquiry:', formState)
+    const subject = encodeURIComponent(`Velocity Terrace ${raceName} Enquiry`)
+    const body = encodeURIComponent(
+      [
+        `Race: ${raceName}`,
+        `Name: ${formState.name}`,
+        `Email: ${formState.email}`,
+        formState.phone ? `Phone: ${formState.phone}` : null,
+        '',
+        formState.message || '(No message provided)',
+      ]
+        .filter(Boolean)
+        .join('\n'),
+    )
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
     setIsSubmitted(true)
   }
 
   return (
-    <section id="enquire" className="relative py-24 lg:py-32 bg-[#0A0A0A] overflow-hidden">
+    <section id="enquire" className="relative py-16 sm:py-24 lg:py-32 bg-[#0A0A0A] overflow-hidden">
       <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full blur-3xl pointer-events-none" style={{ background: `${accent}22` }} />
       <div className="absolute -bottom-40 -left-32 w-[28rem] h-[28rem] rounded-full blur-3xl pointer-events-none" style={{ background: `${accent}1A` }} />
 
@@ -471,10 +565,10 @@ function EnquirySection({ accent }: { accent: string }) {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-12 items-stretch">
+        <div className="max-w-2xl mx-auto">
           <div className="bg-[#111111] border border-white/10 rounded-2xl p-6 sm:p-8 lg:p-10">
             {isSubmitted ? (
-              <div className="bg-[#111111] border border-emerald-500/30 rounded-lg p-12 text-center">
+              <div className="text-center py-8">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-6">
                   <svg className="w-8 h-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -483,7 +577,13 @@ function EnquirySection({ accent }: { accent: string }) {
                 <h3 className="font-[family-name:var(--font-barlow-condensed)] font-bold text-2xl uppercase text-white mb-2">
                   {"Thanks! We'll be in touch shortly"} ✓
                 </h3>
-                <p className="font-[family-name:var(--font-inter)] text-white/60">Our team typically responds within 2 hours.</p>
+                <p className="font-[family-name:var(--font-inter)] text-white/60 mb-4">
+                  Your email app should have opened with your enquiry. If it did not, email us directly at{' '}
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="hover:underline" style={{ color: accent }}>
+                    {CONTACT_EMAIL}
+                  </a>
+                  .
+                </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -533,45 +633,12 @@ function EnquirySection({ accent }: { accent: string }) {
               </form>
             )}
           </div>
-
-          <div className="space-y-3">
-            <div className="bg-[#111111] border border-white/10 rounded-2xl p-8">
-              <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xs uppercase tracking-[0.25em] text-white/60 mb-4">
-                Or skip the form
-              </p>
-              <a
-                href="https://wa.me/44XXXXXXXXXX"
-                className="flex items-center gap-4 p-4 bg-[#0A0A0A]/80 backdrop-blur-sm border border-white/10 rounded-lg hover:bg-[#0A0A0A]/95 transition-all group"
-              >
-                <div className="w-11 h-11 rounded-full bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform">
-                  <MessageCircle className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-white text-sm">+44 XXXX XXXXXX</p>
-                  <p className="text-white/60 text-xs">WhatsApp · usually replies in minutes</p>
-                </div>
-              </a>
-              <a
-                href="mailto:info@velocityterrace.com"
-                className="mt-3 flex items-center gap-4 p-4 bg-[#0A0A0A]/80 backdrop-blur-sm border border-white/10 rounded-lg hover:bg-[#0A0A0A]/95 transition-all group"
-              >
-                <div className="w-11 h-11 rounded-full flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform" style={{ background: accent }}>
-                  <Mail className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-white text-sm">info@velocityterrace.com</p>
-                  <p className="text-white/60 text-xs">Email us anytime · 2 hour response</p>
-                </div>
-              </a>
-            </div>
-
-            <Link
-              href="/#races"
-              className="inline-flex items-center justify-center gap-2 w-full px-6 py-4 bg-[#111111] border border-white/10 rounded-2xl text-white/80 font-semibold text-xs uppercase tracking-wider hover:text-white transition-colors"
-            >
-              Compare other races <ChevronRight className="w-4 h-4" />
-            </Link>
-          </div>
+          <p className="mt-6 text-center font-[family-name:var(--font-inter)] text-sm text-white/50">
+            Prefer email?{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="hover:underline" style={{ color: accent }}>
+              {CONTACT_EMAIL}
+            </a>
+          </p>
         </div>
       </div>
     </section>
@@ -591,12 +658,12 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
 
   const featuredMedia = cfg.media[0]
   const mediaGallery = cfg.media.slice(1).filter((item): item is Extract<MediaItem, { kind: 'image' }> => item.kind === 'image')
-  const expectationGallery = [
+  const expectationGallery = cfg.expectationGallery ?? [
     {
       src: cfg.slug === 'monaco' ? MONACO_ASSETS.raceAction : cfg.heroImage,
-      alt: `${cfg.name} Grand Prix trackside experience`,
-      title: 'Trackside energy',
-      subtitle: 'The race is close. The party is closer.',
+      alt: `${cfg.name} hospitality experience`,
+      title: cfg.slug === 'monaco' ? 'Trackside energy' : 'Premium atmosphere',
+      subtitle: cfg.slug === 'monaco' ? 'The race is close. The party is closer.' : 'Luxury hospitality with the energy turned up.',
     },
     {
       src: MONACO_ASSETS.openBar,
@@ -608,19 +675,44 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
       src: MONACO_ASSETS.gourmet,
       alt: 'Velocity Terrace gourmet dining',
       title: 'Gourmet food',
-      subtitle: 'Premium race-day dining without the stiff corporate feel.',
+      subtitle: 'Premium dining without the stiff corporate feel.',
     },
     {
       src: MONACO_ASSETS.party,
       alt: 'Velocity Terrace after-party',
       title: 'After-party',
-      subtitle: 'When the racing stops, the real evening starts.',
+      subtitle: 'When the action stops, the real evening starts.',
     },
   ]
+  const expectationFooterTile = cfg.expectationFooterTile ?? {
+    src: cfg.slug === 'monaco' ? MONACO_ASSETS.terraceCrowd : MONACO_ASSETS.party,
+    alt: 'Velocity Terrace guests enjoying the atmosphere',
+    title: 'Race day to afters',
+    subtitle: 'One seamless experience from first drink to final track.',
+  }
+  const heroEyebrow = cfg.heroEyebrow ?? `${cfg.eventName} 2026`
+  const heroHeadline = cfg.heroHeadline ?? ['Race weekend,', 'party standard.']
+  const whatToExpectIntro =
+    cfg.whatToExpectIntro ??
+    'A premium race-weekend setup with the energy turned up: front-row views, open bar, food, music, and after-hours moments that feel closer to a private party than standard hospitality.'
+  const marqueeItems =
+    cfg.marqueeItems ??
+    [
+      `${cfg.name.toUpperCase()} GP`,
+      cfg.packageDaysLabel.toUpperCase(),
+      'OPEN BAR',
+      'GOURMET FOOD',
+      'LIVE DJS',
+      'AFTER PARTY',
+      'VELOCITY TERRACE',
+    ]
+  const mediaSectionIntro =
+    cfg.mediaSectionIntro ??
+    `A glimpse of the speed, the sophistication and the unforgettable moments that make our ${cfg.name} GP weekend exceptional.`
 
   return (
     <main className="bg-[#0A0A0A] min-h-screen">
-      <section id="overview" className="relative min-h-[92vh] flex flex-col">
+      <section id="overview" className="relative min-h-[100svh] sm:min-h-[92vh] flex flex-col">
         <div className="absolute inset-0 z-0">
           {cfg.heroVideo ? (
             <video autoPlay muted loop playsInline poster={cfg.heroPoster} className="w-full h-full object-cover">
@@ -639,15 +731,15 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
           <div className="text-center max-w-5xl mx-auto">
             <div className="mb-6">
               <p
-                className="font-[family-name:var(--font-barlow-condensed)] font-black text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.22em]"
+                className="font-[family-name:var(--font-barlow-condensed)] font-black text-lg sm:text-2xl md:text-3xl uppercase tracking-[0.14em] sm:tracking-[0.22em] px-2"
                 style={{ color: cfg.accent }}
               >
-                {cfg.eventName} 2026
+                {heroEyebrow}
               </p>
             </div>
             <h1 className="font-[family-name:var(--font-barlow-condensed)] font-black text-5xl sm:text-7xl md:text-8xl lg:text-[110px] leading-[0.9] tracking-tight uppercase mb-8 animate-fade-in-up">
-              <span className="block text-white">Race weekend,</span>
-              <span className="block" style={{ color: cfg.accent }}>party standard.</span>
+              <span className="block text-white">{heroHeadline[0]}</span>
+              <span className="block" style={{ color: cfg.accent }}>{heroHeadline[1]}</span>
             </h1>
             <p className="font-[family-name:var(--font-inter)] text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto mb-10 animate-fade-in-up delay-200">
               {cfg.heroSubtext}
@@ -673,36 +765,16 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
 
         {/* Accent banner strip */}
         <div className="relative z-10 border-t border-white/10">
-          <div
-            className="py-4 overflow-hidden"
+          <MarqueeTicker
+            className="py-4"
             style={{ background: `linear-gradient(90deg, ${cfg.accent} 0%, ${cfg.accent}CC 30%, ${cfg.accent} 100%)` }}
-          >
-            <div className="flex animate-marquee whitespace-nowrap">
-              {[...Array(2)].map((_, i) => (
-                <div key={i} className="flex items-center gap-8 px-4">
-                  {[
-                    `${cfg.name.toUpperCase()} GP`,
-                    cfg.packageDaysLabel.toUpperCase(),
-                    'OPEN BAR',
-                    'GOURMET FOOD',
-                    'LIVE DJS',
-                    'AFTER PARTY',
-                    'VELOCITY TERRACE'
-                  ].map((item, j) => (
-                    <span key={j} className="flex items-center gap-8">
-                      <span className="text-sm font-black tracking-widest uppercase text-white">{item}</span>
-                      <span className="text-white/70">·</span>
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
+            items={marqueeItems}
+          />
         </div>
       </section>
 
       <div className="flex flex-col">
-      <section id="schedule" ref={sectionRef} className="relative order-2 py-24 lg:py-32 bg-[#080808]">
+      <section id="schedule" ref={sectionRef} className="relative order-2 py-16 sm:py-24 lg:py-32 bg-[#080808]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className={`text-center mb-14 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-sm uppercase tracking-[0.3em] mb-4" style={{ color: cfg.accent }}>
@@ -725,9 +797,11 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
             ].join(' ')}
           >
             {cfg.schedule.map((day, i) => {
-              const scheduleBackgrounds = cfg.slug === 'monaco'
-                ? [MONACO_ASSETS.party, MONACO_ASSETS.raceAction]
-                : [cfg.heroImage, MONACO_ASSETS.party]
+              const scheduleBackgrounds =
+                cfg.scheduleBackgrounds ??
+                (cfg.slug === 'monaco'
+                  ? [MONACO_ASSETS.party, MONACO_ASSETS.raceAction]
+                  : [cfg.heroImage, MONACO_ASSETS.party])
 
               return (
                 <div
@@ -749,7 +823,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
         </div>
       </section>
 
-      <section id="what-to-expect" className="relative order-1 py-24 lg:py-32 bg-[#0A0A0A] overflow-hidden">
+      <section id="what-to-expect" className="relative order-1 py-16 sm:py-24 lg:py-32 bg-[#0A0A0A] overflow-hidden">
         <div className="absolute top-20 left-0 w-80 h-80 rounded-full blur-3xl pointer-events-none" style={{ background: `${cfg.accent}14` }} />
         <div className="absolute bottom-10 right-0 w-96 h-96 rounded-full blur-3xl pointer-events-none" style={{ background: `${cfg.accent}12` }} />
 
@@ -764,10 +838,10 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
                 <span style={{ color: cfg.accent }}>Nothing flat.</span>
               </h2>
               <p className="mt-5 text-white/65 font-[family-name:var(--font-inter)] leading-relaxed max-w-lg">
-                A premium race-weekend setup with the energy turned up: front-row views, open bar, food, music, and after-hours moments that feel closer to a private party than standard hospitality.
+                {whatToExpectIntro}
               </p>
 
-              <div className="mt-10 grid sm:grid-cols-2 gap-x-8 gap-y-4">
+              <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 sm:gap-y-4">
                 <div>
                   <h3 className="font-[family-name:var(--font-barlow-condensed)] font-black text-2xl uppercase text-white mb-4">
                     What’s included
@@ -800,8 +874,8 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
             </div>
 
             <div className="lg:col-span-7">
-              <div className="grid grid-cols-12 grid-rows-[220px_160px_180px] sm:grid-rows-[260px_190px_210px] gap-4 lg:gap-5">
-                <div className="relative col-span-12 sm:col-span-7 row-span-2 rounded-3xl overflow-hidden border border-white/10 group">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-12 sm:grid-rows-[260px_190px_210px] lg:gap-5">
+                <div className="relative min-h-[220px] sm:min-h-0 sm:col-span-7 sm:row-span-2 rounded-3xl overflow-hidden border border-white/10 group">
                   <img
                     src={expectationGallery[0].src}
                     alt={expectationGallery[0].alt}
@@ -819,7 +893,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
                   </div>
                 </div>
 
-                <div className="relative col-span-6 sm:col-span-5 rounded-3xl overflow-hidden border border-white/10 group">
+                <div className="relative min-h-[160px] sm:min-h-0 sm:col-span-5 rounded-3xl overflow-hidden border border-white/10 group">
                   <img
                     src={expectationGallery[1].src}
                     alt={expectationGallery[1].alt}
@@ -837,7 +911,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
                   </div>
                 </div>
 
-                <div className="relative col-span-6 sm:col-span-5 rounded-3xl overflow-hidden border border-white/10 group">
+                <div className="relative min-h-[160px] sm:min-h-0 sm:col-span-5 rounded-3xl overflow-hidden border border-white/10 group">
                   <img
                     src={expectationGallery[2].src}
                     alt={expectationGallery[2].alt}
@@ -855,7 +929,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
                   </div>
                 </div>
 
-                <div className="relative col-span-7 rounded-3xl overflow-hidden border border-white/10 group">
+                <div className="relative min-h-[160px] sm:min-h-0 sm:col-span-7 rounded-3xl overflow-hidden border border-white/10 group">
                   <img
                     src={expectationGallery[3].src}
                     alt={expectationGallery[3].alt}
@@ -873,10 +947,10 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
                   </div>
                 </div>
 
-                <div className="relative col-span-5 rounded-3xl overflow-hidden border border-white/10 group">
+                <div className="relative min-h-[160px] sm:min-h-0 sm:col-span-5 rounded-3xl overflow-hidden border border-white/10 group">
                   <img
-                    src={cfg.slug === 'monaco' ? MONACO_ASSETS.terraceCrowd : MONACO_ASSETS.party}
-                    alt="Velocity Terrace guests enjoying the race weekend atmosphere"
+                    src={expectationFooterTile.src}
+                    alt={expectationFooterTile.alt}
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
                     loading="lazy"
                   />
@@ -884,10 +958,10 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
                   <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, transparent 0%, ${cfg.accent}26 100%)` }} />
                   <div className="absolute left-4 right-4 bottom-4">
                     <p className="font-[family-name:var(--font-barlow-condensed)] font-black text-xl uppercase text-white">
-                      Race day to afters
+                      {expectationFooterTile.title}
                     </p>
                     <p className="text-white/70 text-xs font-[family-name:var(--font-inter)] leading-relaxed">
-                      One seamless experience from first drink to final track.
+                      {expectationFooterTile.subtitle}
                     </p>
                   </div>
                 </div>
@@ -899,7 +973,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
 
       </div>
 
-      <section id="moments" className="relative py-24 lg:py-32 bg-[#080808] overflow-hidden">
+      <section id="moments" className="relative py-16 sm:py-24 lg:py-32 bg-[#080808] overflow-hidden">
         <div className="absolute -top-32 left-1/2 w-[34rem] h-[34rem] -translate-x-1/2 rounded-full blur-3xl pointer-events-none" style={{ background: `${cfg.accent}12` }} />
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="relative text-center mb-12">
@@ -910,13 +984,13 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
               See it. <span style={{ color: cfg.accent }}>Feel it.</span> Live it.
             </h2>
             <p className="font-[family-name:var(--font-inter)] text-white/60 max-w-2xl mx-auto">
-              A glimpse of the speed, the sophistication and the unforgettable moments that make our {cfg.name} GP weekend exceptional.
+              {mediaSectionIntro}
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-4 lg:gap-5 items-stretch">
             {/* Featured reel */}
-            <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-black shadow-2xl shadow-black/40 min-h-[320px]">
+            <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-black shadow-2xl shadow-black/40 min-h-[240px] sm:min-h-[320px]">
               {featuredMedia?.kind === 'video' ? (
                 <video
                   src={featuredMedia.src}
@@ -936,7 +1010,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
             </div>
 
             {/* 3 x 3 image grid */}
-            <div className="grid grid-cols-3 gap-4 lg:gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
               {mediaGallery.slice(0, 9).map((item) => (
                 <div
                   key={item.src}
@@ -956,7 +1030,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
         </div>
       </section>
 
-      <section id="faq" className="relative py-24 lg:py-32 bg-[#080808]">
+      <section id="faq" className="relative py-16 sm:py-24 lg:py-32 bg-[#080808]">
         <div className="max-w-5xl mx-auto px-6 lg:px-12">
           <div className="text-center mb-12">
             <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-sm uppercase tracking-[0.3em] mb-4" style={{ color: cfg.accent }}>
@@ -979,7 +1053,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
                 <Accordion type="single" collapsible className="w-full">
                   {items.map((item) => (
                     <AccordionItem key={`${keyPrefix}-${item.q}`} value={`${keyPrefix}-${item.q}`} className="border-white/10">
-                      <AccordionTrigger className="text-white text-base sm:text-lg font-[family-name:var(--font-barlow-condensed)] font-bold uppercase tracking-wide hover:no-underline">
+                      <AccordionTrigger className="text-white text-left text-base sm:text-lg font-[family-name:var(--font-barlow-condensed)] font-bold uppercase tracking-wide hover:no-underline py-4">
                         {item.q}
                       </AccordionTrigger>
                       <AccordionContent className="text-white/70 font-[family-name:var(--font-inter)] leading-relaxed">
@@ -1001,7 +1075,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
         </div>
       </section>
 
-      <EnquirySection accent={cfg.accent} />
+      <EnquirySection accent={cfg.accent} raceName={cfg.name} />
 
       <footer className="relative bg-[#0A0A0A] border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid gap-8 md:grid-cols-3 items-center">
@@ -1010,7 +1084,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
           </div>
           <div className="flex items-center justify-center gap-3 text-white/70">
             <MapPin className="w-4 h-4" style={{ color: cfg.accent }} />
-            <span className="text-sm font-[family-name:var(--font-inter)]">{cfg.city}</span>
+            <span className="text-sm font-[family-name:var(--font-inter)]">{cfg.venue ?? cfg.city}</span>
           </div>
           <div className="flex items-center justify-center md:justify-end gap-4">
             <Link href="/" className="text-xs font-medium tracking-widest uppercase text-white/60 hover:text-white transition-colors">

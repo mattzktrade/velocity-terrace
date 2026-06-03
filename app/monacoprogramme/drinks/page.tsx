@@ -1,55 +1,30 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Calendar, ChevronRight, GlassWater, Mail, MapPin, UtensilsCrossed } from 'lucide-react'
+import { MonacoProgrammeSubpageHeader } from '@/components/monaco-programme-subpage-header'
+import { MonacoProgrammeJsonLd } from '@/components/seo/json-ld'
+import { DRINKS_MENU, type DrinkSection } from '@/lib/monaco-programme-data'
 import { buildPageMetadata } from '@/lib/seo/metadata'
+import { MONACO_PROGRAMME_PAGES } from '@/lib/seo/monaco-programme-pages'
 
-const ACCENT = '#E8390E'
+const ACCENT = '#F90202'
 const CONTACT_EMAIL = 'info@velocity-terrace.com'
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'Monaco Grand Prix Drinks Menu 2026',
   description:
-    'Velocity Terrace Monaco GP 2026 drinks menu including champagne, wine, beer, spirits and soft drinks for the weekend programme.',
+    'Velocity Terrace Monaco GP 2026 drinks menu including cocktails, spirits, beer and wine for the weekend programme.',
   path: '/monacoprogramme/drinks',
   ogImage: '/monaco/page4-img15.jpg',
   keywords: ['Velocity Terrace drinks menu', 'Monaco GP drinks', 'Monaco Grand Prix programme'],
 })
 
 const navItems = [
-  { label: 'Full Schedule', href: '/monacoprogramme#schedule', icon: Calendar },
-  { label: 'Alec Monopoly', href: '/monacoprogramme/alec', icon: NetworkIcon },
-  { label: 'Menu', href: '/monacoprogramme/menu', icon: UtensilsCrossed },
-  { label: 'Drinks', href: '/monacoprogramme/drinks', icon: GlassWater, active: true },
+  { label: 'Full Schedule', mobileLabel: 'Schedule', href: '/monacoprogramme#schedule', icon: Calendar },
+  { label: 'Alec Monopoly', mobileLabel: 'Alec', href: '/monacoprogramme/alec', icon: NetworkIcon },
+  { label: 'Menu', mobileLabel: 'Menu', href: '/monacoprogramme/menu', icon: UtensilsCrossed },
+  { label: 'Drinks', mobileLabel: 'Drinks', href: '/monacoprogramme/drinks', icon: GlassWater, active: true },
 ] as const
-
-const champagne = [
-  ['MOËT & CHANDON IMPÉRIAL BRUT', 'Champagne, France'],
-  ['VEUVE CLICQUOT YELLOW LABEL BRUT', 'Champagne, France'],
-  ['DOM PÉRIGNON VINTAGE', 'Champagne, France'],
-  ['RUINART ROSÉ', 'Champagne, France'],
-  ['CRISTAL ROEDERER', 'Champagne, France'],
-]
-
-const wine = [
-  ['CHABLIS', 'Domaine Louis Moreau, France'],
-  ['SAUVIGNON BLANC', 'Cloudy Bay, New Zealand'],
-  ['PINOT GRIGIO', 'Santa Margherita, Italy'],
-  ['ROSÉ', 'Whispering Angel, France'],
-  ['PINOT NOIR', 'Meiomi, USA'],
-  ['CABERNET SAUVIGNON', 'Josh Cellars, USA'],
-]
-
-const beer = ['PERONI NASTRO AZZURRO', 'CORONA EXTRA', 'HEINEKEN', 'MONACO BEER (LOCAL)']
-
-const spirits = [
-  ['VODKA', 'Belvedere, Grey Goose'],
-  ['GIN', 'Tanqueray, Bombay Sapphire'],
-  ['WHISKEY', 'Jameson, Chivas Regal 12'],
-  ['RUM', 'Bacardi, Havana Club'],
-  ['TEQUILA', 'Patrón Silver, Don Julio Blanco'],
-]
-
-const softDrinks = ['WATER (STILL / SPARKLING)', 'COCA-COLA', 'DIET COKE', 'LEMONADE', 'ORANGE JUICE', 'RED BULL']
 
 function NetworkIcon({ className = 'w-4 h-4' }: { className?: string }) {
   return (
@@ -70,7 +45,7 @@ function SectionTitle({ title, description }: { title: string; description?: str
       </h2>
       <div className="mt-3 h-0.5 w-12" style={{ background: ACCENT }} />
       {description ? (
-        <p className="mt-5 max-w-[12rem] font-[family-name:var(--font-inter)] text-sm leading-relaxed text-[#3D3834]">
+        <p className="mt-5 max-w-none sm:max-w-[12rem] font-[family-name:var(--font-inter)] text-sm leading-relaxed text-[#3D3834]">
           {description}
         </p>
       ) : null}
@@ -78,27 +53,29 @@ function SectionTitle({ title, description }: { title: string; description?: str
   )
 }
 
-function PremiumSection({
-  title,
-  description,
-  items,
-}: {
-  title: string
-  description: string
-  items: string[][]
-}) {
+function CocktailSection({ section }: { section: DrinkSection }) {
   return (
-    <section className="relative grid gap-8 border border-[#E7E1D6] bg-[#F7F3EA] p-8 sm:grid-cols-[260px_1fr] sm:p-10">
-      <div className="relative min-h-[260px]">
-        <SectionTitle title={title} description={description} />
+    <section className="relative grid gap-5 border border-[#E7E1D6] bg-[#F7F3EA] p-6 sm:grid-cols-[260px_1fr] sm:gap-8 sm:p-10">
+      <div className="relative sm:min-h-[260px]">
+        <SectionTitle
+          title={section.title}
+          description="Signature cocktails and specials, served all weekend."
+        />
       </div>
       <div className="divide-y divide-[#DDD6CA]">
-        {items.map(([name, origin]) => (
-          <div key={name} className="py-4 first:pt-0 last:pb-0">
+        {section.items.map((item) => (
+          <div key={item.name} className="py-4 first:pt-0 last:pb-0">
+            {item.tag ? (
+              <p className="font-[family-name:var(--font-barlow-condensed)] text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A8278]">
+                {item.tag}
+              </p>
+            ) : null}
             <p className="font-[family-name:var(--font-inter)] text-sm font-black uppercase tracking-tight text-[#0A0A0A]">
-              {name}
+              {item.name}
             </p>
-            <p className="mt-1 font-[family-name:var(--font-inter)] text-sm text-[#5C5650]">{origin}</p>
+            {item.ingredients ? (
+              <p className="mt-1 font-[family-name:var(--font-inter)] text-sm text-[#5C5650]">{item.ingredients}</p>
+            ) : null}
           </div>
         ))}
       </div>
@@ -106,30 +83,46 @@ function PremiumSection({
   )
 }
 
-function CompactSection({
-  title,
-  items,
-}: {
-  title: string
-  items: Array<string | string[]>
-}) {
+function MenuSection({ section }: { section: DrinkSection }) {
+  const isCompact = section.items.length <= 2
   return (
-    <section className="relative min-h-[300px] overflow-hidden border border-[#E7E1D6] bg-[#F7F3EA] p-8">
-      <SectionTitle title={title} />
-      <div className="relative z-10 mt-7 space-y-3">
-        {items.map((item) => {
-          const key = Array.isArray(item) ? item[0] : item
-          return (
-            <div key={key}>
-              <p className="font-[family-name:var(--font-inter)] text-xs font-black uppercase text-[#0A0A0A]">
-                {Array.isArray(item) ? item[0] : item}
-              </p>
-              {Array.isArray(item) ? (
-                <p className="font-[family-name:var(--font-inter)] text-xs text-[#5C5650]">{item[1]}</p>
-              ) : null}
-            </div>
-          )
-        })}
+    <section
+      className={`relative overflow-hidden border border-[#E7E1D6] bg-[#F7F3EA] p-6 sm:p-8 ${isCompact ? 'pb-5' : 'sm:min-h-[260px]'}`}
+    >
+      <SectionTitle title={section.title} />
+      <div className={`relative z-10 space-y-3 ${isCompact ? 'mt-5' : 'mt-5 sm:mt-7'}`}>
+        {section.items.map((item) => (
+          <div key={item.name}>
+            <p className="font-[family-name:var(--font-inter)] text-xs font-black uppercase text-[#0A0A0A]">
+              {item.name}
+            </p>
+            {item.ingredients ? (
+              <p className="font-[family-name:var(--font-inter)] text-xs text-[#5C5650]">{item.ingredients}</p>
+            ) : null}
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function WineSection({ section }: { section: DrinkSection }) {
+  return (
+    <section className="relative grid gap-5 border border-[#E7E1D6] bg-[#F7F3EA] p-6 sm:grid-cols-[260px_1fr] sm:gap-8 sm:p-10">
+      <div className="relative sm:min-h-[260px]">
+        <SectionTitle title={section.title} description="A curated selection of rosé, red, white and champagne." />
+      </div>
+      <div className="divide-y divide-[#DDD6CA]">
+        {section.items.map((item) => (
+          <div key={`${item.name}-${item.ingredients}`} className="py-4 first:pt-0 last:pb-0">
+            <p className="font-[family-name:var(--font-inter)] text-sm font-black uppercase tracking-tight text-[#0A0A0A]">
+              {item.name}
+            </p>
+            {item.ingredients ? (
+              <p className="mt-1 font-[family-name:var(--font-inter)] text-sm text-[#5C5650]">{item.ingredients}</p>
+            ) : null}
+          </div>
+        ))}
       </div>
     </section>
   )
@@ -145,13 +138,13 @@ function DrinksNav() {
             <Link
               key={item.label}
               href={item.href}
-              className={`flex items-center justify-center gap-2 border-r border-white/[0.08] px-2 py-5 text-center font-[family-name:var(--font-barlow-condensed)] text-xs font-bold uppercase tracking-widest first:border-l ${
-                item.active ? 'text-[#E8390E]' : 'text-white/80 hover:text-white'
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 border-r border-white/[0.08] px-1.5 sm:px-2 py-4 sm:py-5 text-center font-[family-name:var(--font-barlow-condensed)] text-[10px] sm:text-xs font-bold uppercase tracking-wide sm:tracking-widest first:border-l ${
+                item.active ? 'text-[#F90202]' : 'text-white/80 hover:text-white'
               }`}
             >
               <Icon className="h-4 w-4 shrink-0" />
               <span className="hidden sm:inline">{item.label}</span>
-              <span className="sm:hidden">{item.label.split(' ')[0]}</span>
+              <span className="sm:hidden">{item.mobileLabel}</span>
             </Link>
           )
         })}
@@ -163,7 +156,7 @@ function DrinksNav() {
 function CtaFooter() {
   return (
     <section className="relative overflow-hidden bg-[#070707] px-6 py-12 text-white sm:px-8 sm:py-14 lg:px-12">
-      <div className="absolute right-12 top-10 hidden text-[#E8390E]/20 lg:block">
+      <div className="absolute right-12 top-10 hidden text-[#F90202]/20 lg:block">
         <svg className="h-36 w-56" viewBox="0 0 260 160" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 94C71 61 129 45 238 49" />
           <path d="M57 111c34-34 80-50 144-51" />
@@ -189,7 +182,7 @@ function CtaFooter() {
         <div>
           <a
             href={`mailto:${CONTACT_EMAIL}?subject=Monaco Grand Prix 2027 enquiry`}
-            className="inline-flex w-full items-center justify-center gap-2 rounded bg-[#E8390E] px-8 py-5 font-[family-name:var(--font-barlow-condensed)] text-sm font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-90"
+            className="inline-flex w-full items-center justify-center gap-2 rounded bg-[#F90202] px-8 py-5 font-[family-name:var(--font-barlow-condensed)] text-sm font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-90"
           >
             Enquire for 2027 <ChevronRight className="h-4 w-4" />
           </a>
@@ -197,10 +190,6 @@ function CtaFooter() {
             <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center gap-2 hover:text-white">
               <Mail className="h-4 w-4" style={{ color: ACCENT }} />
               {CONTACT_EMAIL}
-            </a>
-            <a href="https://wa.me/44XXXXXXXXXX" className="inline-flex items-center gap-2 hover:text-white">
-              <span className="h-4 w-4 rounded-full border border-[#E8390E]" />
-              WhatsApp
             </a>
           </div>
         </div>
@@ -219,8 +208,12 @@ function CtaFooter() {
   )
 }
 
+const PAGE = { path: '/monacoprogramme/drinks' as const, ...MONACO_PROGRAMME_PAGES['/monacoprogramme/drinks'] }
+
 export default function MonacoProgrammeDrinksPage() {
   return (
+    <>
+      <MonacoProgrammeJsonLd {...PAGE} />
     <main className="min-h-screen bg-[#0A0A0A] text-white">
       <header className="relative overflow-hidden">
         <div className="absolute inset-0 grid grid-cols-2">
@@ -230,27 +223,17 @@ export default function MonacoProgrammeDrinksPage() {
         <div className="absolute inset-0 bg-[#050505]/72" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0A0A0A]/45" />
 
-        <div className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-6 lg:px-12">
-          <Link href="/" aria-label="Velocity Terrace home">
-            <img src="/monaco/velocity%20logo%20white.png" alt="Velocity Terrace" className="h-8 w-auto object-contain sm:h-10" />
-          </Link>
-          <Link
-            href="/monacoprogramme"
-            className="font-[family-name:var(--font-barlow-condensed)] text-xs font-bold uppercase tracking-[0.24em] text-white/85 hover:text-white"
-          >
-            ← Weekend Programme
-          </Link>
-        </div>
+        <MonacoProgrammeSubpageHeader />
 
         <div className="relative z-10 mx-auto max-w-4xl px-6 pb-16 pt-8 text-center lg:px-12">
-          <p className="font-[family-name:var(--font-barlow-condensed)] text-sm font-bold uppercase tracking-[0.42em]" style={{ color: ACCENT }}>
+          <p className="font-[family-name:var(--font-barlow-condensed)] text-xs sm:text-sm font-bold uppercase tracking-[0.28em] sm:tracking-[0.42em]" style={{ color: ACCENT }}>
             Monaco Grand Prix 2026
           </p>
-          <h1 className="mt-5 font-[family-name:var(--font-barlow-condensed)] text-6xl font-black uppercase leading-none tracking-tight text-white sm:text-8xl lg:text-[112px]">
+          <h1 className="mt-5 font-[family-name:var(--font-barlow-condensed)] text-5xl font-black uppercase leading-none tracking-tight text-white sm:text-8xl lg:text-[112px]">
             Drinks Menu
           </h1>
           <p className="mx-auto mt-5 max-w-xl font-[family-name:var(--font-inter)] text-base leading-relaxed text-white/80 sm:text-lg">
-            Premium drinks, flowing all weekend long. From morning coffees to sunset cocktails and champagne celebrations.
+            Premium cocktails, spirits, beer and wine, flowing all weekend long.
           </p>
           <p className="mt-5 inline-flex items-center gap-2 font-[family-name:var(--font-inter)] text-sm text-white/70">
             <MapPin className="h-4 w-4" style={{ color: ACCENT }} />
@@ -264,25 +247,24 @@ export default function MonacoProgrammeDrinksPage() {
       <section className="rounded-t-[1.75rem] bg-[#F7F3EA] px-5 py-9 text-[#0A0A0A] sm:px-8 lg:px-12">
         <div className="mx-auto max-w-6xl">
           <div className="overflow-hidden border border-[#E7E1D6]">
-            <PremiumSection
-              title="Champagne"
-              description="A curated selection of premium champagnes to elevate every moment."
-              items={champagne}
-            />
-            <PremiumSection
-              title="Wine"
-              description="A fine selection of red, white and rosé wines from around the world."
-              items={wine}
-            />
-            <div className="grid lg:grid-cols-3">
-              <CompactSection title="Beer" items={beer} />
-              <CompactSection title="Spirits" items={spirits} />
-              <CompactSection title="Soft Drinks" items={softDrinks} />
+            {DRINKS_MENU.filter((section) => section.title === 'Cocktails').map((section) => (
+              <CocktailSection key={section.title} section={section} />
+            ))}
+            {DRINKS_MENU.filter((section) => section.title === 'Wine').map((section) => (
+              <WineSection key={section.title} section={section} />
+            ))}
+            <div className="grid lg:grid-cols-2">
+              {DRINKS_MENU.filter((section) => section.title === 'Spirits' || section.title === 'Beer').map(
+                (section) => (
+                  <MenuSection key={section.title} section={section} />
+                ),
+              )}
             </div>
           </div>
         </div>
       </section>
       <CtaFooter />
     </main>
+    </>
   )
 }

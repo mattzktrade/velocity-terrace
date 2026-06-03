@@ -13,6 +13,11 @@ const nextConfig = {
         destination: '/monacoprogramme',
         permanent: true,
       },
+      {
+        source: '/races/abu-dhabi',
+        destination: '/?section=contact',
+        permanent: false,
+      },
     ]
   },
 }

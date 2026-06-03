@@ -1,5 +1,15 @@
-import { HOME_FAQS, RACE_FAQS, type FaqItem } from '@/lib/seo/faqs'
-import { absoluteUrl, CONTACT_EMAIL, SITE_NAME, SITE_URL, type RaceSlug } from '@/lib/seo/site'
+import { HOME_FAQS, MONACO_PROGRAMME_FAQS, RACE_FAQS, type FaqItem } from '@/lib/seo/faqs'
+import {
+  absoluteUrl,
+  CONTACT_EMAIL,
+  getSocialProfileUrls,
+  PUBLISHED_RACE_PAGES,
+  SITE_NAME,
+  SITE_URL,
+  type RaceSlug,
+} from '@/lib/seo/site'
+
+const CONTENT_MODIFIED = '2026-06-03'
 
 function JsonLdScript({ data }: { data: Record<string, unknown> | Record<string, unknown>[] }) {
   return (
@@ -35,7 +45,7 @@ const ORGANIZATION = {
   email: CONTACT_EMAIL,
   description:
     'Premium Formula 1 party hospitality at Monaco, Singapore, and Abu Dhabi Grands Prix — front-row views, open bar, live DJs, and VIP after-parties.',
-  sameAs: [] as string[],
+  sameAs: getSocialProfileUrls(),
 }
 
 const WEBSITE = {
@@ -54,6 +64,19 @@ export function GlobalJsonLd() {
   return <JsonLdScript data={[ORGANIZATION, WEBSITE]} />
 }
 
+function breadcrumbSchema(items: { name: string; item: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((entry, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: entry.name,
+      item: entry.item,
+    })),
+  }
+}
+
 export function HomeJsonLd() {
   const webPage = {
     '@context': 'https://schema.org',
@@ -65,6 +88,27 @@ export function HomeJsonLd() {
     isPartOf: { '@id': `${SITE_URL}/#website` },
     about: { '@id': `${SITE_URL}/#organization` },
     inLanguage: 'en-GB',
+    dateModified: CONTENT_MODIFIED,
+  }
+
+  const raceList = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Velocity Terrace F1 Grand Prix experiences 2026',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Monaco Grand Prix 2026',
+        url: absoluteUrl('/monacoprogramme'),
+      },
+      ...PUBLISHED_RACE_PAGES.filter((s) => s !== 'monaco').map((slug, i) => ({
+        '@type': 'ListItem' as const,
+        position: i + 2,
+        name: slug === 'singapore' ? 'Singapore 2026' : 'Abu Dhabi Grand Prix 2026',
+        url: absoluteUrl(`/races/${slug}`),
+      })),
+    ],
   }
 
   const service = {
@@ -83,7 +127,7 @@ export function HomeJsonLd() {
     },
   }
 
-  return <JsonLdScript data={[webPage, service, faqPageSchema(HOME_FAQS)]} />
+  return <JsonLdScript data={[webPage, service, raceList, faqPageSchema(HOME_FAQS)]} />
 }
 
 const RACE_EVENTS: Record<
@@ -105,12 +149,12 @@ const RACE_EVENTS: Record<
       '2-day F1 party hospitality overlooking the Monaco start/finish straight with open bar, DJs, and VIP after-party.',
   },
   singapore: {
-    name: 'Velocity Terrace — Singapore Grand Prix 2026',
-    startDate: '2026-09-18',
-    endDate: '2026-09-20',
-    location: 'Marina Bay, Singapore',
+    name: 'Velocity Terrace — Singapore 2026',
+    startDate: '2026-10-09',
+    endDate: '2026-10-11',
+    location: 'National Gallery Singapore, Marina Bay',
     description:
-      '3-day night-race F1 hospitality at Marina Bay with open bar, live entertainment, and after-party access.',
+      'Exclusive VIP rooftop hospitality on the Padang Deck with Marina Bay skyline views, world-class catering, open bar, live entertainment and 150-guest capacity.',
   },
   'abu-dhabi': {
     name: 'Velocity Terrace — Abu Dhabi Grand Prix 2026',
@@ -120,6 +164,62 @@ const RACE_EVENTS: Record<
     description:
       '3-day season finale F1 hospitality at Yas Marina with front-row views, open bar, and exclusive after-party.',
   },
+}
+
+export function MonacoProgrammeJsonLd({
+  path,
+  title,
+  description,
+}: {
+  path: string
+  title: string
+  description: string
+}) {
+  const pageUrl = absoluteUrl(path)
+  const event = RACE_EVENTS.monaco
+
+  const webPage = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    url: pageUrl,
+    name: title,
+    description,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': `${SITE_URL}/#organization` },
+    inLanguage: 'en-GB',
+    dateModified: CONTENT_MODIFIED,
+  }
+
+  const eventSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: event.name,
+    description: event.description,
+    startDate: event.startDate,
+    endDate: event.endDate,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'Place',
+      name: event.location,
+      address: event.location,
+    },
+    organizer: { '@id': `${SITE_URL}/#organization` },
+    url: pageUrl,
+    image: absoluteUrl('/monaco/page4-img15.jpg'),
+  }
+
+  const breadcrumb = breadcrumbSchema([
+    { name: 'Home', item: SITE_URL },
+    { name: 'Monaco Grand Prix 2026', item: absoluteUrl('/monacoprogramme') },
+    ...(path !== '/monacoprogramme' ? [{ name: title, item: pageUrl }] : []),
+  ])
+
+  return (
+    <JsonLdScript
+      data={[webPage, eventSchema, breadcrumb, faqPageSchema(MONACO_PROGRAMME_FAQS)]}
+    />
+  )
 }
 
 export function RaceJsonLd({ slug }: { slug: RaceSlug }) {
@@ -148,7 +248,7 @@ export function RaceJsonLd({ slug }: { slug: RaceSlug }) {
       availability: 'https://schema.org/LimitedAvailability',
       validFrom: '2026-01-01',
     },
-    image: absoluteUrl(slug === 'monaco' ? '/monaco/page4-img15.jpg' : slug === 'singapore' ? '/singapore.jpg' : '/abudhabi.jpg'),
+    image: absoluteUrl(slug === 'monaco' ? '/monaco/page4-img15.jpg' : slug === 'singapore' ? '/singapore/VT%20MBS%20view.png' : '/abudhabi.jpg'),
   }
 
   const webPage = {
@@ -160,21 +260,19 @@ export function RaceJsonLd({ slug }: { slug: RaceSlug }) {
     isPartOf: { '@id': `${SITE_URL}/#website` },
     about: eventSchema,
     inLanguage: 'en-GB',
+    dateModified: CONTENT_MODIFIED,
   }
 
   const schemas: Record<string, unknown>[] = [webPage, eventSchema]
   if (faqs.length > 0) schemas.push(faqPageSchema(faqs))
 
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-      { '@type': 'ListItem', position: 2, name: 'Races', item: absoluteUrl('/#races') },
-      { '@type': 'ListItem', position: 3, name: event.name, item: pageUrl },
-    ],
-  }
-  schemas.push(breadcrumb)
+  schemas.push(
+    breadcrumbSchema([
+      { name: 'Home', item: SITE_URL },
+      { name: 'Races', item: absoluteUrl('/#races') },
+      { name: event.name, item: pageUrl },
+    ]),
+  )
 
   return <JsonLdScript data={schemas} />
 }

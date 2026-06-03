@@ -3,6 +3,21 @@ import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_NAME, SITE_TAGLINE, SITE_URL, type 
 
 const TITLE_TEMPLATE = `%s | ${SITE_NAME}`
 
+const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+const BING_SITE_VERIFICATION = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+
+const INDEX_ROBOTS = {
+  index: true,
+  follow: true,
+  googleBot: {
+    index: true,
+    follow: true,
+    'max-image-preview': 'large' as const,
+    'max-snippet': -1,
+    'max-video-preview': -1,
+  },
+}
+
 function ogImageUrl(path: string = DEFAULT_OG_IMAGE): string {
   return absoluteUrl(path)
 }
@@ -30,9 +45,7 @@ export function buildPageMetadata({
     description,
     keywords,
     alternates: { canonical },
-    robots: noIndex
-      ? { index: false, follow: false }
-      : { index: true, follow: true, googleBot: { index: true, follow: true } },
+    robots: noIndex ? { index: false, follow: false } : INDEX_ROBOTS,
     openGraph: {
       type: 'website',
       locale: 'en_GB',
@@ -74,11 +87,18 @@ export const ROOT_METADATA: Metadata = {
   publisher: SITE_NAME,
   category: 'Sports & Entertainment',
   icons: {
-    icon: '/icon.svg',
-    apple: '/icon.svg',
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    apple: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    shortcut: '/icon.svg',
   },
-  robots: { index: true, follow: true },
+  robots: INDEX_ROBOTS,
   alternates: { canonical: SITE_URL },
+  ...(GOOGLE_SITE_VERIFICATION ? { verification: { google: GOOGLE_SITE_VERIFICATION } } : {}),
+  ...(BING_SITE_VERIFICATION
+    ? { other: { 'msvalidate.01': BING_SITE_VERIFICATION } }
+    : {}),
+  applicationName: SITE_NAME,
+  formatDetection: { telephone: false, email: false, address: false },
   openGraph: {
     type: 'website',
     locale: 'en_GB',
@@ -127,11 +147,11 @@ const RACE_META: Record<
     keywords: ['Monaco Grand Prix hospitality', 'Monaco GP VIP terrace', 'Monte Carlo F1 party'],
   },
   singapore: {
-    title: 'Singapore Grand Prix Hospitality 2026',
+    title: 'Velocity Terrace Singapore 2026 — Marina Bay VIP Hospitality',
     description:
-      'Velocity Terrace at Singapore GP 2026. 3-day night-race hospitality (Fri–Sun) at Marina Bay with open bar, DJs, gourmet food & after-party at the street circuit.',
-    ogImage: '/singapore.jpg',
-    keywords: ['Singapore Grand Prix hospitality', 'Marina Bay F1 VIP', 'Singapore GP party'],
+      'Exclusive VIP rooftop hospitality at National Gallery Singapore, 9–11 October 2026. Marina Bay skyline views, world-class catering, open bar, DJs and 150-guest capacity on the Padang Deck.',
+    ogImage: '/singapore/VT%20MBS%20view.png',
+    keywords: ['Velocity Terrace Singapore', 'Marina Bay VIP hospitality', 'National Gallery rooftop Singapore'],
   },
   'abu-dhabi': {
     title: 'Abu Dhabi Grand Prix Hospitality 2026',
@@ -144,12 +164,14 @@ const RACE_META: Record<
 
 export function racePageMetadata(slug: RaceSlug): Metadata {
   const meta = RACE_META[slug]
+  const noIndex = slug === 'abu-dhabi' || slug === 'monaco'
   return buildPageMetadata({
     title: meta.title,
     description: meta.description,
     path: `/races/${slug}`,
     ogImage: meta.ogImage,
     keywords: meta.keywords,
+    noIndex,
   })
 }
 

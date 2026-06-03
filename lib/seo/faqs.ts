@@ -49,12 +49,40 @@ export const RACE_FAQS: Record<string, FaqItem[]> = {
   ],
   singapore: [
     {
-      q: 'Is Velocity Terrace Singapore a 3-day package?',
-      a: 'Yes. Singapore is a 3-day Velocity Terrace package from Friday through Sunday of the Singapore Grand Prix at Marina Bay.',
+      q: 'Is Velocity Terrace Singapore a 3-day experience?',
+      a: 'Yes — the full experience runs Friday through Sunday, 9–11 October 2026. Single-day and 2-day (Saturday–Sunday) packages are also available. Enquire for details.',
     },
     {
-      q: 'What makes Singapore GP hospitality different at Velocity Terrace?',
-      a: 'The Marina Bay night race combines trackside views with open-bar party hospitality across three evenings, with DJs and after-party energy matched to the night-race schedule.',
+      q: 'Where is Velocity Terrace Singapore located?',
+      a: 'Velocity Terrace is on the Padang Deck rooftop of the National Gallery Singapore, with prime views over the Marina Bay skyline.',
+    },
+    {
+      q: 'What packages are available for Singapore GP 2026?',
+      a: 'Choose from a 3-day package (Fri–Sun), a 2-day package (Sat–Sun), or single-day options for Friday, Saturday or Sunday. Share your preferred dates in your enquiry.',
+    },
+    {
+      q: 'What is included at Velocity Terrace Singapore?',
+      a: 'Rooftop Marina Bay views, world-class catering, open bar, live DJs and entertainment, and access to an exclusive 150-guest capacity venue. Full details are confirmed at booking.',
+    },
+    {
+      q: 'What makes Velocity Terrace Singapore different from other F1 hospitality?',
+      a: 'A rare premium rooftop hospitality product outside the Paddock Club — Marina Bay skyline views, world-class catering, open bar, live DJs and an exclusive 150-guest capacity venue designed for corporate and HNW entertaining.',
+    },
+    {
+      q: 'Is arrival and departure straightforward at the National Gallery?',
+      a: 'Yes — the National Gallery sits outside the primary road closure zones, ensuring a smooth, hassle-free journey so you can focus on the experience.',
+    },
+    {
+      q: 'Who is Velocity Terrace Singapore designed for?',
+      a: 'C-suite executives, high-net-worth individuals, corporate entertaining and global brands — particularly finance, tech and lifestyle clients looking for a premium social hosting environment.',
+    },
+    {
+      q: 'Can we book Velocity Terrace Singapore as a group?',
+      a: 'Yes — tell us your group size in the enquiry and we will come back with the best options.',
+    },
+    {
+      q: 'Is there a dress code at Velocity Terrace Singapore?',
+      a: 'Smart and polished. Think luxury rooftop hospitality — comfortable, confident, and ready to be photographed.',
     },
   ],
   'abu-dhabi': [
@@ -68,3 +96,18 @@ export const RACE_FAQS: Record<string, FaqItem[]> = {
     },
   ],
 }
+
+export const MONACO_PROGRAMME_FAQS: FaqItem[] = [
+  {
+    q: 'What is the Velocity Terrace Monaco Grand Prix programme?',
+    a: 'The Monaco programme is your guest guide for the 2026 Monaco GP weekend at Velocity Terrace — schedule, food and drinks service times, Alec Monopoly DJ sets, and venue details for the 2-day hospitality experience.',
+  },
+  {
+    q: 'How many days is Velocity Terrace at Monaco?',
+    a: 'Monaco is a 2-day Velocity Terrace package covering Saturday and Sunday of the Monaco Grand Prix weekend.',
+  },
+  {
+    q: 'Where can I see the Monaco weekend schedule?',
+    a: 'The full weekend schedule is on the Monaco programme page, including session timings, entertainment, and after-party hours.',
+  },
+]

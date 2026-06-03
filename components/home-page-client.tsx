@@ -1,9 +1,12 @@
 'use client'
 
 import { HOME_FAQS } from '@/lib/seo/faqs'
-import { useEffect, useRef, useState } from 'react'
-import { MapPin, MessageCircle, Mail, Menu, X, ChevronRight } from 'lucide-react'
+import { CONTACT_EMAIL } from '@/lib/seo/site'
+import { useEffect, useRef, useState, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { MapPin, Menu, X, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import { MarqueeTicker } from '@/components/marquee-ticker'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
@@ -21,6 +24,18 @@ const MONACO = {
   gridWalk: `${M}/page6-img28.png`,
   raceAction: `${M}/page2-img4.jpg`,
   carPush: `${M}/page4-img11.jpg`,
+  alecDjing: `${M}/10-2-alec-monopoly-djing37.jpg`,
+} as const
+
+const SINGAPORE = {
+  mbsView: '/singapore/VT%20MBS%20view.png',
+  nightOutside: '/singapore/VT%20night%20outside.jpg',
+  insideOutside: '/singapore/VT%20inside%20outisde%20view.png',
+  inside1: '/singapore/VT%20SIngapore%20inside%201.jpg',
+  outdoor: '/singapore/VTS%20-%20Outdoor%201.jpg',
+  champagne: '/singapore/VT%20Champagne.jpg',
+  food: '/singapore/VT%20Food.jpg',
+  image2: '/singapore/image-2.jpg',
 } as const
 
 function VelocityLogo({ className = 'h-9 sm:h-11' }: { className?: string }) {
@@ -36,7 +51,7 @@ function VelocityLogo({ className = 'h-9 sm:h-11' }: { className?: string }) {
 // Hero Section Component
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col">
+    <section className="relative min-h-[100svh] flex flex-col">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
         <video
@@ -62,19 +77,19 @@ function HeroSection() {
           <h1 className="font-[family-name:var(--font-barlow-condensed)] font-black text-5xl sm:text-7xl md:text-8xl lg:text-[120px] leading-[0.9] tracking-tight uppercase mb-8 animate-fade-in-up">
             <span className="block text-white">This is not</span>
             <span className="block text-white">hospitality.</span>
-            <span className="block text-[#E8390E]">This is a party.</span>
+            <span className="block text-[#F90202]">This is a party.</span>
           </h1>
 
           {/* Sub-headline */}
           <p className="font-[family-name:var(--font-inter)] text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-10 animate-fade-in-up delay-200">
-            Cars at your feet. Champagne on ice. DJs until the after-party ends. Monaco · Singapore · Abu Dhabi.
+            <strong className="font-medium text-white/90">Velocity Terrace</strong> is premium F1 party hospitality — front-row track views, open bar all day, live DJs and VIP after-party at Monaco, Singapore and Abu Dhabi GP 2026.
           </p>
 
           {/* CTA */}
           <div className="flex justify-center animate-fade-in-up delay-300">
             <a
               href="#contact"
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-[#E8390E] text-white font-semibold text-sm uppercase tracking-wider rounded hover:bg-[#ff4a1f] transition-all duration-300 animate-pulse-glow"
+              className="group inline-flex items-center gap-2 px-8 py-4 bg-[#F90202] text-white font-semibold text-sm uppercase tracking-wider rounded hover:bg-[#FF1A1A] transition-all duration-300 animate-pulse-glow"
             >
               Secure Your Place
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -92,20 +107,19 @@ function HeroSection() {
       </div>
 
       {/* Marquee Ticker */}
-      <div className="relative z-10 bg-[#E8390E] border-t border-[#ff4a1f]/30 py-4 overflow-hidden">
-        <div className="flex animate-marquee whitespace-nowrap">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="flex items-center gap-8 px-4">
-              {['MONACO GP', 'SINGAPORE GP', 'ABU DHABI GP', 'OPEN BAR', 'LIVE DJS', 'GOURMET HOSPITALITY', 'VIP AFTER PARTY', 'VELOCITY TERRACE'].map((item, j) => (
-                <span key={j} className="flex items-center gap-8">
-                  <span className="text-sm font-bold tracking-widest uppercase text-white">{item}</span>
-                  <span className="text-white/60">·</span>
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+      <MarqueeTicker
+        className="relative z-10 bg-[#F90202] border-t border-[#FF1A1A]/30 py-4"
+        items={[
+          'MONACO GP',
+          'SINGAPORE GP',
+          'ABU DHABI GP',
+          'OPEN BAR',
+          'LIVE DJS',
+          'GOURMET HOSPITALITY',
+          'VIP AFTER PARTY',
+          'VELOCITY TERRACE',
+        ]}
+      />
     </section>
   )
 }
@@ -145,7 +159,7 @@ function Navigation() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10 md:hidden">
+        <div className="absolute top-full left-0 right-0 z-30 max-h-[min(70vh,28rem)] overflow-y-auto overscroll-contain bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10 md:hidden">
           <div className="flex flex-col p-6 gap-4">
             {['The Experience', 'The Races', 'Gallery', 'FAQ', 'Contact'].map((item) => (
               <a
@@ -197,7 +211,7 @@ function WhatIsSection() {
     },
     {
       title: 'A LIVE SHOW, NOT JUST LUNCH',
-      description: 'World-renowned DJ and live artist Alec Monopoly performing on race days. Exclusive live art experience.'
+      description: 'International DJs, live entertainment and a high-energy atmosphere — built for the weekend, not a formal sit-down lunch.',
     },
     {
       title: "THE NIGHT DOESN'T END",
@@ -213,14 +227,14 @@ function WhatIsSection() {
   ]
 
   return (
-    <section id="experience" ref={sectionRef} className="relative py-24 lg:py-32 bg-[#0A0A0A] racing-stripes overflow-hidden">
+    <section id="experience" ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 bg-[#0A0A0A] racing-stripes overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
           {/* Left Column - Features */}
           <div className="lg:col-span-3 space-y-8">
             <h2 className={`font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white mb-6 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
               What is<br />
-              <span className="text-[#E8390E]">Velocity Terrace?</span>
+              <span className="text-[#F90202]">Velocity Terrace?</span>
             </h2>
             <p className={`font-[family-name:var(--font-inter)] text-white/70 text-base sm:text-lg leading-relaxed mb-10 max-w-2xl ${isVisible ? 'animate-fade-in-up delay-75' : 'opacity-0'}`}>
               Velocity Terrace is premium Formula 1 party hospitality at Monaco, Singapore, and Abu Dhabi — front-row track views, open bar all day, live DJs, and a VIP after-party. It is built for guests who want the race weekend to feel like a party, not a corporate lunch.
@@ -233,7 +247,7 @@ function WhatIsSection() {
                   className={`flex gap-6 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
                   style={{ animationDelay: `${(index + 1) * 0.1}s` }}
                 >
-                  <div className="w-1 bg-[#E8390E] flex-shrink-0" />
+                  <div className="w-1 bg-[#F90202] flex-shrink-0" />
                   <div>
                     <h3 className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xl sm:text-2xl uppercase tracking-wide text-white mb-2">
                       {feature.title}
@@ -252,12 +266,12 @@ function WhatIsSection() {
             {stats.map((stat, index) => (
               <div
                 key={stat.label}
-                className={`bg-[#111111] border border-white/10 p-6 rounded-lg hover:border-[#E8390E]/30 transition-all duration-300 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+                className={`bg-[#111111] border border-white/10 p-6 rounded-lg hover:border-[#F90202]/30 transition-all duration-300 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
                 style={{ animationDelay: `${(index + 1) * 0.15}s` }}
               >
                 <div className="flex items-baseline gap-1 mb-2">
-                  <span className="font-[family-name:var(--font-barlow-condensed)] font-black text-5xl sm:text-6xl text-[#E8390E]">{stat.value}</span>
-                  <span className="font-[family-name:var(--font-barlow-condensed)] font-bold text-2xl text-[#E8390E]">{stat.unit}</span>
+                  <span className="font-[family-name:var(--font-barlow-condensed)] font-black text-5xl sm:text-6xl text-[#F90202]">{stat.value}</span>
+                  <span className="font-[family-name:var(--font-barlow-condensed)] font-bold text-2xl text-[#F90202]">{stat.unit}</span>
                 </div>
                 <p className="font-[family-name:var(--font-inter)] text-white/60 text-sm">{stat.label}</p>
               </div>
@@ -297,35 +311,39 @@ function RacesSection() {
       name: 'MONACO',
       location: 'Monte Carlo',
       dates: 'SAT 6 – SUN 7 JUNE',
-      accentColor: '#E8390E',
+      accentColor: '#F90202',
       glowClass: 'card-glow-red',
       image: MONACO.terrace,
-      href: '/monacoprogramme'
+      href: '/monacoprogramme',
+      ctaLabel: 'View Programme',
     },
     {
       number: '02',
       name: 'SINGAPORE',
-      location: 'Marina Bay',
-      dates: 'SAT 19 – SUN 20 SEPT',
+      location: 'National Gallery · Marina Bay',
+      dates: 'FRI 9 – SUN 11 OCT 2026',
       accentColor: '#0EA5E9',
       glowClass: 'card-glow-blue',
-      image: '/singapore.jpg',
-      href: '/races/singapore'
+      image: '/singapore/VT%20MBS%20view.png',
+      href: '/races/singapore',
+      ctaLabel: 'View Race Details',
     },
     {
       number: '03',
       name: 'ABU DHABI',
       location: 'Yas Marina',
-      dates: 'SAT 5 – SUN 6 DEC',
+      dates: 'Coming soon',
       accentColor: '#C9A84C',
       glowClass: 'card-glow-gold',
       image: '/abudhabi.jpg',
-      href: '/races/abu-dhabi'
-    }
+      href: '#contact',
+      ctaLabel: 'Coming Soon · Enquire',
+      comingSoon: true,
+    },
   ]
 
   return (
-    <section id="races" ref={sectionRef} className="relative py-24 lg:py-32 bg-[#080808]">
+    <section id="races" ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 bg-[#080808]">
       {/* Angled top border */}
       <div className="absolute top-0 left-0 right-0 h-24 bg-[#0A0A0A]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 0%, 0 100%)' }} />
 
@@ -333,7 +351,7 @@ function RacesSection() {
         <h2 className={`font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl lg:text-7xl uppercase tracking-tight text-white text-center mb-4 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           Three Legendary Circuits.
         </h2>
-        <p className={`font-[family-name:var(--font-barlow-condensed)] font-bold text-2xl sm:text-3xl lg:text-4xl uppercase tracking-tight text-[#E8390E] text-center mb-16 ${isVisible ? 'animate-fade-in-up delay-100' : 'opacity-0'}`}>
+        <p className={`font-[family-name:var(--font-barlow-condensed)] font-bold text-2xl sm:text-3xl lg:text-4xl uppercase tracking-tight text-[#F90202] text-center mb-16 ${isVisible ? 'animate-fade-in-up delay-100' : 'opacity-0'}`}>
           One Legendary Experience.
         </p>
 
@@ -363,7 +381,7 @@ function RacesSection() {
                 />
 
                 {/* Watermark Number */}
-                <span className="absolute top-4 right-4 font-[family-name:var(--font-barlow-condensed)] font-black text-[120px] leading-none text-white/5">
+                <span className="absolute top-4 right-4 font-[family-name:var(--font-barlow-condensed)] font-black text-[72px] sm:text-[120px] leading-none text-white/5 pointer-events-none">
                   {race.number}
                 </span>
 
@@ -388,7 +406,7 @@ function RacesSection() {
                     className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider hover:gap-3 transition-all"
                     style={{ color: race.accentColor }}
                   >
-                    View Race Details
+                    {race.ctaLabel}
                     <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -424,7 +442,7 @@ function BentoSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-32 bg-[#0A0A0A]">
+    <section ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 bg-[#0A0A0A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <h2 className={`font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white text-center mb-4 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           Everything Included.
@@ -449,18 +467,18 @@ function BentoSection() {
             {
               span: '',
               minH: 'min-h-[240px]',
-              image: MONACO.party,
-              alt: 'Guests at the terrace party',
+              image: MONACO.alecDjing,
+              alt: 'Alec Monopoly DJing at Velocity Terrace',
               title: 'Live DJs',
-              desc: 'International DJs & Artist Alec Monopoly performing live both days',
+              desc: 'International DJs keeping the energy high from day to night',
               titleSize: 'text-2xl',
               delay: 'delay-300',
             },
             {
               span: '',
               minH: 'min-h-[240px]',
-              image: MONACO.gourmet,
-              alt: 'Gourmet trackside food',
+              image: SINGAPORE.food,
+              alt: 'Premium gourmet catering at Velocity Terrace',
               title: 'Gourmet Food',
               desc: 'French breakfast, luxury appetisers, grilled Italian & Mediterranean cuisine all day',
               titleSize: 'text-2xl',
@@ -479,8 +497,8 @@ function BentoSection() {
             {
               span: '',
               minH: 'min-h-[220px]',
-              image: MONACO.gridWalk,
-              alt: 'Grid walk at the Grand Prix',
+              image: MONACO.party,
+              alt: 'VIP after-party at Velocity Terrace',
               title: 'VIP After Party',
               desc: "6PM–11PM — the night doesn't end when the chequered flag drops",
               titleSize: 'text-xl',
@@ -489,17 +507,17 @@ function BentoSection() {
             {
               span: 'md:col-span-2',
               minH: 'min-h-[280px]',
-              image: MONACO.carPush,
-              alt: 'F1 action at Monaco',
-              title: 'Exclusive Live Art',
-              desc: 'Alec Monopoly creating exclusive artwork live at the event — watch a master at work between sessions, then back to the party.',
+              image: SINGAPORE.nightOutside,
+              alt: 'Velocity Terrace rooftop atmosphere at night',
+              title: 'Elite Atmosphere',
+              desc: 'An exclusive guest crowd, seamless service and premium hospitality at every race weekend.',
               titleSize: 'text-3xl',
               delay: 'delay-600',
             },
           ].map((card) => (
             <div
               key={card.title}
-              className={`${card.span} relative rounded-lg overflow-hidden border border-white/10 group hover:border-[#E8390E]/40 transition-all duration-300 ${card.minH} ${isVisible ? `animate-fade-in-up ${card.delay}` : 'opacity-0'}`}
+              className={`${card.span} relative rounded-lg overflow-hidden border border-white/10 group hover:border-[#F90202]/40 transition-all duration-300 ${card.minH} ${isVisible ? `animate-fade-in-up ${card.delay}` : 'opacity-0'}`}
             >
               <img
                 src={card.image}
@@ -551,10 +569,10 @@ function GallerySection() {
     MONACO.terrace,
     MONACO.terraceCrowd,
     MONACO.openBar,
-    MONACO.gourmet,
     MONACO.party,
-    MONACO.gridWalk,
-    MONACO.carPush,
+    MONACO.alecDjing,
+    SINGAPORE.food,
+    SINGAPORE.nightOutside,
   ])
 
   const monacoGallery: { src: string; aspect: string; alt: string }[] = [
@@ -571,8 +589,19 @@ function GallerySection() {
     { src: `${M}/page5-img25.png`, aspect: 'aspect-[4/5]', alt: 'Red Bull on the Monaco track' },
   ].filter((img) => !usedOnHomepage.has(img.src))
 
+  const singaporeGallery: { src: string; aspect: string; alt: string }[] = [
+    { src: SINGAPORE.mbsView, aspect: 'aspect-[4/3]', alt: 'Marina Bay skyline from Velocity Terrace Singapore' },
+    { src: SINGAPORE.outdoor, aspect: 'aspect-[4/5]', alt: 'Velocity Terrace outdoor rooftop at National Gallery' },
+    { src: SINGAPORE.inside1, aspect: 'aspect-[4/5]', alt: 'Velocity Terrace Singapore interior hospitality' },
+    { src: SINGAPORE.insideOutside, aspect: 'aspect-[4/3]', alt: 'Velocity Terrace inside and outside views' },
+    { src: SINGAPORE.nightOutside, aspect: 'aspect-[4/5]', alt: 'Velocity Terrace Singapore at night' },
+    { src: SINGAPORE.champagne, aspect: 'aspect-[4/3]', alt: 'Champagne service at Velocity Terrace Singapore' },
+    { src: SINGAPORE.food, aspect: 'aspect-[4/5]', alt: 'Premium catering at Velocity Terrace Singapore' },
+    { src: SINGAPORE.image2, aspect: 'aspect-[4/3]', alt: 'Velocity Terrace Singapore hospitality experience' },
+  ]
+
   return (
-    <section id="gallery" ref={sectionRef} className="relative py-24 lg:py-32 bg-[#080808]">
+    <section id="gallery" ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 bg-[#080808]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className={`text-center mb-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <h2 className="font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white mb-2">
@@ -584,15 +613,15 @@ function GallerySection() {
         </div>
 
         <Tabs defaultValue="monaco" className="w-full">
-          <div className="flex justify-center mb-10">
-            <TabsList className="bg-[#111111] border border-white/10 h-auto p-1 rounded-xl">
-              <TabsTrigger value="monaco" className="data-[state=active]:bg-[#0A0A0A] data-[state=active]:text-white text-white/70 px-5 py-2 rounded-lg">
+          <div className="flex justify-center mb-10 px-1">
+            <TabsList className="bg-[#111111] border border-white/10 h-auto p-1 rounded-xl flex flex-wrap justify-center gap-1 w-full max-w-md sm:max-w-none sm:flex-nowrap">
+              <TabsTrigger value="monaco" className="data-[state=active]:bg-[#0A0A0A] data-[state=active]:text-white text-white/70 px-4 sm:px-5 py-2 rounded-lg text-sm flex-1 sm:flex-none min-w-[5.5rem]">
                 Monaco
               </TabsTrigger>
-              <TabsTrigger value="singapore" className="data-[state=active]:bg-[#0A0A0A] data-[state=active]:text-white text-white/70 px-5 py-2 rounded-lg">
+              <TabsTrigger value="singapore" className="data-[state=active]:bg-[#0A0A0A] data-[state=active]:text-white text-white/70 px-4 sm:px-5 py-2 rounded-lg text-sm flex-1 sm:flex-none min-w-[5.5rem]">
                 Singapore
               </TabsTrigger>
-              <TabsTrigger value="abu-dhabi" className="data-[state=active]:bg-[#0A0A0A] data-[state=active]:text-white text-white/70 px-5 py-2 rounded-lg">
+              <TabsTrigger value="abu-dhabi" className="data-[state=active]:bg-[#0A0A0A] data-[state=active]:text-white text-white/70 px-4 sm:px-5 py-2 rounded-lg text-sm flex-1 sm:flex-none min-w-[5.5rem]">
                 Abu Dhabi
               </TabsTrigger>
             </TabsList>
@@ -612,77 +641,51 @@ function GallerySection() {
                     className={`w-full ${img.aspect} object-cover group-hover:brightness-110 group-hover:scale-[1.02] transition-all duration-300`}
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#E8390E] rounded-lg transition-colors duration-300 pointer-events-none" />
+                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#F90202] rounded-lg transition-colors duration-300 pointer-events-none" />
                 </div>
               ))}
             </div>
           </TabsContent>
 
           <TabsContent value="singapore">
-            <div className="grid lg:grid-cols-2 gap-6 items-stretch">
-              <div className={`relative rounded-2xl overflow-hidden border border-white/10 min-h-[420px] bg-gradient-to-br from-[#0A0A0A] via-[#111111] to-[#0EA5E9]/25 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_#0EA5E9/20,_transparent_60%)]" />
-                <div className="relative p-8 h-full flex flex-col justify-end">
-                  <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xs uppercase tracking-[0.3em] text-[#0EA5E9] mb-3">
-                    Singapore GP
-                  </p>
-                  <h3 className="font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl uppercase tracking-tight text-white mb-3">
-                    Night race. Big energy.
-                  </h3>
-                  <p className="font-[family-name:var(--font-inter)] text-white/70 max-w-xl">
-                    Full race-page coming with schedule, what to expect, and all the details — for now, jump into the race landing page.
-                  </p>
-                  <div className="mt-6">
-                    <Link href="/races/singapore" className="inline-flex items-center gap-2 px-6 py-3 bg-[#0EA5E9] text-white font-semibold text-xs uppercase tracking-wider rounded hover:brightness-110 transition-all">
-                      View Singapore page <ChevronRight className="w-4 h-4" />
-                    </Link>
-                  </div>
+            <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+              {singaporeGallery.map((img, index) => (
+                <div
+                  key={img.src}
+                  className={`relative break-inside-avoid overflow-hidden rounded-lg group ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+                  style={{ animationDelay: `${index * 0.04}s` }}
+                >
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className={`w-full ${img.aspect} object-cover group-hover:brightness-110 group-hover:scale-[1.02] transition-all duration-300`}
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#0EA5E9] rounded-lg transition-colors duration-300 pointer-events-none" />
                 </div>
-              </div>
-              <div className={`bg-[#111111] border border-white/10 rounded-2xl p-8 ${isVisible ? 'animate-fade-in-up delay-150' : 'opacity-0'}`}>
-                <h4 className="font-[family-name:var(--font-barlow-condensed)] font-black text-2xl uppercase text-white mb-4">
-                  3-day package (Fri–Sun)
-                </h4>
-                <ul className="space-y-3 text-white/70 text-sm font-[family-name:var(--font-inter)]">
-                  <li className="flex gap-3"><span className="text-[#0EA5E9]">—</span><span>Friday: settle in, practice sessions, DJs warm-up</span></li>
-                  <li className="flex gap-3"><span className="text-[#0EA5E9]">—</span><span>Saturday: qualifying day + peak party energy</span></li>
-                  <li className="flex gap-3"><span className="text-[#0EA5E9]">—</span><span>Sunday: race day, champagne moments, afters</span></li>
-                </ul>
-              </div>
+              ))}
             </div>
           </TabsContent>
 
           <TabsContent value="abu-dhabi">
-            <div className="grid lg:grid-cols-2 gap-6 items-stretch">
-              <div className={`relative rounded-2xl overflow-hidden border border-white/10 min-h-[420px] bg-gradient-to-br from-[#0A0A0A] via-[#111111] to-[#C9A84C]/25 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_#C9A84C/20,_transparent_60%)]" />
-                <div className="relative p-8 h-full flex flex-col justify-end">
-                  <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xs uppercase tracking-[0.3em] text-[#C9A84C] mb-3">
-                    Abu Dhabi GP
-                  </p>
-                  <h3 className="font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl uppercase tracking-tight text-white mb-3">
-                    Season finale, full send.
-                  </h3>
-                  <p className="font-[family-name:var(--font-inter)] text-white/70 max-w-xl">
-                    Full race-page coming with schedule, what to expect, and FAQs — for now, jump into the race landing page.
-                  </p>
-                  <div className="mt-6">
-                    <Link href="/races/abu-dhabi" className="inline-flex items-center gap-2 px-6 py-3 bg-[#C9A84C] text-[#0A0A0A] font-semibold text-xs uppercase tracking-wider rounded hover:brightness-110 transition-all">
-                      View Abu Dhabi page <ChevronRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className={`bg-[#111111] border border-white/10 rounded-2xl p-8 ${isVisible ? 'animate-fade-in-up delay-150' : 'opacity-0'}`}>
-                <h4 className="font-[family-name:var(--font-barlow-condensed)] font-black text-2xl uppercase text-white mb-4">
-                  3-day package (Fri–Sun)
-                </h4>
-                <ul className="space-y-3 text-white/70 text-sm font-[family-name:var(--font-inter)]">
-                  <li className="flex gap-3"><span className="text-[#C9A84C]">—</span><span>Friday: opening night energy, practice sessions</span></li>
-                  <li className="flex gap-3"><span className="text-[#C9A84C]">—</span><span>Saturday: qualifying + the biggest party moments</span></li>
-                  <li className="flex gap-3"><span className="text-[#C9A84C]">—</span><span>Sunday: race day + finale afters</span></li>
-                </ul>
-              </div>
+            <div
+              className={`flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-dashed border-white/15 bg-[#111111] px-8 py-16 text-center ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+            >
+              <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xs uppercase tracking-[0.3em] text-[#C9A84C] mb-4">
+                Abu Dhabi
+              </p>
+              <h3 className="font-[family-name:var(--font-barlow-condensed)] font-black text-3xl sm:text-4xl uppercase tracking-tight text-white mb-3">
+                Images coming soon
+              </h3>
+              <p className="max-w-md font-[family-name:var(--font-inter)] text-sm leading-relaxed text-white/60">
+                Our Abu Dhabi season finale gallery is on the way. Enquire now for early details on packages and availability.
+              </p>
+              <a
+                href="#contact"
+                className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-[#C9A84C] text-[#0A0A0A] font-semibold text-xs uppercase tracking-wider rounded hover:brightness-110 transition-all"
+              >
+                Enquire for details <ChevronRight className="w-4 h-4" />
+              </a>
             </div>
           </TabsContent>
         </Tabs>
@@ -711,10 +714,10 @@ function FAQSection() {
   const faqs = HOME_FAQS
 
   return (
-    <section id="faq" ref={sectionRef} className="relative py-24 lg:py-32 bg-[#080808]" aria-labelledby="faq-heading">
+    <section id="faq" ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 bg-[#080808]" aria-labelledby="faq-heading">
       <div className="max-w-5xl mx-auto px-6 lg:px-12">
         <div className={`text-center mb-12 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-          <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-sm uppercase tracking-[0.3em] text-[#E8390E] mb-4">
+          <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-sm uppercase tracking-[0.3em] text-[#F90202] mb-4">
             Quick Answers
           </p>
           <h2 id="faq-heading" className="font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white mb-3">
@@ -729,7 +732,7 @@ function FAQSection() {
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((item) => (
               <AccordionItem key={item.q} value={item.q} className="border-white/10">
-                <AccordionTrigger className="text-white text-base sm:text-lg font-[family-name:var(--font-barlow-condensed)] font-bold uppercase tracking-wide hover:no-underline">
+                <AccordionTrigger className="text-white text-left text-base sm:text-lg font-[family-name:var(--font-barlow-condensed)] font-bold uppercase tracking-wide hover:no-underline py-4">
                   {item.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-white/70 font-[family-name:var(--font-inter)] leading-relaxed">
@@ -769,7 +772,7 @@ function QuoteSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-32 lg:py-44 overflow-hidden"
+      className="relative py-20 sm:py-32 lg:py-44 overflow-hidden"
     >
       <img
         src={MONACO.party}
@@ -777,19 +780,19 @@ function QuoteSection() {
         aria-hidden
         className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/55 to-[#E8390E]/30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/55 to-[#F90202]/30" />
       <div className="absolute inset-0 bg-[#0A0A0A]/35" />
 
       <div className="relative max-w-5xl mx-auto px-6 lg:px-12">
         <blockquote className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-          <span className="font-[family-name:var(--font-barlow-condensed)] font-black text-[120px] sm:text-[180px] leading-none text-[#E8390E] block -mb-8 sm:-mb-12">
+          <span className="font-[family-name:var(--font-barlow-condensed)] font-black text-[120px] sm:text-[180px] leading-none text-[#F90202] block -mb-8 sm:-mb-12">
             &ldquo;
           </span>
           <p className="font-[family-name:var(--font-barlow-condensed)] font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight text-white leading-[1.05] max-w-4xl">
-            This is what F1 was <span className="text-[#E8390E]">always supposed</span> to feel like.
+            This is what F1 was <span className="text-[#F90202]">always supposed</span> to feel like.
           </p>
           <footer className="mt-8 flex items-center gap-4">
-            <div className="h-px w-12 bg-[#E8390E]" />
+            <div className="h-px w-12 bg-[#F90202]" />
             <p className="font-[family-name:var(--font-inter)] text-white/80 text-sm uppercase tracking-widest">
               Guest, Monaco Grand Prix 2025
             </p>
@@ -831,22 +834,23 @@ function ComparisonSection() {
   ]
 
   const velocity = [
-    'Open bar all day',
-    'Live DJ & Alec Monopoly performing',
-    'Curated guest list of enthusiasts, influencers & celebs',
-    'After-party 6PM–11PM',
-    'Front-row start/finish views'
+    'Open bar all day — champagne, spirits, wine & beer',
+    'International DJs & live entertainment',
+    'Gourmet dining & world-class catering',
+    'VIP after-party 6PM–11PM',
+    'Premium trackside or rooftop views (by venue)',
+    'Flexible 2–3 day & single-day packages',
   ]
 
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-32 bg-[#080808]">
+    <section ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 bg-[#080808]">
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
-        <h2 className={`font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white text-center mb-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+        <h2 className={`font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white text-center mb-10 sm:mb-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           Not Your Average<br />
-          <span className="text-[#E8390E]">Hospitality Package.</span>
+          <span className="text-[#F90202]">Hospitality Package.</span>
         </h2>
 
-        <div className="grid lg:grid-cols-[1fr_auto_1.15fr] gap-6 lg:gap-8 items-stretch max-w-5xl mx-auto">
+        <div className="grid gap-6 lg:grid-cols-[1fr_auto_1.15fr] lg:gap-8 items-stretch max-w-5xl mx-auto">
           {/* Traditional */}
           <div className={`bg-[#111111] border border-white/10 rounded-xl p-8 lg:p-10 ${isVisible ? 'animate-fade-in-up delay-200' : 'opacity-0'}`}>
             <h3 className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xl sm:text-2xl uppercase tracking-wider text-white/40 mb-8 pb-4 border-b border-white/10">
@@ -863,27 +867,27 @@ function ComparisonSection() {
           </div>
 
           {/* VS */}
-          <div className={`flex items-center justify-center ${isVisible ? 'animate-fade-in-up delay-250' : 'opacity-0'}`}>
-            <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-[#E8390E] flex items-center justify-center shadow-[0_0_30px_rgba(232,57,14,0.5)]">
+          <div className={`flex items-center justify-center py-2 lg:py-0 ${isVisible ? 'animate-fade-in-up delay-250' : 'opacity-0'}`}>
+            <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full bg-[#F90202] flex items-center justify-center shadow-[0_0_30px_rgba(249,2,2,0.5)]">
               <span className="font-[family-name:var(--font-barlow-condensed)] font-black text-2xl text-white">VS</span>
             </div>
           </div>
 
           {/* Velocity Terrace */}
-          <div className={`relative rounded-xl overflow-hidden border-2 border-[#E8390E] shadow-[0_0_60px_rgba(232,57,14,0.25)] ${isVisible ? 'animate-fade-in-up delay-300' : 'opacity-0'}`}>
+          <div className={`relative rounded-xl overflow-hidden border-2 border-[#F90202] shadow-[0_0_60px_rgba(249,2,2,0.25)] ${isVisible ? 'animate-fade-in-up delay-300' : 'opacity-0'}`}>
             <img
               src={MONACO.terrace}
               alt=""
               aria-hidden
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A]/95 via-[#0A0A0A]/85 to-[#E8390E]/50" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A]/95 via-[#0A0A0A]/85 to-[#F90202]/50" />
             <div className="relative p-8 lg:p-10">
               <VelocityLogo className="h-9 sm:h-10 mb-8" />
               <ul className="space-y-4">
                 {velocity.map((item) => (
                   <li key={item} className="flex gap-3 items-center text-white font-[family-name:var(--font-inter)] text-sm sm:text-base font-medium">
-                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#E8390E] flex items-center justify-center">
+                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#F90202] flex items-center justify-center">
                       <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                       </svg>
@@ -932,7 +936,20 @@ function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Form submitted:', formState)
+    const subject = encodeURIComponent('Velocity Terrace Enquiry')
+    const body = encodeURIComponent(
+      [
+        `Name: ${formState.name}`,
+        `Email: ${formState.email}`,
+        formState.phone ? `Phone: ${formState.phone}` : null,
+        `Races: ${formState.races.length > 0 ? formState.races.join(', ') : 'Not specified'}`,
+        '',
+        formState.message || '(No message provided)',
+      ]
+        .filter(Boolean)
+        .join('\n'),
+    )
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
     setIsSubmitted(true)
   }
 
@@ -946,29 +963,28 @@ function ContactSection() {
   }
 
   return (
-    <section id="contact" ref={sectionRef} className="relative py-24 lg:py-32 bg-[#0A0A0A] overflow-hidden">
+    <section id="contact" ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 bg-[#0A0A0A] overflow-hidden">
       {/* Decorative red accents */}
-      <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#E8390E]/15 blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 -left-32 w-[28rem] h-[28rem] rounded-full bg-[#E8390E]/10 blur-3xl pointer-events-none" />
+      <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#F90202]/15 blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-40 -left-32 w-[28rem] h-[28rem] rounded-full bg-[#F90202]/10 blur-3xl pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto px-6 lg:px-12">
         <div className={`text-center mb-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-          <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-sm uppercase tracking-[0.3em] text-[#E8390E] mb-4">
+          <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-sm uppercase tracking-[0.3em] text-[#F90202] mb-4">
             Lights Out · Get In
           </p>
           <h2 className="font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl lg:text-7xl uppercase tracking-tight text-white mb-4">
-            Ready to Race <span className="text-[#E8390E]">With Us?</span>
+            Ready to Race <span className="text-[#F90202]">With Us?</span>
           </h2>
           <p className="font-[family-name:var(--font-inter)] text-white/70 text-lg max-w-xl mx-auto">
             Limited places available across all three races. Enquire now to secure yours.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-12 items-stretch">
-          {/* Form */}
-          <div className={`bg-[#111111] border border-white/10 rounded-2xl p-6 sm:p-8 lg:p-10 ${isVisible ? 'animate-fade-in-up delay-200' : 'opacity-0'}`}>
+        <div className={`max-w-2xl mx-auto ${isVisible ? 'animate-fade-in-up delay-200' : 'opacity-0'}`}>
+          <div className="bg-[#111111] border border-white/10 rounded-2xl p-6 sm:p-8 lg:p-10">
             {isSubmitted ? (
-              <div className="bg-[#111111] border border-emerald-500/30 rounded-lg p-12 text-center">
+              <div className="text-center py-8">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-6">
                   <svg className="w-8 h-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -977,8 +993,12 @@ function ContactSection() {
                 <h3 className="font-[family-name:var(--font-barlow-condensed)] font-bold text-2xl uppercase text-white mb-2">
                   {"Thanks! We'll be in touch shortly"} ✓
                 </h3>
-                <p className="font-[family-name:var(--font-inter)] text-white/60">
-                  Our team typically responds within 2 hours.
+                <p className="font-[family-name:var(--font-inter)] text-white/60 mb-4">
+                  Your email app should have opened with your enquiry. If it did not, email us directly at{' '}
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-[#F90202] hover:underline">
+                    {CONTACT_EMAIL}
+                  </a>
+                  .
                 </p>
               </div>
             ) : (
@@ -990,7 +1010,7 @@ function ContactSection() {
                     required
                     value={formState.name}
                     onChange={(e) => setFormState(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-4 py-4 bg-[#0A0A0A] border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:border-[#E8390E] focus:outline-none focus:ring-1 focus:ring-[#E8390E] transition-colors"
+                    className="w-full px-4 py-4 bg-[#0A0A0A] border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:border-[#F90202] focus:outline-none focus:ring-1 focus:ring-[#F90202] transition-colors"
                   />
                 </div>
                 <div className="grid sm:grid-cols-2 gap-6">
@@ -1000,14 +1020,14 @@ function ContactSection() {
                     required
                     value={formState.email}
                     onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-4 py-4 bg-[#0A0A0A] border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:border-[#E8390E] focus:outline-none focus:ring-1 focus:ring-[#E8390E] transition-colors"
+                    className="w-full px-4 py-4 bg-[#0A0A0A] border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:border-[#F90202] focus:outline-none focus:ring-1 focus:ring-[#F90202] transition-colors"
                   />
                   <input
                     type="tel"
                     placeholder="Phone Number"
                     value={formState.phone}
                     onChange={(e) => setFormState(prev => ({ ...prev, phone: e.target.value }))}
-                    className="w-full px-4 py-4 bg-[#0A0A0A] border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:border-[#E8390E] focus:outline-none focus:ring-1 focus:ring-[#E8390E] transition-colors"
+                    className="w-full px-4 py-4 bg-[#0A0A0A] border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:border-[#F90202] focus:outline-none focus:ring-1 focus:ring-[#F90202] transition-colors"
                   />
                 </div>
 
@@ -1017,7 +1037,7 @@ function ContactSection() {
                   <div className="flex flex-wrap gap-4">
                     {['Monaco', 'Singapore', 'Abu Dhabi'].map((race) => (
                       <label key={race} className="flex items-center gap-2 cursor-pointer group">
-                        <div className={`w-5 h-5 border ${formState.races.includes(race) ? 'bg-[#E8390E] border-[#E8390E]' : 'border-white/30'} rounded flex items-center justify-center transition-colors`}>
+                        <div className={`w-5 h-5 border ${formState.races.includes(race) ? 'bg-[#F90202] border-[#F90202]' : 'border-white/30'} rounded flex items-center justify-center transition-colors`}>
                           {formState.races.includes(race) && (
                             <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -1042,13 +1062,13 @@ function ContactSection() {
                     rows={4}
                     value={formState.message}
                     onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value }))}
-                    className="w-full px-4 py-4 bg-[#0A0A0A] border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:border-[#E8390E] focus:outline-none focus:ring-1 focus:ring-[#E8390E] transition-colors resize-none"
+                    className="w-full px-4 py-4 bg-[#0A0A0A] border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:border-[#F90202] focus:outline-none focus:ring-1 focus:ring-[#F90202] transition-colors resize-none"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#E8390E] text-white font-semibold text-sm uppercase tracking-wider rounded hover:bg-[#ff4a1f] transition-all duration-300 animate-pulse-glow"
+                  className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#F90202] text-white font-semibold text-sm uppercase tracking-wider rounded hover:bg-[#FF1A1A] transition-all duration-300 animate-pulse-glow"
                 >
                   Send Enquiry
                   <ChevronRight className="w-4 h-4" />
@@ -1056,49 +1076,12 @@ function ContactSection() {
               </form>
             )}
           </div>
-
-          {/* Image-led Contact Panel */}
-          <div className={`relative rounded-2xl overflow-hidden border border-[#E8390E]/30 min-h-[500px] flex flex-col ${isVisible ? 'animate-fade-in-up delay-300' : 'opacity-0'}`}>
-            <img
-              src={MONACO.party}
-              alt="Velocity Terrace party in Monaco"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/75 to-[#0A0A0A]/30" />
-
-            {/* Bottom contact stack */}
-            <div className="relative mt-auto p-6 sm:p-8 space-y-3">
-              <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xs uppercase tracking-[0.25em] text-white/60 mb-3">
-                Or skip the form
-              </p>
-
-              <a
-                href="https://wa.me/44XXXXXXXXXX"
-                className="flex items-center gap-4 p-4 bg-[#0A0A0A]/80 backdrop-blur-sm border border-white/10 rounded-lg hover:border-emerald-500/50 hover:bg-[#0A0A0A]/95 transition-all group"
-              >
-                <div className="w-11 h-11 rounded-full bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform">
-                  <MessageCircle className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-white text-sm">+44 XXXX XXXXXX</p>
-                  <p className="text-white/60 text-xs">WhatsApp · usually replies in minutes</p>
-                </div>
-              </a>
-
-              <a
-                href="mailto:info@velocityterrace.com"
-                className="flex items-center gap-4 p-4 bg-[#0A0A0A]/80 backdrop-blur-sm border border-white/10 rounded-lg hover:border-[#E8390E]/60 hover:bg-[#0A0A0A]/95 transition-all group"
-              >
-                <div className="w-11 h-11 rounded-full bg-[#E8390E] flex items-center justify-center shadow-lg shadow-[#E8390E]/40 group-hover:scale-105 transition-transform">
-                  <Mail className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-white text-sm">info@velocityterrace.com</p>
-                  <p className="text-white/60 text-xs">Email us anytime · 2 hour response</p>
-                </div>
-              </a>
-            </div>
-          </div>
+          <p className="mt-6 text-center font-[family-name:var(--font-inter)] text-sm text-white/50">
+            Prefer email?{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-[#F90202] hover:underline">
+              {CONTACT_EMAIL}
+            </a>
+          </p>
         </div>
       </div>
     </section>
@@ -1110,7 +1093,7 @@ function Footer() {
   return (
     <footer className="relative bg-[#0A0A0A]">
       {/* Red accent bar */}
-      <div className="h-1 bg-gradient-to-r from-[#E8390E] via-[#ff6b3d] to-[#E8390E]" />
+      <div className="h-1 bg-gradient-to-r from-[#F90202] via-[#FF3333] to-[#F90202]" />
 
       {/* Big CTA strip */}
       <div className="relative overflow-hidden border-b border-white/5">
@@ -1122,7 +1105,7 @@ function Footer() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]" />
         <div className="relative max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-16 text-center">
-          <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xs uppercase tracking-[0.3em] text-[#E8390E] mb-2">
+          <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xs uppercase tracking-[0.3em] text-[#F90202] mb-2">
             See you on the grid
           </p>
           <h3 className="font-[family-name:var(--font-barlow-condensed)] font-black text-3xl sm:text-4xl lg:text-5xl uppercase text-white leading-none">
@@ -1147,7 +1130,7 @@ function Footer() {
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="text-xs font-medium tracking-widest uppercase text-white/60 hover:text-[#E8390E] transition-colors"
+                className="text-xs font-medium tracking-widest uppercase text-white/60 hover:text-[#F90202] transition-colors"
               >
                 {item}
               </a>
@@ -1169,9 +1152,35 @@ function Footer() {
   )
 }
 
+function ScrollToContactOnLoad() {
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    const scrollToContact = () => {
+      const el = document.getElementById('contact')
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
+    if (searchParams.get('section') === 'contact') {
+      scrollToContact()
+      window.history.replaceState(null, '', '/#contact')
+      return
+    }
+
+    if (window.location.hash === '#contact' || window.location.hash === '#enquire') {
+      scrollToContact()
+    }
+  }, [searchParams])
+
+  return null
+}
+
 export default function HomePageClient() {
   return (
     <main className="bg-[#0A0A0A] min-h-screen">
+      <Suspense fallback={null}>
+        <ScrollToContactOnLoad />
+      </Suspense>
       <HeroSection />
       <WhatIsSection />
       <RacesSection />

@@ -85,9 +85,12 @@ function ProgrammeHeader() {
       <Link href="/" className="block shrink-0">
         <img src="/monaco/velocity%20logo%20white.png" alt="Velocity Terrace" className="h-8 sm:h-10 w-auto object-contain" />
       </Link>
-      <div className="flex items-center gap-2.5">
-        <span className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xs uppercase tracking-[0.3em] text-white/80">
+      <div className="flex items-center gap-2.5 shrink-0">
+        <span className="hidden min-[420px]:inline font-[family-name:var(--font-barlow-condensed)] font-bold text-xs uppercase tracking-[0.3em] text-white/80">
           Weekend Programme
+        </span>
+        <span className="min-[420px]:hidden font-[family-name:var(--font-barlow-condensed)] font-bold text-[10px] uppercase tracking-[0.2em] text-white/80">
+          Programme
         </span>
         <CheckeredFlag className="w-4 h-4 shrink-0" />
       </div>
@@ -129,15 +132,15 @@ function NavPill({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center justify-center gap-2.5 rounded-full px-4 py-3.5 font-[family-name:var(--font-barlow-condensed)] font-bold text-[11px] uppercase tracking-wide transition-all sm:px-7 sm:py-4 sm:text-sm ${
+      className={`inline-flex w-full items-center justify-center gap-1.5 rounded-full px-3 py-3 font-[family-name:var(--font-barlow-condensed)] font-bold text-[10px] uppercase tracking-wide transition-all sm:w-auto sm:gap-2.5 sm:px-7 sm:py-4 sm:text-sm ${
         active
-          ? 'text-white shadow-lg shadow-[#E8390E]/20'
+          ? 'text-white shadow-lg shadow-[#F90202]/20'
           : 'text-white/80 hover:text-white'
       }`}
       style={active ? { background: ACCENT } : undefined}
     >
       {iconEl}
-      <span className="whitespace-nowrap">{label}</span>
+      <span className="text-center leading-tight sm:whitespace-nowrap">{label}</span>
     </button>
   )
 }
@@ -156,13 +159,13 @@ function TimelineDay({ dayTitle, items }: { dayTitle: string; items: TimelineIte
           <li key={`${item.time}-${item.title}`} className="relative flex gap-3 sm:gap-4 pb-5 last:pb-0">
             {i < items.length - 1 && (
               <span
-                className="absolute left-[104px] sm:left-[126px] top-3 bottom-0 w-px"
+                className="absolute left-[4.5rem] sm:left-[126px] top-3 bottom-0 w-px"
                 style={{ background: `linear-gradient(to bottom, ${ACCENT}66, ${ACCENT}22)` }}
                 aria-hidden
               />
             )}
             <span
-              className="shrink-0 w-[104px] sm:w-[126px] font-[family-name:var(--font-barlow-condensed)] font-bold text-sm sm:text-base tabular-nums pt-0.5"
+              className="shrink-0 w-[4.5rem] sm:w-[126px] font-[family-name:var(--font-barlow-condensed)] font-bold text-xs sm:text-base tabular-nums pt-0.5"
               style={{ color: ACCENT }}
             >
               {item.time}
@@ -277,7 +280,7 @@ function DrinksDetailPanel() {
 function ProgrammeFooter() {
   return (
     <section id="enquire" className="relative overflow-hidden bg-[#070707] px-6 py-12 text-white sm:px-8 sm:py-14 lg:px-12">
-      <div className="absolute right-12 top-10 hidden text-[#E8390E]/20 lg:block">
+      <div className="absolute right-12 top-10 hidden text-[#F90202]/20 lg:block">
         <svg className="h-36 w-56" viewBox="0 0 260 160" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
           <path d="M21 94C71 61 129 45 238 49" />
           <path d="M57 111c34-34 80-50 144-51" />
@@ -304,7 +307,7 @@ function ProgrammeFooter() {
         <div>
           <a
             href={`mailto:${CONTACT_EMAIL}?subject=Monaco Grand Prix 2027 enquiry`}
-            className="inline-flex w-full items-center justify-center gap-2 rounded bg-[#E8390E] px-8 py-5 font-[family-name:var(--font-barlow-condensed)] text-sm font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-90"
+            className="inline-flex w-full items-center justify-center gap-2 rounded bg-[#F90202] px-8 py-5 font-[family-name:var(--font-barlow-condensed)] text-sm font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-90"
           >
             Enquire for 2027 <ChevronRight className="h-4 w-4" />
           </a>
@@ -403,7 +406,7 @@ export function MonacoProgrammeClient() {
             <source src={HERO_VIDEO} type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-[#0A0A0A]/62" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_26%_28%,rgba(232,57,14,0.18),transparent_34%),linear-gradient(to_bottom,rgba(10,10,10,0.18),#0A0A0A_90%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_26%_28%,rgba(249,2,2,0.18),transparent_34%),linear-gradient(to_bottom,rgba(10,10,10,0.18),#0A0A0A_90%)]" />
         </div>
 
         <div className="relative z-10">
@@ -416,7 +419,7 @@ export function MonacoProgrammeClient() {
             >
               — Monaco Grand Prix 2026 —
             </p>
-            <h1 className="font-[family-name:var(--font-barlow-condensed)] font-black text-6xl sm:text-8xl lg:text-[112px] uppercase tracking-tight leading-[0.86] mb-6">
+            <h1 className="font-[family-name:var(--font-barlow-condensed)] font-black text-5xl sm:text-8xl lg:text-[112px] uppercase tracking-tight leading-[0.86] mb-6">
               <span className="block text-white">Your Weekend</span>
               <span className="block italic" style={{ color: ACCENT }}>
                 Programme
@@ -431,7 +434,7 @@ export function MonacoProgrammeClient() {
             </div>
 
             {/* Nav pills */}
-            <div className="grid grid-cols-4 items-center gap-1.5 rounded-full border border-white/12 bg-[#111111]/80 p-1.5 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-4 items-stretch sm:items-center gap-1.5 rounded-2xl sm:rounded-full border border-white/12 bg-[#111111]/80 p-1.5 max-w-4xl mx-auto">
               {NAV_SECTIONS.map((tab) => (
                 <NavPill
                   key={tab.id}
@@ -479,7 +482,7 @@ export function MonacoProgrammeClient() {
               {OPENING_HOURS.map((block) => (
                 <div
                   key={block.levelTag}
-                  className="rounded-xl bg-[#F5F0E6] px-8 py-8 border border-[#E8E2D6]"
+                  className="rounded-xl bg-[#F5F0E6] px-6 py-6 sm:px-8 sm:py-8 border border-[#E8E2D6]"
                 >
                   <span
                     className="inline-block px-2.5 py-1 rounded text-[11px] font-[family-name:var(--font-barlow-condensed)] font-bold uppercase tracking-wider text-white mb-4"
@@ -527,7 +530,7 @@ export function MonacoProgrammeClient() {
                 <p className="mb-9 font-[family-name:var(--font-barlow-condensed)] text-xl font-bold uppercase tracking-wide" style={{ color: ACCENT }}>
                   DJ sets: 17:15 – 18:15 · Saturday & Sunday
                 </p>
-                <div className="grid grid-cols-3 gap-5">
+                <div className="grid grid-cols-3 gap-3 sm:gap-5">
                   {ALEC_MONOPOLY.highlights.map((item) => (
                     <div key={item.label} className="text-center">
                       <AlecHighlightIcon type={item.icon} />
@@ -545,14 +548,14 @@ export function MonacoProgrammeClient() {
         {/* Menu & Drinks cards */}
         <div className="grid md:grid-cols-2 gap-5">
           <section id="menu" ref={setSectionRef('menu')}>
-            <DarkCard className="p-8 h-full flex flex-col">
+            <DarkCard className="p-6 sm:p-8 h-full flex flex-col">
               <p
-                className="font-[family-name:var(--font-barlow-condensed)] font-bold text-sm uppercase tracking-[0.35em] mb-8"
+                className="font-[family-name:var(--font-barlow-condensed)] font-bold text-sm uppercase tracking-[0.35em] mb-6 sm:mb-8"
                 style={{ color: ACCENT }}
               >
                 Menu
               </p>
-              <div className="grid grid-cols-3 gap-5 flex-1 mb-8">
+              <div className="grid grid-cols-3 gap-3 sm:gap-5 flex-1 mb-8">
                 {MENU_PREVIEW.map((item) => (
                   <div key={item.title} className="text-center">
                     <MenuPreviewIcon type={item.icon} />
@@ -586,14 +589,14 @@ export function MonacoProgrammeClient() {
           </section>
 
           <section id="drinks" ref={setSectionRef('drinks')}>
-            <DarkCard className="p-8 h-full flex flex-col">
+            <DarkCard className="p-6 sm:p-8 h-full flex flex-col">
               <p
-                className="font-[family-name:var(--font-barlow-condensed)] font-bold text-sm uppercase tracking-[0.35em] mb-8"
+                className="font-[family-name:var(--font-barlow-condensed)] font-bold text-sm uppercase tracking-[0.35em] mb-6 sm:mb-8"
                 style={{ color: ACCENT }}
               >
                 Drinks
               </p>
-              <div className="grid grid-cols-4 gap-5 flex-1 mb-8">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 flex-1 mb-8">
                 {DRINKS_PREVIEW.map((item) => (
                   <div key={item.title} className="text-center">
                     <DrinksPreviewIcon type={item.icon} />
@@ -622,7 +625,7 @@ export function MonacoProgrammeClient() {
         </div>
       </div>
 
-      <div className="mx-auto mb-10 h-px w-[min(72rem,calc(100%-3rem))] bg-[#E8390E]/55" />
+      <div className="mx-auto mb-10 h-px w-[min(72rem,calc(100%-3rem))] bg-[#F90202]/55" />
       <ProgrammeFooter />
     </main>
   )

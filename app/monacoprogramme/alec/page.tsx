@@ -1,9 +1,12 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Calendar, ChevronRight, Crown, Disc3, GlassWater, Headphones, Info, Mail, MapPin, Star, UtensilsCrossed } from 'lucide-react'
+import { MonacoProgrammeSubpageHeader } from '@/components/monaco-programme-subpage-header'
+import { MonacoProgrammeJsonLd } from '@/components/seo/json-ld'
 import { buildPageMetadata } from '@/lib/seo/metadata'
+import { MONACO_PROGRAMME_PAGES } from '@/lib/seo/monaco-programme-pages'
 
-const ACCENT = '#E8390E'
+const ACCENT = '#F90202'
 const CONTACT_EMAIL = 'info@velocity-terrace.com'
 
 export const metadata: Metadata = buildPageMetadata({
@@ -16,10 +19,10 @@ export const metadata: Metadata = buildPageMetadata({
 })
 
 const navItems = [
-  { label: 'Full Schedule', href: '/monacoprogramme#schedule', icon: Calendar },
-  { label: 'Alec Monopoly', href: '/monacoprogramme/alec', icon: NetworkIcon, active: true },
-  { label: 'Menu', href: '/monacoprogramme/menu', icon: UtensilsCrossed },
-  { label: 'Drinks', href: '/monacoprogramme/drinks', icon: GlassWater },
+  { label: 'Full Schedule', mobileLabel: 'Schedule', href: '/monacoprogramme#schedule', icon: Calendar },
+  { label: 'Alec Monopoly', mobileLabel: 'Alec', href: '/monacoprogramme/alec', icon: NetworkIcon, active: true },
+  { label: 'Menu', mobileLabel: 'Menu', href: '/monacoprogramme/menu', icon: UtensilsCrossed },
+  { label: 'Drinks', mobileLabel: 'Drinks', href: '/monacoprogramme/drinks', icon: GlassWater },
 ] as const
 
 function NetworkIcon({ className = 'w-4 h-4' }: { className?: string }) {
@@ -57,13 +60,13 @@ function ProgrammeNav() {
             <Link
               key={item.label}
               href={item.href}
-              className={`flex items-center justify-center gap-2 border-r border-white/[0.08] px-2 py-5 text-center font-[family-name:var(--font-barlow-condensed)] text-xs font-bold uppercase tracking-widest first:border-l ${
-                item.active ? 'text-[#E8390E]' : 'text-white/80 hover:text-white'
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 border-r border-white/[0.08] px-1.5 sm:px-2 py-4 sm:py-5 text-center font-[family-name:var(--font-barlow-condensed)] text-[10px] sm:text-xs font-bold uppercase tracking-wide sm:tracking-widest first:border-l ${
+                item.active ? 'text-[#F90202]' : 'text-white/80 hover:text-white'
               }`}
             >
               <Icon className="h-4 w-4 shrink-0" />
               <span className="hidden sm:inline">{item.label}</span>
-              <span className="sm:hidden">{item.label.split(' ')[0]}</span>
+              <span className="sm:hidden">{item.mobileLabel}</span>
             </Link>
           )
         })}
@@ -85,7 +88,7 @@ function FeatureStrip() {
         const Icon = feature.icon
         return (
           <div key={feature.label} className="flex items-center gap-5 border-b border-[#E7E1D6] p-8 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
-            <Icon className="h-11 w-11 shrink-0 text-[#E8390E]/65" strokeWidth={1.5} />
+            <Icon className="h-11 w-11 shrink-0 text-[#F90202]/65" strokeWidth={1.5} />
             <p className="font-[family-name:var(--font-barlow-condensed)] text-xl font-black uppercase leading-tight text-[#0A0A0A]">
               {feature.label}
             </p>
@@ -100,17 +103,17 @@ function SetCard({ day }: { day: string }) {
   return (
     <article className="relative min-h-[270px] overflow-hidden border border-[#E7E1D6] bg-[#F7F3EA] p-8">
       <div className="flex items-center gap-3">
-        <Calendar className="h-6 w-6 text-[#E8390E]/65" strokeWidth={1.5} />
+        <Calendar className="h-6 w-6 text-[#F90202]/65" strokeWidth={1.5} />
         <h3 className="font-[family-name:var(--font-barlow-condensed)] text-3xl font-black uppercase text-[#0A0A0A]">
           {day}
         </h3>
       </div>
-      <div className="mt-10 flex items-center gap-4">
-        <p className="font-[family-name:var(--font-barlow-condensed)] text-2xl font-bold tabular-nums" style={{ color: ACCENT }}>
+      <div className="mt-10 flex flex-wrap items-center gap-3 sm:gap-4">
+        <p className="font-[family-name:var(--font-barlow-condensed)] text-xl sm:text-2xl font-bold tabular-nums" style={{ color: ACCENT }}>
           17:15 – 18:15
         </p>
-        <span className="h-px w-12" style={{ background: ACCENT }} />
-        <p className="font-[family-name:var(--font-barlow-condensed)] text-xl font-black uppercase text-[#0A0A0A]">
+        <span className="hidden sm:block h-px w-12 shrink-0" style={{ background: ACCENT }} />
+        <p className="font-[family-name:var(--font-barlow-condensed)] text-lg sm:text-xl font-black uppercase text-[#0A0A0A]">
           Alec Monopoly DJ Set
         </p>
       </div>
@@ -145,7 +148,7 @@ function InfoPanel() {
         return (
           <article key={item.title} className="border border-[#E7E1D6] bg-[#F7F3EA] p-8">
             <div className="flex items-center gap-4">
-              <Icon className="h-8 w-8 text-[#E8390E]/65" strokeWidth={1.5} />
+              <Icon className="h-8 w-8 text-[#F90202]/65" strokeWidth={1.5} />
               <h3 className="font-[family-name:var(--font-barlow-condensed)] text-xl font-black uppercase text-[#0A0A0A]">
                 {item.title}
               </h3>
@@ -168,7 +171,7 @@ function InfoPanel() {
 function CtaFooter() {
   return (
     <section className="relative overflow-hidden bg-[#070707] px-6 py-12 text-white sm:px-8 sm:py-14 lg:px-12">
-      <div className="absolute right-12 top-10 hidden text-[#E8390E]/20 lg:block">
+      <div className="absolute right-12 top-10 hidden text-[#F90202]/20 lg:block">
         <svg className="h-36 w-56" viewBox="0 0 260 160" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 94C71 61 129 45 238 49" />
           <path d="M57 111c34-34 80-50 144-51" />
@@ -194,7 +197,7 @@ function CtaFooter() {
         <div>
           <a
             href={`mailto:${CONTACT_EMAIL}?subject=Monaco Grand Prix 2027 enquiry`}
-            className="inline-flex w-full items-center justify-center gap-2 rounded bg-[#E8390E] px-8 py-5 font-[family-name:var(--font-barlow-condensed)] text-sm font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-90"
+            className="inline-flex w-full items-center justify-center gap-2 rounded bg-[#F90202] px-8 py-5 font-[family-name:var(--font-barlow-condensed)] text-sm font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-90"
           >
             Enquire for 2027 <ChevronRight className="h-4 w-4" />
           </a>
@@ -202,10 +205,6 @@ function CtaFooter() {
             <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center gap-2 hover:text-white">
               <Mail className="h-4 w-4" style={{ color: ACCENT }} />
               {CONTACT_EMAIL}
-            </a>
-            <a href="https://wa.me/44XXXXXXXXXX" className="inline-flex items-center gap-2 hover:text-white">
-              <span className="h-4 w-4 rounded-full border border-[#E8390E]" />
-              WhatsApp
             </a>
           </div>
         </div>
@@ -224,8 +223,12 @@ function CtaFooter() {
   )
 }
 
+const PAGE = { path: '/monacoprogramme/alec' as const, ...MONACO_PROGRAMME_PAGES['/monacoprogramme/alec'] }
+
 export default function MonacoProgrammeAlecPage() {
   return (
+    <>
+      <MonacoProgrammeJsonLd {...PAGE} />
     <main className="min-h-screen bg-[#0A0A0A] text-white">
       <header className="relative overflow-hidden">
         <div className="absolute inset-0 grid grid-cols-2">
@@ -235,23 +238,13 @@ export default function MonacoProgrammeAlecPage() {
         <div className="absolute inset-0 bg-[#050505]/72" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0A0A0A]/45" />
 
-        <div className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-6 lg:px-12">
-          <Link href="/" aria-label="Velocity Terrace home">
-            <img src="/monaco/velocity%20logo%20white.png" alt="Velocity Terrace" className="h-8 w-auto object-contain sm:h-10" />
-          </Link>
-          <Link
-            href="/monacoprogramme"
-            className="font-[family-name:var(--font-barlow-condensed)] text-xs font-bold uppercase tracking-[0.24em] text-white/85 hover:text-white"
-          >
-            ← Weekend Programme
-          </Link>
-        </div>
+        <MonacoProgrammeSubpageHeader />
 
         <div className="relative z-10 mx-auto max-w-4xl px-6 pb-16 pt-8 text-center lg:px-12">
-          <p className="font-[family-name:var(--font-barlow-condensed)] text-sm font-bold uppercase tracking-[0.42em]" style={{ color: ACCENT }}>
+          <p className="font-[family-name:var(--font-barlow-condensed)] text-xs sm:text-sm font-bold uppercase tracking-[0.28em] sm:tracking-[0.42em]" style={{ color: ACCENT }}>
             Monaco Grand Prix 2026
           </p>
-          <h1 className="mt-5 font-[family-name:var(--font-barlow-condensed)] text-6xl font-black uppercase leading-none tracking-tight text-white sm:text-8xl lg:text-[112px]">
+          <h1 className="mt-5 font-[family-name:var(--font-barlow-condensed)] text-5xl font-black uppercase leading-none tracking-tight text-white sm:text-8xl lg:text-[112px]">
             Alec Monopoly
           </h1>
           <p className="mx-auto mt-5 max-w-xl font-[family-name:var(--font-inter)] text-base leading-relaxed text-white/80 sm:text-lg">
@@ -269,11 +262,11 @@ export default function MonacoProgrammeAlecPage() {
       <section className="rounded-t-[1.75rem] bg-[#F7F3EA] px-5 py-9 text-[#0A0A0A] sm:px-8 lg:px-12">
         <div className="mx-auto max-w-6xl">
           <div className="mb-8 flex items-center justify-center gap-5">
-            <span className="hidden h-px w-16 bg-[#E8390E]/35 sm:block" />
+            <span className="hidden h-px w-16 bg-[#F90202]/35 sm:block" />
             <p className="font-[family-name:var(--font-barlow-condensed)] text-xs font-bold uppercase tracking-[0.28em] text-[#0A0A0A]/80">
               Artist Feature
             </p>
-            <span className="hidden h-px w-16 bg-[#E8390E]/35 sm:block" />
+            <span className="hidden h-px w-16 bg-[#F90202]/35 sm:block" />
           </div>
 
           <div className="grid gap-8 border border-[#E7E1D6] bg-[#F7F3EA] p-8 lg:grid-cols-[1.15fr_0.85fr] lg:p-10">
@@ -313,5 +306,6 @@ export default function MonacoProgrammeAlecPage() {
       </section>
       <CtaFooter />
     </main>
+    </>
   )
 }

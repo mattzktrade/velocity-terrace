@@ -1,4 +1,4 @@
-export const MONACO_ACCENT = '#E8390E'
+export const MONACO_ACCENT = '#F90202'
 
 export const OPENING_HOURS = [
   {
@@ -111,7 +111,7 @@ export const DRINKS_MENU: DrinkSection[] = [
       { name: 'Aperol Spritz', ingredients: 'Aperol, prosecco, soda' },
       { name: 'Dirty Tonic', ingredients: 'Belvedere Dirty Brew, tonic water', tag: 'Belvedere Dirty Brew special' },
       { name: 'Dirty Espresso Martini', ingredients: 'Belvedere Dirty Brew, fresh espresso', tag: 'Belvedere Dirty Brew special' },
-      { name: 'The Skinny', ingredients: 'Belvedere vodka, soda, lime juice', tag: 'Belvedere' },
+      { name: 'THE SKINNY', ingredients: 'Belvedere vodka, soda, lime juice', tag: 'Belvedere' },
       { name: 'Paloma', ingredients: 'Rosaluna, grapefruit soda, lime', tag: 'Rosaluna special' },
       { name: 'Mezcal Tonic', ingredients: 'Rosaluna, tonic water', tag: 'Rosaluna special' },
     ],
@@ -129,12 +129,12 @@ export const DRINKS_MENU: DrinkSection[] = [
   },
   {
     title: 'Beer',
-    items: [{ name: 'Heineken', ingredients: 'Bottled' }],
+    items: [{ name: 'Heineken bottled' }],
   },
   {
     title: 'Wine',
     items: [
-      { name: 'Rosé', ingredients: 'Whispering Angel' },
+      { name: 'Rose', ingredients: 'Whispering angel' },
       { name: 'Red', ingredients: 'Montes Wings' },
       { name: 'White', ingredients: 'Montes Outer Limits Sauvignon Blanc' },
       { name: 'White', ingredients: 'Montes Alpha Special Cuvée Chardonnay' },
