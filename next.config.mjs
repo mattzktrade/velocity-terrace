@@ -6,6 +6,15 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  async redirects() {
+    return [
+      {
+        source: '/races/monaco',
+        destination: '/monacoprogramme',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig

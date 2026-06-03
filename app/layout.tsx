@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Barlow_Condensed, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { GlobalJsonLd } from '@/components/seo/json-ld'
+import { ROOT_METADATA } from '@/lib/seo/metadata'
 import './globals.css'
 
 const barlowCondensed = Barlow_Condensed({
@@ -15,17 +17,7 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-export const metadata: Metadata = {
-  title: 'Velocity Terrace | Premium F1 Hospitality Experience',
-  description: 'The ultimate F1 party hospitality experience. World-class views, open bars, live DJs at Monaco, Singapore & Abu Dhabi Grand Prix 2026.',
-  keywords: 'F1 hospitality, Monaco Grand Prix, Singapore Grand Prix, Abu Dhabi Grand Prix, VIP F1 experience, Formula 1 party',
-  openGraph: {
-    title: 'Velocity Terrace | Premium F1 Hospitality Experience',
-    description: 'This is not hospitality. This is a party. Experience F1 like never before.',
-    type: 'website',
-    images: ['/monaco/page4-img15.jpg'],
-  },
-}
+export const metadata: Metadata = ROOT_METADATA
 
 export const viewport: Viewport = {
   themeColor: '#0A0A0A',
@@ -39,8 +31,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${barlowCondensed.variable} ${inter.variable} bg-[#0A0A0A]`}>
+    <html lang="en-GB" className={`${barlowCondensed.variable} ${inter.variable} bg-[#0A0A0A]`}>
       <body className="font-sans antialiased bg-[#0A0A0A] text-white">
+        <GlobalJsonLd />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
