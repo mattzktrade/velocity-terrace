@@ -12,7 +12,7 @@ const CONTACT_EMAIL = 'info@velocity-terrace.com'
 export const metadata: Metadata = buildPageMetadata({
   title: 'Monaco Grand Prix Food Menu 2026',
   description:
-    'Velocity Terrace Monaco GP 2026 food menu including breakfast, small plates, main service, desserts and dietary information for the weekend programme.',
+    'Velocity Terrace Monaco GP 2026 official food menu including Saturday, Sunday, breakfast and two-day buffet service.',
   path: '/monacoprogramme/menu',
   ogImage: '/monaco/page4-img15.jpg',
   keywords: ['Velocity Terrace food menu', 'Monaco GP menu', 'Monaco Grand Prix programme'],
@@ -25,59 +25,190 @@ const navItems = [
   { label: 'Drinks', mobileLabel: 'Drinks', href: '/monacoprogramme/drinks', icon: GlassWater },
 ] as const
 
-const menuSections = [
+type MenuItem = {
+  name: string
+  description?: string | string[]
+}
+
+type MenuSection = {
+  title: string
+  subtitle?: string
+  icon: typeof SunIcon
+  wide?: boolean
+  items: MenuItem[]
+}
+
+const menuSections: MenuSection[] = [
+  {
+    title: 'Saturday Cold Dishes',
+    subtitle: 'Menu 2',
+    icon: ClocheIcon,
+    items: [
+      {
+        name: 'Salmon Poké Bowl',
+        description:
+          'Sushi rice, sweet and sour cucumber, soybeans, grated carrots, miso mayo, chukawame (seaweed salad), avocado cream, sushi ginger',
+      },
+      {
+        name: 'Beetroot Salad',
+        description:
+          'Frozen labneh, baby beetroots, olives, smoked almonds, fresh basil, sumac, olive oil, pomegranate seeds',
+      },
+      {
+        name: 'Tortilla',
+        description:
+          'With cream cheese, smoked salmon, and arugula (rocket) OR with cream cheese, Mexican vegetable mix, and arugula (rocket)',
+      },
+    ],
+  },
+  {
+    title: 'Saturday Hot Dishes',
+    subtitle: 'Menu 2',
+    icon: ClocheIcon,
+    items: [
+      { name: 'Chicken Nuggets', description: 'Caviar and crème fraîche' },
+      { name: 'Croque Monsieur', description: 'Served with salad / half a toasted sandwich per person' },
+      {
+        name: 'Artichoke Fondue',
+        description: 'Artichokes, cream cheese, béchamel sauce, shredded cheese, garlic, thyme, shrimp, chips (crisps)',
+      },
+      {
+        name: 'Cod Fillet',
+        description: 'Out of the oven, green asparagus, white wine sauce, mashed potatoes with lemon zest',
+      },
+      {
+        name: 'Hot Dog',
+        description:
+          'On a brioche bun, crispy onion, coleslaw (red and white cabbage in vinegar and mayo), cheddar cheese, truffle mayo, ketchup, diced pickles',
+      },
+      {
+        name: 'Chicken Satay',
+        description:
+          'Cubed and marinated chicken (chili sauce, sweet soy sauce, soy sauce, ginger, mustard, sriracha, balsamic, garlic, or curry), satay sauce, fried bean sprouts, prawn crackers (kroepoek)',
+      },
+    ],
+  },
+  {
+    title: 'Snacks',
+    subtitle: 'Saturday',
+    icon: ClocheIcon,
+    items: [{ name: 'Fries', description: 'With ketchup, mayo, mustard' }],
+  },
+  {
+    title: 'Staff Meal',
+    subtitle: 'Saturday',
+    icon: CakeIcon,
+    items: [{ name: 'Lasagna, salad' }],
+  },
+  {
+    title: 'Sunday Cold Dishes',
+    subtitle: 'Menu 1',
+    icon: ClocheIcon,
+    items: [
+      { name: 'Oysters', description: 'Over ice with lemon and lime wedges' },
+      { name: 'Salmon Roe Canapé', description: 'In small pastry cases with Boursin cream and lemon zest' },
+      { name: 'Pâté en Croûte', description: 'Lettuce, cornichons (gherkins), mayo, pomegranate molasses' },
+      {
+        name: 'Tuna Sashimi',
+        description:
+          'Granny Smith apple and yuzu granita, wasabi nuts, caper berries, pickled onion, wasabi roe',
+      },
+    ],
+  },
+  {
+    title: 'Sunday Hot Dishes',
+    subtitle: 'Menu 1',
+    icon: ClocheIcon,
+    items: [
+      {
+        name: 'Gnocchi',
+        description:
+          'Creamy parmesan sauce, bacon lardons. Served with arugula (rocket), a box of cherry tomatoes, olive oil, parmesan cheese, and optional pesto',
+      },
+      {
+        name: 'Tuna Melt Sandwich',
+        description:
+          'Tuna salad with olives, capers, tomato, bell pepper, parsley, onion, crème fraîche, shredded cheese; on a brioche hotdog bun out of the oven, truffle roe',
+      },
+      { name: 'Smash Burger', description: 'Brioche bun, lettuce, pickles, tomatoes, sauce' },
+      {
+        name: 'Choucroute (Sauerkraut) Sausage',
+        description:
+          'Sauerkraut, boiled potato in white wine, sausage, a slice of smoked pork, mayo mustard sauce',
+      },
+      {
+        name: 'Ribeye',
+        description:
+          'Slow-cooked out of the oven, potato truffle gratin, green asparagus, veal jus (jus de veau)',
+      },
+      { name: 'Pizza', description: 'Pepperoni, margherita, verdura (olives, vegetables)' },
+    ],
+  },
+  {
+    title: 'Snacks',
+    subtitle: 'Sunday',
+    icon: ClocheIcon,
+    items: [{ name: 'Fries', description: 'Sauces: Mayo, ketchup, chili sauce, mustard' }],
+  },
+  {
+    title: 'Staff Meal',
+    subtitle: 'Sunday',
+    icon: CakeIcon,
+    items: [{ name: "Hachis Parmentier (Shepherd's pie style dish), salad / pizza" }],
+  },
   {
     title: 'Breakfast',
-    subtitle: 'Served Saturday & Sunday · 11:00–13:00',
+    subtitle: 'Menu 3 · Saturday & Sunday',
     icon: SunIcon,
-    items: [
-      'Fresh pastries and croissants',
-      'Seasonal fruit platter',
-      'Greek yoghurt, granola & berries',
-      'Smoked salmon & cream cheese bagels',
-      'Scrambled eggs on brioche',
-      'Fresh juices, tea & coffee',
-    ],
+    items: [{ name: 'Croissant, pain au chocolat, fresh fruit from a 3kg bucket' }],
   },
   {
-    title: 'Small Plates',
-    subtitle: 'Light bites throughout the day',
+    title: 'Two-Day Cold Buffet',
+    subtitle: 'Menu 3 · Saturday & Sunday',
     icon: ClocheIcon,
+    wide: true,
     items: [
-      'Truffle arancini',
-      'Burrata with heritage tomatoes',
-      'Tuna tartare cones',
-      'Mini lobster rolls',
-      'Parmesan fries',
-      'Mediterranean mezze selection',
+      { name: 'Fruit', description: 'Watermelon' },
+      { name: 'Bread', description: 'Baguette, tortilla chips' },
+      { name: 'Hummus', description: 'Chickpeas, tahini, garlic, lemon / garnish (olives, tomato, parsley)' },
+      {
+        name: 'Harissa Hummus',
+        description: 'Chickpeas, harissa, roasted bell pepper, tahini, garlic / tomato, parsley, mint, olives',
+      },
+      { name: 'Labneh', description: "Sliced olives, mint, spring onion, za'atar" },
+      { name: 'Aubergine Mutabal (Baba Ganoush)', description: 'Pomegranate seeds, parsley' },
+      { name: 'Bell Pepper Tapenade', description: 'Chives, cashew nuts, alfalfa' },
+      {
+        name: 'Crudités (Raw Vegetables)',
+        description:
+          'Cucumber, carrots, celery, radishes, bell pepper, cherry tomatoes, hearts of Romaine lettuce, red salad',
+      },
+      { name: 'Pasta Salads', description: 'Farfalle, pesto, artichokes, cherry tomatoes, arugula (rocket)' },
+      {
+        name: 'Baby Mozzarella & Tomato',
+        description: 'Red, yellow, and green tomatoes, pesto, arugula (rocket), basil',
+      },
+      { name: 'Guacamole', description: 'In round bowls, with chips on the side' },
+      {
+        name: 'Tramazzini Sandwiches (Three Layers)',
+        description: [
+          'With hummus, grilled vegetables (zucchini, bell pepper), lettuce / arugula',
+          'With bell pepper tapenade / grilled vegetables / salad',
+          'With labneh / grilled vegetables / salad',
+        ],
+      },
+      {
+        name: 'Bulgur Salads with Feta',
+        description:
+          'Canned tomatoes, feta cheese, oregano, parsley, mint, red onion, cumin, cinnamon, pomegranate molasses',
+      },
+      {
+        name: 'Potato Salads',
+        description: 'Sliced potatoes out of the bag, spring onion, vinegar, mayonnaise (garnish with chives, red alfalfa)',
+      },
     ],
   },
-  {
-    title: 'Main Service',
-    subtitle: 'Luncheon service from 13:00',
-    icon: ClocheIcon,
-    items: [
-      'Grilled sea bass with citrus herbs',
-      'Beef fillet with pommes purée',
-      'Wild mushroom risotto',
-      'Roast chicken supreme',
-      'Rigatoni alla vodka',
-      'Charred vegetable tart',
-    ],
-  },
-  {
-    title: 'Dessert',
-    subtitle: '',
-    icon: CakeIcon,
-    items: [
-      'Lemon tart',
-      'Tiramisu cups',
-      'Chocolate délice',
-      'Fresh berries & chantilly',
-      'Mini patisserie selection',
-    ],
-  },
-] as const
+]
 
 function NetworkIcon({ className = 'w-4 h-4' }: { className?: string }) {
   return (
@@ -145,11 +276,11 @@ function MenuNav() {
   )
 }
 
-function MenuCard({ section }: { section: (typeof menuSections)[number] }) {
+function MenuCard({ section }: { section: MenuSection }) {
   const Icon = section.icon
 
   return (
-    <article className="relative min-h-[420px] border border-[#E7E1D6] bg-[#F7F3EA] p-8 sm:p-10">
+    <article className={`relative border border-[#E7E1D6] bg-[#F7F3EA] p-6 sm:p-8 lg:p-10 ${section.wide ? 'lg:col-span-2' : ''}`}>
       <div className="flex items-start gap-5">
         <Icon className="mt-0.5 h-12 w-12 shrink-0 text-[#F90202]/55" />
         <div>
@@ -163,11 +294,29 @@ function MenuCard({ section }: { section: (typeof menuSections)[number] }) {
         </div>
       </div>
 
-      <div className="mt-10 divide-y divide-[#DDD6CA]">
+      <div className={`mt-8 ${section.wide ? 'grid gap-x-8 sm:grid-cols-2' : 'divide-y divide-[#DDD6CA]'}`}>
         {section.items.map((item) => (
-          <p key={item} className="py-3 font-[family-name:var(--font-inter)] text-sm text-[#2F2B27] first:pt-0 last:pb-0">
-            {item}
-          </p>
+          <div
+            key={item.name}
+            className={`border-[#DDD6CA] py-3 first:pt-0 last:pb-0 ${section.wide ? 'border-t first:border-t-0 sm:[&:nth-child(2)]:border-t-0' : ''}`}
+          >
+            <p className="font-[family-name:var(--font-inter)] text-sm font-black uppercase tracking-tight text-[#0A0A0A]">
+              {item.name}
+            </p>
+            {Array.isArray(item.description) ? (
+              <div className="mt-1 space-y-1">
+                {item.description.map((line) => (
+                  <p key={line} className="font-[family-name:var(--font-inter)] text-sm leading-relaxed text-[#5C5650]">
+                    {line}
+                  </p>
+                ))}
+              </div>
+            ) : item.description ? (
+              <p className="mt-1 font-[family-name:var(--font-inter)] text-sm leading-relaxed text-[#5C5650]">
+                {item.description}
+              </p>
+            ) : null}
+          </div>
         ))}
       </div>
     </article>
@@ -177,18 +326,18 @@ function MenuCard({ section }: { section: (typeof menuSections)[number] }) {
 function InfoPanel() {
   const items = [
     {
-      title: 'Food Service Throughout The Day',
-      text: 'From breakfast to late afternoon, with light bites available all day.',
+      title: 'Saturday Listed First',
+      text: 'Saturday cold dishes, hot dishes, snacks and staff meal are shown before Sunday.',
       icon: Clock,
     },
     {
-      title: 'Vegetarian Options Available',
-      text: 'A selection of vegetarian dishes available across all menus.',
+      title: 'Sunday Follows',
+      text: 'Sunday cold dishes, hot dishes, snacks and staff meal are listed after Saturday.',
       icon: Leaf,
     },
     {
-      title: 'Please Speak To The Team For Dietary Requirements And Allergies',
-      text: 'Our team is here to help you enjoy your experience with confidence.',
+      title: 'Breakfast & Two-Day Buffet',
+      text: 'Breakfast and the two-day cold buffet from Menu 3 are included after the day menus.',
       icon: ShieldCheck,
     },
   ]
@@ -293,7 +442,7 @@ export default function MonacoProgrammeMenuPage() {
             Food Menu
           </h1>
           <p className="mx-auto mt-5 max-w-xl font-[family-name:var(--font-inter)] text-base leading-relaxed text-white/80 sm:text-lg">
-            A refined dining experience to complement an unforgettable weekend of world-class racing, entertainment and hospitality.
+            The official Monaco weekend menu, presented Saturday first, then Sunday, with breakfast and the two-day cold buffet.
           </p>
           <p className="mt-5 inline-flex items-center gap-2 font-[family-name:var(--font-inter)] text-sm text-white/70">
             <MapPin className="h-4 w-4" style={{ color: ACCENT }} />
@@ -309,7 +458,7 @@ export default function MonacoProgrammeMenuPage() {
           <div className="mb-8 flex items-center justify-center gap-5">
             <span className="hidden h-px w-16 bg-[#F90202]/35 sm:block" />
             <p className="font-[family-name:var(--font-barlow-condensed)] text-xs font-bold uppercase tracking-[0.28em] text-[#0A0A0A]/80">
-              Sample Menu — Official Menu To Be Confirmed
+              Official Monaco Weekend Menu
             </p>
             <span className="hidden h-px w-16 bg-[#F90202]/35 sm:block" />
           </div>
