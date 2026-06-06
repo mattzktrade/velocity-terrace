@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { Calendar, ChevronRight, Clock, GlassWater, Leaf, Mail, MapPin, ShieldCheck, UtensilsCrossed } from 'lucide-react'
+import { Calendar, ChevronRight, GlassWater, Mail, MapPin, UtensilsCrossed } from 'lucide-react'
 import { MonacoProgrammeSubpageHeader } from '@/components/monaco-programme-subpage-header'
 import { MonacoProgrammeJsonLd } from '@/components/seo/json-ld'
 import { buildPageMetadata } from '@/lib/seo/metadata'
@@ -41,7 +41,7 @@ type MenuSection = {
 const menuSections: MenuSection[] = [
   {
     title: 'Saturday Cold Dishes',
-    subtitle: 'Menu 2',
+    subtitle: 'Menu',
     icon: ClocheIcon,
     items: [
       {
@@ -63,7 +63,7 @@ const menuSections: MenuSection[] = [
   },
   {
     title: 'Saturday Hot Dishes',
-    subtitle: 'Menu 2',
+    subtitle: 'Menu',
     icon: ClocheIcon,
     items: [
       { name: 'Chicken Nuggets', description: 'Caviar and crème fraîche' },
@@ -95,14 +95,8 @@ const menuSections: MenuSection[] = [
     items: [{ name: 'Fries', description: 'With ketchup, mayo, mustard' }],
   },
   {
-    title: 'Staff Meal',
-    subtitle: 'Saturday',
-    icon: CakeIcon,
-    items: [{ name: 'Lasagna, salad' }],
-  },
-  {
     title: 'Sunday Cold Dishes',
-    subtitle: 'Menu 1',
+    subtitle: 'Menu',
     icon: ClocheIcon,
     items: [
       { name: 'Oysters', description: 'Over ice with lemon and lime wedges' },
@@ -117,7 +111,7 @@ const menuSections: MenuSection[] = [
   },
   {
     title: 'Sunday Hot Dishes',
-    subtitle: 'Menu 1',
+    subtitle: 'Menu',
     icon: ClocheIcon,
     items: [
       {
@@ -151,20 +145,14 @@ const menuSections: MenuSection[] = [
     items: [{ name: 'Fries', description: 'Sauces: Mayo, ketchup, chili sauce, mustard' }],
   },
   {
-    title: 'Staff Meal',
-    subtitle: 'Sunday',
-    icon: CakeIcon,
-    items: [{ name: "Hachis Parmentier (Shepherd's pie style dish), salad / pizza" }],
-  },
-  {
     title: 'Breakfast',
-    subtitle: 'Menu 3 · Saturday & Sunday',
+    subtitle: 'Menu',
     icon: SunIcon,
     items: [{ name: 'Croissant, pain au chocolat, fresh fruit from a 3kg bucket' }],
   },
   {
     title: 'Two-Day Cold Buffet',
-    subtitle: 'Menu 3 · Saturday & Sunday',
+    subtitle: 'Menu',
     icon: ClocheIcon,
     wide: true,
     items: [
@@ -240,17 +228,6 @@ function ClocheIcon({ className = 'h-12 w-12' }: { className?: string }) {
   )
 }
 
-function CakeIcon({ className = 'h-12 w-12' }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 80 64" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
-      <path d="M16 31h48v22H16z" />
-      <path d="M16 31 40 17l24 14" />
-      <path d="M24 37h32M24 44h32" strokeLinecap="round" />
-      <path d="M40 17V8M34 8h12" strokeLinecap="round" />
-    </svg>
-  )
-}
-
 function MenuNav() {
   return (
     <nav className="border-y border-white/[0.08] bg-[#080808]">
@@ -320,45 +297,6 @@ function MenuCard({ section }: { section: MenuSection }) {
         ))}
       </div>
     </article>
-  )
-}
-
-function InfoPanel() {
-  const items = [
-    {
-      title: 'Saturday Listed First',
-      text: 'Saturday cold dishes, hot dishes, snacks and staff meal are shown before Sunday.',
-      icon: Clock,
-    },
-    {
-      title: 'Sunday Follows',
-      text: 'Sunday cold dishes, hot dishes, snacks and staff meal are listed after Saturday.',
-      icon: Leaf,
-    },
-    {
-      title: 'Breakfast & Two-Day Buffet',
-      text: 'Breakfast and the two-day cold buffet from Menu 3 are included after the day menus.',
-      icon: ShieldCheck,
-    },
-  ]
-
-  return (
-    <div className="grid overflow-hidden rounded-xl border border-[#E7E1D6] bg-[#F7F3EA] sm:grid-cols-3">
-      {items.map((item) => {
-        const Icon = item.icon
-        return (
-          <div key={item.title} className="border-b border-[#E7E1D6] p-7 text-center last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
-            <Icon className="mx-auto h-8 w-8 text-[#F90202]/55" strokeWidth={1.5} />
-            <h3 className="mx-auto mt-4 max-w-[14rem] font-[family-name:var(--font-barlow-condensed)] text-sm font-black uppercase tracking-[0.12em] text-[#0A0A0A]">
-              {item.title}
-            </h3>
-            <p className="mx-auto mt-3 max-w-[15rem] font-[family-name:var(--font-inter)] text-xs leading-relaxed text-[#5C5650]">
-              {item.text}
-            </p>
-          </div>
-        )
-      })}
-    </div>
   )
 }
 
@@ -469,9 +407,6 @@ export default function MonacoProgrammeMenuPage() {
             ))}
           </div>
 
-          <div className="mt-5">
-            <InfoPanel />
-          </div>
         </div>
       </section>
       <CtaFooter />
