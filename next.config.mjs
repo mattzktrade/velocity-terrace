@@ -9,11 +9,6 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/races/monaco',
-        destination: '/monacoprogramme',
-        permanent: true,
-      },
-      {
         source: '/races/abu-dhabi',
         destination: '/?section=contact',
         permanent: false,

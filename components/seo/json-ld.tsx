@@ -44,7 +44,7 @@ const ORGANIZATION = {
   logo: absoluteUrl('/monaco/velocity%20logo%20white.png'),
   email: CONTACT_EMAIL,
   description:
-    'Premium Formula 1 party hospitality at Monaco, Singapore, and Abu Dhabi Grands Prix — front-row views, open bar, live DJs, and VIP after-parties.',
+    'Premium Formula 1 party hospitality at Singapore, Abu Dhabi, and Monaco 2027 — front-row views, open bar, live DJs, and VIP after-parties.',
   sameAs: getSocialProfileUrls(),
 }
 
@@ -55,7 +55,7 @@ const WEBSITE = {
   name: SITE_NAME,
   url: SITE_URL,
   description:
-    'Premium F1 party hospitality experiences at Monaco, Singapore, and Abu Dhabi Grand Prix weekends.',
+    'Premium F1 party hospitality experiences at Singapore, Abu Dhabi, and Monaco 2027 Grand Prix weekends.',
   publisher: { '@id': `${SITE_URL}/#organization` },
   inLanguage: 'en-GB',
 }
@@ -83,7 +83,7 @@ export function HomeJsonLd() {
     '@type': 'WebPage',
     '@id': `${SITE_URL}/#webpage`,
     url: SITE_URL,
-    name: `${SITE_NAME} | Premium F1 Party Hospitality 2026`,
+    name: `${SITE_NAME} | Premium F1 Party Hospitality`,
     description: ORGANIZATION.description,
     isPartOf: { '@id': `${SITE_URL}/#website` },
     about: { '@id': `${SITE_URL}/#organization` },
@@ -94,21 +94,13 @@ export function HomeJsonLd() {
   const raceList = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Velocity Terrace F1 Grand Prix experiences 2026',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Monaco Grand Prix 2026',
-        url: absoluteUrl('/monacoprogramme'),
-      },
-      ...PUBLISHED_RACE_PAGES.filter((s) => s !== 'monaco').map((slug, i) => ({
-        '@type': 'ListItem' as const,
-        position: i + 2,
-        name: slug === 'singapore' ? 'Singapore 2026' : 'Abu Dhabi Grand Prix 2026',
-        url: absoluteUrl(`/races/${slug}`),
-      })),
-    ],
+    name: 'Velocity Terrace F1 Grand Prix experiences',
+    itemListElement: PUBLISHED_RACE_PAGES.map((slug, i) => ({
+      '@type': 'ListItem' as const,
+      position: i + 1,
+      name: slug === 'singapore' ? 'Singapore 2026' : 'Monaco Grand Prix 2027',
+      url: absoluteUrl(`/races/${slug}`),
+    })),
   }
 
   const service = {
@@ -134,19 +126,17 @@ const RACE_EVENTS: Record<
   RaceSlug,
   {
     name: string
-    startDate: string
-    endDate: string
+    startDate?: string
+    endDate?: string
     location: string
     description: string
   }
 > = {
   monaco: {
-    name: 'Velocity Terrace — Monaco Grand Prix 2026',
-    startDate: '2026-06-06',
-    endDate: '2026-06-07',
+    name: 'Velocity Terrace — Monaco Grand Prix 2027',
     location: 'Monte Carlo, Monaco',
     description:
-      '2-day F1 party hospitality overlooking the Monaco start/finish straight with open bar, DJs, and VIP after-party.',
+      '2027 Monaco Grand Prix hospitality packages with Saturday-only, Sunday-only and full 2-day options, front-row views, open bar, DJs and VIP after-party access.',
   },
   singapore: {
     name: 'Velocity Terrace — Singapore 2026',
@@ -166,6 +156,15 @@ const RACE_EVENTS: Record<
   },
 }
 
+const MONACO_PROGRAMME_EVENT = {
+  name: 'Velocity Terrace — Monaco Grand Prix 2026',
+  startDate: '2026-06-06',
+  endDate: '2026-06-07',
+  location: 'Monte Carlo, Monaco',
+  description:
+    '2-day F1 party hospitality overlooking the Monaco start/finish straight with open bar, DJs, and VIP after-party.',
+}
+
 export function MonacoProgrammeJsonLd({
   path,
   title,
@@ -176,7 +175,7 @@ export function MonacoProgrammeJsonLd({
   description: string
 }) {
   const pageUrl = absoluteUrl(path)
-  const event = RACE_EVENTS.monaco
+  const event = MONACO_PROGRAMME_EVENT
 
   const webPage = {
     '@context': 'https://schema.org',
@@ -195,10 +194,10 @@ export function MonacoProgrammeJsonLd({
     '@type': 'Event',
     name: event.name,
     description: event.description,
-    startDate: event.startDate,
-    endDate: event.endDate,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    ...(event.startDate ? { startDate: event.startDate } : {}),
+    ...(event.endDate ? { endDate: event.endDate } : {}),
     location: {
       '@type': 'Place',
       name: event.location,
@@ -232,10 +231,10 @@ export function RaceJsonLd({ slug }: { slug: RaceSlug }) {
     '@type': 'Event',
     name: event.name,
     description: event.description,
-    startDate: event.startDate,
-    endDate: event.endDate,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    ...(event.startDate ? { startDate: event.startDate } : {}),
+    ...(event.endDate ? { endDate: event.endDate } : {}),
     location: {
       '@type': 'Place',
       name: event.location,
@@ -244,7 +243,7 @@ export function RaceJsonLd({ slug }: { slug: RaceSlug }) {
     organizer: { '@id': `${SITE_URL}/#organization` },
     offers: {
       '@type': 'Offer',
-      url: absoluteUrl('/#contact'),
+      url: `${pageUrl}#enquire`,
       availability: 'https://schema.org/LimitedAvailability',
       validFrom: '2026-01-01',
     },

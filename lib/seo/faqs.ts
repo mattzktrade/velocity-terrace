@@ -12,11 +12,11 @@ export const HOME_FAQS: FaqItem[] = [
   },
   {
     q: 'How many days is Velocity Terrace at each Grand Prix?',
-    a: 'Monaco is a 2-day experience (Saturday and Sunday). Singapore and Abu Dhabi are 3-day experiences (Friday through Sunday).',
+    a: 'Monaco 2027 is available as Saturday-only, Sunday-only or a full 2-day Saturday and Sunday package. Singapore and Abu Dhabi are planned as 3-day experiences from Friday through Sunday.',
   },
   {
     q: 'Which F1 races does Velocity Terrace host?',
-    a: 'Velocity Terrace runs at three Grands Prix in 2026: Monaco (Monte Carlo), Singapore (Marina Bay night race), and Abu Dhabi (Yas Marina season finale).',
+    a: 'Velocity Terrace focuses on three Grand Prix destinations: Monaco 2027 in Monte Carlo, Singapore 2026 at Marina Bay, and Abu Dhabi at Yas Marina.',
   },
   {
     q: 'How is Velocity Terrace different from traditional F1 hospitality?',
@@ -35,16 +35,24 @@ export const HOME_FAQS: FaqItem[] = [
 export const RACE_FAQS: Record<string, FaqItem[]> = {
   monaco: [
     {
-      q: 'Is Velocity Terrace Monaco a 2-day or 3-day package?',
-      a: 'Monaco is a 2-day Velocity Terrace package covering Saturday and Sunday of the Monaco Grand Prix weekend.',
+      q: 'Can I enquire for Velocity Terrace Monaco Grand Prix 2027?',
+      a: 'Yes. Monaco 2027 enquiries are open now. Submit your details to secure a Saturday, Sunday or full 2-day Velocity Terrace package and the team will follow up with availability and next steps.',
     },
     {
-      q: 'Where is Velocity Terrace located at the Monaco Grand Prix?',
-      a: 'Velocity Terrace overlooks the start/finish straight and starting grid at Monte Carlo, giving front-row views of race action and big-screen coverage.',
+      q: 'Are Monaco 2027 dates confirmed?',
+      a: 'Official Monaco Grand Prix 2027 dates are not yet confirmed. Velocity Terrace will update registered enquiries as soon as the calendar and hospitality timetable are available.',
     },
     {
-      q: 'What is included at Velocity Terrace Monaco?',
-      a: 'Open bar all day, gourmet food, live DJs, Alec Monopoly live art, front-row terrace views, and an exclusive VIP after-party on race weekend evenings.',
+      q: 'What is usually included at Velocity Terrace Monaco?',
+      a: 'Typical inclusions include front-row trackside views, open bar, gourmet food, DJs and entertainment, comfortable seating and after-party access. The weekend lineup shown is based on a 2026 sample and final 2027 timings follow the official timetable.',
+    },
+    {
+      q: 'Can I book Monaco as individual day packages?',
+      a: 'Yes. Monaco 2027 can be enquired for as Saturday-only, Sunday-only, or as the full 2-day Saturday and Sunday package.',
+    },
+    {
+      q: 'Can I enquire for a Monaco group or corporate booking?',
+      a: 'Yes. Monaco is suited to private groups, corporate hosting and high-net-worth guests. Include your estimated group size in the enquiry form so the team can advise on options.',
     },
   ],
   singapore: [

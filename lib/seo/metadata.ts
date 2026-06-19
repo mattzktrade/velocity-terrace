@@ -67,15 +67,15 @@ export function buildPageMetadata({
 export const ROOT_METADATA: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | Premium F1 Party Hospitality 2026`,
+    default: `${SITE_NAME} | Premium F1 Party Hospitality`,
     template: TITLE_TEMPLATE,
   },
   description:
-    'Velocity Terrace is premium Formula 1 party hospitality at Monaco, Singapore & Abu Dhabi GP 2026. Front-row views, open bar all day, live DJs & VIP after-party. Enquire now.',
+    'Velocity Terrace is premium Formula 1 party hospitality at Monaco 2027, Singapore 2026 & Abu Dhabi. Front-row views, open bar all day, live DJs & VIP after-party. Enquire now.',
   keywords: [
     'F1 hospitality',
     'Formula 1 VIP experience',
-    'Monaco Grand Prix hospitality',
+    'Monaco Grand Prix hospitality 2027',
     'Singapore Grand Prix hospitality',
     'Abu Dhabi Grand Prix hospitality',
     'F1 party hospitality',
@@ -87,9 +87,12 @@ export const ROOT_METADATA: Metadata = {
   publisher: SITE_NAME,
   category: 'Sports & Entertainment',
   icons: {
-    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
-    apple: [{ url: '/icon.svg', type: 'image/svg+xml' }],
-    shortcut: '/icon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml', sizes: 'any' },
+      { url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' },
+    ],
+    apple: [{ url: '/apple-icon.svg', type: 'image/svg+xml', sizes: '180x180' }],
+    shortcut: '/favicon.svg',
   },
   robots: INDEX_ROBOTS,
   alternates: { canonical: SITE_URL },
@@ -104,8 +107,9 @@ export const ROOT_METADATA: Metadata = {
     locale: 'en_GB',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | Premium F1 Party Hospitality 2026`,
-    description: SITE_TAGLINE + '. Open bar, live DJs, front-row views & after-party at three iconic Grands Prix.',
+    title: `${SITE_NAME} | Premium F1 Party Hospitality`,
+    description:
+      'Premium F1 party hospitality at Monaco 2027, Singapore 2026 and Abu Dhabi. Open bar, live DJs, front-row views and after-party access.',
     images: [{ url: ogImageUrl(), width: 1200, height: 630, alt: SITE_NAME }],
   },
   twitter: {
@@ -118,20 +122,20 @@ export const ROOT_METADATA: Metadata = {
 
 export const HOME_METADATA: Metadata = {
   ...buildPageMetadata({
-  title: 'Premium F1 Party Hospitality — Monaco, Singapore & Abu Dhabi 2026',
+  title: 'Premium F1 Party Hospitality — Monaco 2027, Singapore & Abu Dhabi',
   description:
-    'Velocity Terrace is not traditional F1 hospitality — it is a party. Front-row track views, open bar all day, live DJs & VIP after-party at Monaco, Singapore & Abu Dhabi Grand Prix 2026.',
+    'Velocity Terrace is not traditional F1 hospitality — it is a party. Enquire for Monaco Grand Prix 2027, or explore Singapore and Abu Dhabi F1 party hospitality.',
   path: '/',
   keywords: [
     'F1 party hospitality',
-    'Monaco GP VIP',
+    'Monaco GP 2027 VIP',
     'Singapore GP hospitality',
     'Abu Dhabi GP hospitality',
     'Formula 1 terrace experience',
   ],
   }),
   title: {
-    absolute: 'Velocity Terrace | Premium F1 Party Hospitality — Monaco, Singapore & Abu Dhabi 2026',
+    absolute: 'Velocity Terrace | Premium F1 Party Hospitality — Monaco 2027, Singapore & Abu Dhabi',
   },
 }
 
@@ -140,11 +144,11 @@ const RACE_META: Record<
   { title: string; description: string; ogImage: string; keywords: string[] }
 > = {
   monaco: {
-    title: 'Monaco Grand Prix Hospitality 2026',
+    title: 'Monaco Grand Prix Hospitality 2027 — Enquire Now',
     description:
-      'Book Velocity Terrace at the Monaco GP 2026. 2-day party hospitality with front-row start/finish views, open bar, live DJs, Alec Monopoly & VIP after-party in Monte Carlo.',
+      'Enquire now to secure Velocity Terrace Monaco Grand Prix 2027 hospitality. Saturday-only, Sunday-only and full 2-day packages with front-row views, open bar, live DJs and VIP after-party access.',
     ogImage: '/monaco/page4-img15.jpg',
-    keywords: ['Monaco Grand Prix hospitality', 'Monaco GP VIP terrace', 'Monte Carlo F1 party'],
+    keywords: ['Monaco Grand Prix hospitality 2027', 'Monaco GP 2027 VIP terrace', 'Monte Carlo F1 party'],
   },
   singapore: {
     title: 'Velocity Terrace Singapore 2026 — Marina Bay VIP Hospitality',
@@ -164,7 +168,7 @@ const RACE_META: Record<
 
 export function racePageMetadata(slug: RaceSlug): Metadata {
   const meta = RACE_META[slug]
-  const noIndex = slug === 'abu-dhabi' || slug === 'monaco'
+  const noIndex = slug === 'abu-dhabi'
   return buildPageMetadata({
     title: meta.title,
     description: meta.description,
@@ -183,5 +187,6 @@ export function monacoProgrammeMetadata(): Metadata {
     path: '/monacoprogramme',
     ogImage: '/monaco/page4-img15.jpg',
     keywords: ['Monaco GP programme', 'Velocity Terrace schedule', 'Monaco Grand Prix 2026'],
+    noIndex: true,
   })
 }

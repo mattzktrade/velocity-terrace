@@ -17,6 +17,7 @@ export const metadata: Metadata = buildPageMetadata({
   path: '/monacoprogramme/drinks',
   ogImage: '/monaco/page4-img15.jpg',
   keywords: ['Velocity Terrace drinks menu', 'Monaco GP drinks', 'Monaco Grand Prix programme'],
+  noIndex: true,
 })
 
 const navItems = [

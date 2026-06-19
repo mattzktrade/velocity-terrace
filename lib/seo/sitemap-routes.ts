@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { BLOG_POSTS } from '../blog-posts'
 import { absoluteUrl, PUBLISHED_RACE_PAGES } from './site'
 
 export type SitemapEntry = MetadataRoute.Sitemap[number]
@@ -9,19 +10,25 @@ export function getSitemapEntries(): SitemapEntry[] {
 
   const entries: SitemapEntry[] = [
     { url: absoluteUrl('/'), lastModified, changeFrequency: 'weekly', priority: 1 },
-    { url: absoluteUrl('/monacoprogramme'), lastModified, changeFrequency: 'weekly', priority: 0.95 },
-    { url: absoluteUrl('/monacoprogramme/menu'), lastModified, changeFrequency: 'monthly', priority: 0.75 },
-    { url: absoluteUrl('/monacoprogramme/drinks'), lastModified, changeFrequency: 'monthly', priority: 0.75 },
-    { url: absoluteUrl('/monacoprogramme/alec'), lastModified, changeFrequency: 'monthly', priority: 0.75 },
+    { url: absoluteUrl('/about'), lastModified, changeFrequency: 'monthly', priority: 0.9 },
+    { url: absoluteUrl('/blog'), lastModified, changeFrequency: 'weekly', priority: 0.85 },
   ]
 
   for (const slug of PUBLISHED_RACE_PAGES) {
-    if (slug === 'monaco') continue
     entries.push({
       url: absoluteUrl(`/races/${slug}`),
       lastModified,
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: slug === 'monaco' ? 0.95 : 0.9,
+    })
+  }
+
+  for (const post of BLOG_POSTS) {
+    entries.push({
+      url: absoluteUrl(`/blog/${post.slug}`),
+      lastModified: new Date(post.dateModified),
+      changeFrequency: 'monthly',
+      priority: 0.8,
     })
   }
 

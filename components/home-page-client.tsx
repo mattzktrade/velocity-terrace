@@ -4,9 +4,10 @@ import { HOME_FAQS } from '@/lib/seo/faqs'
 import { CONTACT_EMAIL } from '@/lib/seo/site'
 import { useEffect, useRef, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { MapPin, Menu, X, ChevronRight } from 'lucide-react'
+import { MapPin, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { MarqueeTicker } from '@/components/marquee-ticker'
+import { SiteFooter, SiteHeader } from '@/components/site-chrome'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
@@ -38,16 +39,6 @@ const SINGAPORE = {
   image2: '/singapore/image-2.jpg',
 } as const
 
-function VelocityLogo({ className = 'h-9 sm:h-11' }: { className?: string }) {
-  return (
-    <img
-      src={MONACO.logo}
-      alt="Velocity Terrace"
-      className={`w-auto object-contain ${className}`}
-    />
-  )
-}
-
 // Hero Section Component
 function HeroSection() {
   return (
@@ -68,7 +59,7 @@ function HeroSection() {
       </div>
 
       {/* Navigation */}
-      <Navigation />
+      <SiteHeader isHome />
 
       {/* Hero Content */}
       <div className="relative z-10 flex-1 flex items-center justify-center px-6 lg:px-12">
@@ -82,7 +73,7 @@ function HeroSection() {
 
           {/* Sub-headline */}
           <p className="font-[family-name:var(--font-inter)] text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-10 animate-fade-in-up delay-200">
-            <strong className="font-medium text-white/90">Velocity Terrace</strong> is premium F1 party hospitality — front-row track views, open bar all day, live DJs and VIP after-party at Monaco, Singapore and Abu Dhabi GP 2026.
+            <strong className="font-medium text-white/90">Velocity Terrace</strong> is premium F1 party hospitality — front-row track views, open bar all day, live DJs and VIP after-party access for Singapore, Abu Dhabi and Monaco 2027.
           </p>
 
           {/* CTA */}
@@ -121,60 +112,6 @@ function HeroSection() {
         ]}
       />
     </section>
-  )
-}
-
-// Navigation Component
-function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-
-  return (
-    <nav aria-label="Main navigation" className="relative z-20 flex items-center justify-between px-6 lg:px-12 py-6">
-      {/* Logo */}
-      <a href="/" className="block" aria-label="Velocity Terrace home">
-        <VelocityLogo className="h-8 sm:h-10" />
-      </a>
-
-      {/* Desktop Nav */}
-      <div className="hidden md:flex items-center gap-8">
-        {['The Experience', 'The Races', 'Gallery', 'FAQ', 'Contact'].map((item) => (
-          <a
-            key={item}
-            href={`#${item.toLowerCase().replace(' ', '-').replace('the-', '')}`}
-            className="text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white transition-colors"
-          >
-            {item}
-          </a>
-        ))}
-      </div>
-
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden text-white p-2"
-        aria-label="Toggle menu"
-      >
-        {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-      </button>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="absolute top-full left-0 right-0 z-30 max-h-[min(70vh,28rem)] overflow-y-auto overscroll-contain bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-white/10 md:hidden">
-          <div className="flex flex-col p-6 gap-4">
-            {['The Experience', 'The Races', 'Gallery', 'FAQ', 'Contact'].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase().replace(' ', '-').replace('the-', '')}`}
-                onClick={() => setIsOpen(false)}
-                className="text-sm font-medium tracking-widest uppercase text-white/70 hover:text-white transition-colors py-2"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
-    </nav>
   )
 }
 
@@ -221,8 +158,8 @@ function WhatIsSection() {
 
   const stats = [
     { value: '11', unit: 'HRS', label: 'of VIP hospitality daily' },
-    { value: '2–3', unit: 'DAYS', label: 'Monaco 2 · Singapore & Abu Dhabi 3' },
-    { value: '3', unit: 'RACES', label: 'Monaco · Singapore · Abu Dhabi' },
+    { value: '2–3', unit: 'DAYS', label: 'Singapore & Abu Dhabi 3 · Monaco 2' },
+    { value: '3', unit: 'RACES', label: 'Singapore · Abu Dhabi · Monaco 2027' },
     { value: '1', unit: 'VIBE', label: 'Like nowhere else in F1' }
   ]
 
@@ -237,7 +174,7 @@ function WhatIsSection() {
               <span className="text-[#F90202]">Velocity Terrace?</span>
             </h2>
             <p className={`font-[family-name:var(--font-inter)] text-white/70 text-base sm:text-lg leading-relaxed mb-10 max-w-2xl ${isVisible ? 'animate-fade-in-up delay-75' : 'opacity-0'}`}>
-              Velocity Terrace is premium Formula 1 party hospitality at Monaco, Singapore, and Abu Dhabi — front-row track views, open bar all day, live DJs, and a VIP after-party. It is built for guests who want the race weekend to feel like a party, not a corporate lunch.
+              Velocity Terrace is premium Formula 1 party hospitality at Singapore, Abu Dhabi, and Monaco 2027 — front-row track views, open bar all day, live DJs, and a VIP after-party. It is built for guests who want the race weekend to feel like a party, not a corporate lunch.
             </p>
 
             <div className="space-y-6">
@@ -308,20 +245,10 @@ function RacesSection() {
   const races = [
     {
       number: '01',
-      name: 'MONACO',
-      location: 'Monte Carlo',
-      dates: 'SAT 6 – SUN 7 JUNE',
-      accentColor: '#F90202',
-      glowClass: 'card-glow-red',
-      image: MONACO.terrace,
-      href: '/monacoprogramme',
-      ctaLabel: 'View Programme',
-    },
-    {
-      number: '02',
       name: 'SINGAPORE',
       location: 'National Gallery · Marina Bay',
       dates: 'FRI 9 – SUN 11 OCT 2026',
+      year: '2026',
       accentColor: '#0EA5E9',
       glowClass: 'card-glow-blue',
       image: '/singapore/VT%20MBS%20view.png',
@@ -329,16 +256,29 @@ function RacesSection() {
       ctaLabel: 'View Race Details',
     },
     {
-      number: '03',
+      number: '02',
       name: 'ABU DHABI',
       location: 'Yas Marina',
       dates: 'Coming soon',
+      year: '2026',
       accentColor: '#C9A84C',
       glowClass: 'card-glow-gold',
       image: '/abudhabi.jpg',
       href: '#contact',
       ctaLabel: 'Coming Soon · Enquire',
       comingSoon: true,
+    },
+    {
+      number: '03',
+      name: 'MONACO',
+      location: 'Monte Carlo',
+      dates: '2027 dates TBC',
+      year: '2027',
+      accentColor: '#F90202',
+      glowClass: 'card-glow-red',
+      image: MONACO.terrace,
+      href: '/races/monaco',
+      ctaLabel: 'Enquire for 2027',
     },
   ]
 
@@ -391,7 +331,7 @@ function RacesSection() {
                     {race.name}
                   </h3>
                   <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-lg uppercase tracking-wider text-white/60 mb-3">
-                    Grand Prix 2026
+                    Grand Prix {race.year}
                   </p>
 
                   <p className="font-[family-name:var(--font-inter)] text-sm text-white/80 mb-1">{race.dates}</p>
@@ -614,16 +554,22 @@ function GallerySection() {
 
         <Tabs defaultValue="monaco" className="w-full">
           <div className="flex justify-center mb-10 px-1">
-            <TabsList className="bg-[#111111] border border-white/10 h-auto p-1 rounded-xl flex flex-wrap justify-center gap-1 w-full max-w-md sm:max-w-none sm:flex-nowrap">
-              <TabsTrigger value="monaco" className="data-[state=active]:bg-[#0A0A0A] data-[state=active]:text-white text-white/70 px-4 sm:px-5 py-2 rounded-lg text-sm flex-1 sm:flex-none min-w-[5.5rem]">
-                Monaco
-              </TabsTrigger>
-              <TabsTrigger value="singapore" className="data-[state=active]:bg-[#0A0A0A] data-[state=active]:text-white text-white/70 px-4 sm:px-5 py-2 rounded-lg text-sm flex-1 sm:flex-none min-w-[5.5rem]">
-                Singapore
-              </TabsTrigger>
-              <TabsTrigger value="abu-dhabi" className="data-[state=active]:bg-[#0A0A0A] data-[state=active]:text-white text-white/70 px-4 sm:px-5 py-2 rounded-lg text-sm flex-1 sm:flex-none min-w-[5.5rem]">
-                Abu Dhabi
-              </TabsTrigger>
+            <TabsList className="bg-transparent h-auto p-0 border-0 shadow-none flex flex-wrap justify-center gap-2 sm:gap-3">
+              {(
+                [
+                  { value: 'monaco', label: 'Monaco' },
+                  { value: 'singapore', label: 'Singapore' },
+                  { value: 'abu-dhabi', label: 'Abu Dhabi' },
+                ] as const
+              ).map(({ value, label }) => (
+                <TabsTrigger
+                  key={value}
+                  value={value}
+                  className="flex-none min-w-[5.5rem] sm:min-w-[6.5rem] px-4 sm:px-6 py-2.5 rounded-lg border border-white/15 bg-[#111111] text-white/55 font-[family-name:var(--font-barlow-condensed)] font-bold text-sm uppercase tracking-wider transition-all duration-200 hover:border-white/30 hover:text-white/80 data-[state=active]:border-[#F90202] data-[state=active]:bg-[#1a0808] data-[state=active]:text-white data-[state=active]:shadow-[0_0_20px_rgba(249,2,2,0.25)] data-[state=active]:ring-1 data-[state=active]:ring-[#F90202]/50"
+                >
+                  {label}
+                </TabsTrigger>
+              ))}
             </TabsList>
           </div>
 
@@ -883,7 +829,7 @@ function ComparisonSection() {
             />
             <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A]/95 via-[#0A0A0A]/85 to-[#F90202]/50" />
             <div className="relative p-8 lg:p-10">
-              <VelocityLogo className="h-9 sm:h-10 mb-8" />
+              <img src={MONACO.logo} alt="Velocity Terrace" className="h-9 sm:h-10 mb-8 w-auto object-contain" />
               <ul className="space-y-4">
                 {velocity.map((item) => (
                   <li key={item} className="flex gap-3 items-center text-white font-[family-name:var(--font-inter)] text-sm sm:text-base font-medium">
@@ -1035,7 +981,7 @@ function ContactSection() {
                 <div>
                   <p className="text-white/60 text-sm mb-3">Which races are you interested in?</p>
                   <div className="flex flex-wrap gap-4">
-                    {['Monaco', 'Singapore', 'Abu Dhabi'].map((race) => (
+                    {['Singapore', 'Abu Dhabi', 'Monaco 2027'].map((race) => (
                       <label key={race} className="flex items-center gap-2 cursor-pointer group">
                         <div className={`w-5 h-5 border ${formState.races.includes(race) ? 'bg-[#F90202] border-[#F90202]' : 'border-white/30'} rounded flex items-center justify-center transition-colors`}>
                           {formState.races.includes(race) && (
@@ -1088,70 +1034,6 @@ function ContactSection() {
   )
 }
 
-// Footer Component
-function Footer() {
-  return (
-    <footer className="relative bg-[#0A0A0A]">
-      {/* Red accent bar */}
-      <div className="h-1 bg-gradient-to-r from-[#F90202] via-[#FF3333] to-[#F90202]" />
-
-      {/* Big CTA strip */}
-      <div className="relative overflow-hidden border-b border-white/5">
-        <img
-          src={MONACO.terraceCrowd}
-          alt=""
-          aria-hidden
-          className="absolute inset-0 w-full h-full object-cover opacity-25"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]" />
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-16 text-center">
-          <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xs uppercase tracking-[0.3em] text-[#F90202] mb-2">
-            See you on the grid
-          </p>
-          <h3 className="font-[family-name:var(--font-barlow-condensed)] font-black text-3xl sm:text-4xl lg:text-5xl uppercase text-white leading-none">
-            Monaco · Singapore · Abu Dhabi
-          </h3>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10">
-        <div className="grid md:grid-cols-3 gap-8 items-center">
-          {/* Logo & Tagline */}
-          <div className="text-center md:text-left">
-            <VelocityLogo className="h-10 mb-3 mx-auto md:mx-0" />
-            <p className="font-[family-name:var(--font-inter)] text-white/50 text-sm">
-              The premium F1 party hospitality experience.
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div className="flex flex-wrap justify-center gap-6">
-            {['Experience', 'Races', 'Gallery', 'Contact'].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="text-xs font-medium tracking-widest uppercase text-white/60 hover:text-[#F90202] transition-colors"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-
-          {/* Copyright */}
-          <div className="flex flex-col items-center md:items-end gap-1 text-center md:text-right">
-            <p className="text-white/40 text-xs">
-              © 2026 Velocity Terrace. All rights reserved.
-            </p>
-            <p className="text-white/30 text-xs">
-              Built for the people who came to party.
-            </p>
-          </div>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
 function ScrollToContactOnLoad() {
   const searchParams = useSearchParams()
 
@@ -1190,7 +1072,7 @@ export default function HomePageClient() {
       <ComparisonSection />
       <FAQSection />
       <ContactSection />
-      <Footer />
+      <SiteFooter isHome />
     </main>
   )
 }

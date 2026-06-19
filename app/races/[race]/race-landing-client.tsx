@@ -4,6 +4,7 @@ import { MarqueeTicker } from '@/components/marquee-ticker'
 import { RACE_FAQS } from '@/lib/seo/faqs'
 import { CONTACT_EMAIL } from '@/lib/seo/site'
 import Link from 'next/link'
+import type { FormEvent, ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { ChevronRight, MapPin, Menu, Play, X } from 'lucide-react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
@@ -84,45 +85,49 @@ const RACES: Record<RaceSlug, RaceConfig> = {
     heroImage: MONACO_ASSETS.terrace,
     heroVideo: MONACO_ASSETS.heroVideo,
     heroPoster: MONACO_ASSETS.heroPoster,
-    packageDaysLabel: '2-day package (Sat–Sun)',
-    heroSubtext: 'Two days. World-class racing. Unmatched hospitality. Front-row views. Epic parties. Memories that last.',
+    heroEyebrow: 'Monaco Grand Prix 2027 · Enquiries now open',
+    heroHeadline: ['Monaco 2027,', 'secure yours.'],
+    packageDaysLabel: 'Saturday, Sunday & 2-day packages',
+    heroSubtext:
+      'Enquire now to secure your Velocity Terrace Monaco Grand Prix 2027 package. Choose Saturday, Sunday or the full 2-day weekend, with front-row Monte Carlo views, open bar, gourmet food, live DJs and VIP after-party access.',
     schedule: [
       {
-        dayLabel: 'Saturday',
+        dayLabel: 'Saturday · sample 2026 flow',
         items: [
-          { time: '11:00', title: 'Doors open · Welcome drinks' },
-          { time: '12:00', title: 'Track sessions + terrace energy', desc: 'Racing on screens, cars in front of you, and the bar stays open.' },
-          { time: '15:00', title: 'DJ set · Peak daytime vibe' },
-          { time: '18:00', title: 'After-party begins', desc: 'DJs, complimentary bar, and the night keeps going.' },
+          { time: '11:00', title: 'Doors open · welcome drinks' },
+          { time: '12:00', title: 'Track sessions + terrace energy', desc: 'Racing on screens, cars in front of you and the bar open from arrival.' },
+          { time: '15:00', title: 'DJ set · peak daytime vibe', desc: 'Music, food and the terrace atmosphere building through the afternoon.' },
+          { time: '18:00', title: 'VIP after-party begins', desc: 'DJs, complimentary bar and luxury snacks as the Monaco weekend moves into the evening.' },
         ],
       },
       {
-        dayLabel: 'Sunday',
+        dayLabel: 'Sunday · sample 2026 flow',
         items: [
-          { time: '11:00', title: 'Doors open · Warm-up' },
-          { time: '12:30', title: 'Build-up to race day', desc: 'Food and drinks flowing while the circuit comes alive.' },
-          { time: '15:00', title: 'Race', desc: 'Front-row views of start/finish. Every lap hits harder.' },
-          { time: '18:00', title: 'After-party · Monaco finale' },
+          { time: '11:00', title: 'Race day hospitality opens' },
+          { time: '12:30', title: 'Grand Prix build-up', desc: 'Food, drinks and screens across the terrace while Monte Carlo comes alive.' },
+          { time: '15:00', title: 'Monaco Grand Prix', desc: 'Front-row start/finish and grid views for the weekend’s headline moment.' },
+          { time: '18:00', title: 'Finale after-party', desc: 'Post-race celebrations with DJs, open bar and the full Velocity Terrace atmosphere.' },
         ],
       },
     ],
     inclusions: [
-      'Front-row start/finish & grid views',
-      'All-day open bar (champagne, spirits, wine, beer, soft drinks)',
+      'Saturday-only, Sunday-only and full 2-day Monaco 2027 packages',
+      'Front-row start/finish and grid views',
+      'All-day open bar: champagne, spirits, wine, beer and soft drinks',
       'Gourmet dining throughout the day',
-      'DJs + live entertainment',
-      'Comfortable seating + shaded areas',
-      'Live race coverage on screens throughout the terrace',
-      'Signature after-party access',
-      'Screens, atmosphere, and a curated guest crowd',
+      'DJs, live entertainment and signature after-party access',
+      'Comfortable seating, shaded areas and live race coverage',
+      'Curated guest list for groups, brands and private clients',
     ],
     whatToExpect: [
-      'A high-end party atmosphere with serious racing views (not corporate hospitality).',
-      'Open bar energy all day — champagne moments are kind of the point.',
-      'DJs and entertainment that feel like a show, not background music.',
-      'A crowd that’s here for the race and the afters.',
-      'A “see and be seen” social hub — expect a star-studded crowd and easy networking between sessions.',
+      'A live Monaco 2027 enquiry route for Saturday, Sunday or full-weekend packages.',
+      'A high-end party atmosphere with serious racing views, not standard corporate hospitality.',
+      'Open bar energy all day, with DJs and entertainment that feel like a show.',
+      'A social, “see and be seen” Monaco crowd built around the race and the afters.',
+      'A premium option for private groups, corporate hosting and HNW guests.',
     ],
+    whatToExpectIntro:
+      'Monaco 2027 packages are available to enquire for now. Secure Saturday, Sunday or the full 2-day weekend and our team will guide you through availability, group options and the best package for your guests.',
     media: [
       { kind: 'video', src: MONACO_ASSETS.heroVideo, poster: MONACO_ASSETS.heroPoster, alt: 'Monaco race weekend highlights reel' },
       { kind: 'image', src: '/monaco/page3-img10.jpg', alt: 'Monaco circuit views from the terrace' },
@@ -139,52 +144,40 @@ const RACES: Record<RaceSlug, RaceConfig> = {
     ],
     faqs: [
       {
-        q: 'Is Monaco a 2-day or 3-day package?',
-        a: 'Monaco is a 2-day package (Saturday and Sunday).',
+        q: 'Can I enquire for Velocity Terrace Monaco Grand Prix 2027?',
+        a: 'Yes. Monaco 2027 enquiries are open now. Submit your details to secure a Saturday, Sunday or full 2-day Velocity Terrace package and the team will follow up with availability and next steps.',
       },
       {
-        q: 'Is the schedule fixed?',
-        a: 'The outline is accurate, but final timings can shift with the official weekend timetable. We confirm final times closer to the event.',
+        q: 'Are Monaco 2027 dates confirmed?',
+        a: 'Official Monaco Grand Prix 2027 dates are not yet confirmed. Velocity Terrace will update registered enquiries as soon as the calendar and hospitality timetable are available.',
       },
       {
-        q: 'Where is Velocity Terrace located?',
-        a: 'Trackside with direct views over the start/finish straight and starting grid area.',
+        q: 'Can I book Monaco as individual day packages?',
+        a: 'Yes. Monaco 2027 can be enquired for as Saturday-only, Sunday-only, or as the full 2-day Saturday and Sunday package.',
       },
       {
-        q: 'What’s included in the package?',
-        a: 'Front-row trackside views, open bar, gourmet food, DJs/entertainment, and access to the after-party experience. Full inclusions can vary slightly by race — we confirm details in your booking.',
+        q: 'Where is Velocity Terrace located at the Monaco Grand Prix?',
+        a: 'Velocity Terrace is a trackside Monte Carlo hospitality experience with direct views over the start/finish straight and starting grid area.',
       },
       {
-        q: 'Is there seating and shade?',
-        a: 'Yes — there are comfortable seating areas and shaded spaces so you can relax between sessions without missing the atmosphere.',
+        q: 'What is usually included at Velocity Terrace Monaco?',
+        a: 'Typical inclusions include front-row trackside views, open bar, gourmet food, DJs and entertainment, comfortable seating and after-party access. The weekend lineup shown is based on a 2026 sample and final 2027 timings follow the official timetable.',
       },
       {
-        q: 'Will there be screens / live race coverage?',
-        a: 'Yes — live race coverage is shown on strategically placed screens so you can stay across every moment.',
+        q: 'Can I enquire for a group or corporate booking?',
+        a: 'Yes. Monaco is suited to private groups, corporate hosting and high-net-worth guests. Include your estimated group size in the enquiry form so we can advise on options.',
       },
       {
-        q: 'Is Velocity Terrace a celebrity hotspot?',
-        a: 'It’s known as a “see and be seen” social hub during Monaco. Previous years have welcomed notable guests from fashion, sport, and entertainment — the crowd is a big part of the energy.',
+        q: 'What happens after I enquire?',
+        a: 'The team will contact you to discuss availability, whether you want Saturday, Sunday or the full weekend, your group size and the best package options for Monaco 2027.',
       },
       {
         q: 'Is there a dress code?',
-        a: 'Smart and comfortable. Think: luxury day party. Avoid anything you wouldn’t want in photos.',
+        a: 'Expect a smart luxury day-party dress code. Final guidance is shared with confirmed guests before the event.',
       },
       {
-        q: 'Can we book as a group?',
-        a: 'Yes — tell us your group size in the enquiry and we’ll come back with the best options.',
-      },
-      {
-        q: 'Do you cater for dietary requirements?',
-        a: 'Yes — share any dietary needs in your enquiry and we’ll accommodate where possible.',
-      },
-      {
-        q: 'Is it seated?',
-        a: 'It’s designed as a social, high-energy experience (not a formal sit-down hospitality). There are spaces to relax, but the vibe is “party with unreal views”.',
-      },
-      {
-        q: 'What happens if it rains?',
-        a: 'The experience goes ahead. In rare cases of timetable changes, we’ll communicate any updates as early as possible.',
+        q: 'Will the 2026 programme page still exist?',
+        a: 'The previous programme remains available internally as a template, but the public Monaco page now focuses on 2027 enquiries.',
       },
     ],
   },
@@ -524,11 +517,21 @@ function ScheduleDayCard({
   )
 }
 
-function EnquirySection({ accent, raceName }: { accent: string; raceName: string }) {
+function EnquirySection({
+  accent,
+  raceName,
+  heading = 'Ready to Lock It In?',
+  intro = 'Tell us your group size and what you’re after. Places are limited.',
+}: {
+  accent: string
+  raceName: string
+  heading?: ReactNode
+  intro?: string
+}) {
   const [formState, setFormState] = useState({ name: '', email: '', phone: '', message: '' })
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     const subject = encodeURIComponent(`Velocity Terrace ${raceName} Enquiry`)
     const body = encodeURIComponent(
@@ -558,10 +561,10 @@ function EnquirySection({ accent, raceName }: { accent: string; raceName: string
             Enquire
           </p>
           <h2 className="font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl lg:text-7xl uppercase tracking-tight text-white mb-4">
-            Ready to <span style={{ color: accent }}>Lock It In?</span>
+            {heading}
           </h2>
           <p className="font-[family-name:var(--font-inter)] text-white/70 text-lg max-w-xl mx-auto">
-            Tell us your group size and what you’re after. Places are limited.
+            {intro}
           </p>
         </div>
 
@@ -784,7 +787,9 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
               Plan your escape
             </h2>
             <p className="font-[family-name:var(--font-inter)] text-white/60 max-w-2xl mx-auto">
-              Timings are a guide (subject to the official timetable). The vibe is guaranteed.
+              {cfg.slug === 'monaco'
+                ? 'A sample weekend flow based on the 2026 Velocity Terrace programme. Final 2027 timings follow the official Monaco Grand Prix timetable.'
+                : 'Timings are a guide (subject to the official timetable). The vibe is guaranteed.'}
             </p>
           </div>
 
@@ -1075,7 +1080,26 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
         </div>
       </section>
 
-      <EnquirySection accent={cfg.accent} raceName={cfg.name} />
+      <EnquirySection
+        accent={cfg.accent}
+        raceName={cfg.slug === 'monaco' ? 'Monaco 2027' : cfg.name}
+        heading={
+          cfg.slug === 'monaco' ? (
+            <>
+              Join the <span style={{ color: cfg.accent }}>2027 List.</span>
+            </>
+          ) : (
+            <>
+              Ready to <span style={{ color: cfg.accent }}>Lock It In?</span>
+            </>
+          )
+        }
+        intro={
+          cfg.slug === 'monaco'
+            ? 'Enquire now to secure your Monaco Grand Prix 2027 package. Tell us whether you want Saturday, Sunday or the full 2-day weekend, plus your group size.'
+            : undefined
+        }
+      />
 
       <footer className="relative bg-[#0A0A0A] border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid gap-8 md:grid-cols-3 items-center">

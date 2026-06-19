@@ -29,10 +29,6 @@ export default async function RacePage({
   if (!RACE_SLUGS.includes(rawRace as RaceSlug)) notFound()
   const race = rawRace as RaceSlug
 
-  if (race === 'monaco') {
-    redirect('/monacoprogramme')
-  }
-
   if (race === 'abu-dhabi') {
     redirect('/?section=contact')
   }

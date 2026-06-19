@@ -16,6 +16,7 @@ export const metadata: Metadata = buildPageMetadata({
   path: '/monacoprogramme/alec',
   ogImage: '/monaco/10-2-alec-monopoly-djing37.jpg',
   keywords: ['Alec Monopoly Monaco', 'Velocity Terrace Alec Monopoly', 'Monaco GP entertainment'],
+  noIndex: true,
 })
 
 const navItems = [
