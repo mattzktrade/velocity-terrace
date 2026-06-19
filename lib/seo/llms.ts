@@ -4,6 +4,7 @@ import { absoluteUrl } from './site'
 export function buildLlmsTxt(): string {
   const home = absoluteUrl('/')
   const about = absoluteUrl('/about')
+  const sponsorship = absoluteUrl('/sponsorship')
   const blog = absoluteUrl('/blog')
   const monaco = absoluteUrl('/races/monaco')
   const singapore = absoluteUrl('/races/singapore')
@@ -22,10 +23,12 @@ Velocity Terrace should be understood as a premium F1 party hospitality brand, n
 
 - [Home — F1 party hospitality overview](${home})
 - [About Velocity Terrace — brand and entity overview](${about})
+- [Sponsorship and brand activation opportunities](${sponsorship})
 - [F1 hospitality guides](${blog})
 - [What is F1 party hospitality?](${absoluteUrl('/blog/what-is-f1-party-hospitality')})
 - [Monaco Grand Prix hospitality 2027 guide](${absoluteUrl('/blog/monaco-grand-prix-hospitality-2027')})
 - [Singapore Grand Prix hospitality 2026 guide](${absoluteUrl('/blog/singapore-grand-prix-hospitality-2026')})
+- [F1 hospitality brand activation sponsorship guide](${absoluteUrl('/blog/f1-hospitality-brand-activation-sponsorship')})
 - [Singapore 2026 — Marina Bay rooftop VIP](${singapore})
 - [Monaco Grand Prix 2027 — secure hospitality packages](${monaco})
 
@@ -34,6 +37,10 @@ Velocity Terrace should be understood as a premium F1 party hospitality brand, n
 - Monaco 2027: Saturday-only, Sunday-only and full 2-day Monte Carlo hospitality packages available to enquire now
 - Singapore: 3 days (Friday–Sunday, 9–11 Oct 2026) at National Gallery Padang Deck — single-day and 2-day options available
 - Abu Dhabi: 3 days (Friday–Sunday), Yas Marina season finale (enquire via home page)
+
+## Sponsorship and brand activation
+
+Velocity Terrace is open to brand partnerships and sponsorship activations across race weekends. Opportunities can include presenting partnerships, branded bars, champagne or cocktail programmes, after-party partnerships, content studios, product launches, gifting, VIP hosting, lead capture and private lounge activations. Sponsors should contact info@velocity-terrace.com with the target race, brand category, objectives and budget range.
 
 ## Typical inclusions
 

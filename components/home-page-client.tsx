@@ -693,6 +693,87 @@ function FAQSection() {
   )
 }
 
+function SponsorshipSection() {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true)
+      },
+      { threshold: 0.1 },
+    )
+
+    if (sectionRef.current) observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <section ref={sectionRef} className="relative overflow-hidden bg-[#080808] px-6 py-16 sm:py-24 lg:px-12 lg:py-32">
+      <div className="absolute inset-0">
+        <img
+          src={MONACO.terraceCrowd}
+          alt=""
+          aria-hidden
+          className="h-full w-full object-cover opacity-20"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/88 to-[#0A0A0A]/70" />
+      </div>
+      <div className="absolute -right-32 top-20 h-96 w-96 rounded-full bg-[#F90202]/15 blur-3xl" />
+      <div className="absolute -left-32 bottom-10 h-96 w-96 rounded-full bg-[#C9A84C]/10 blur-3xl" />
+
+      <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-12 lg:items-center">
+        <div className={`lg:col-span-7 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+          <p className="mb-4 font-[family-name:var(--font-barlow-condensed)] text-sm font-bold uppercase tracking-[0.3em] text-[#C9A84C]">
+            Sponsorship & brand activation
+          </p>
+          <h2 className="font-[family-name:var(--font-barlow-condensed)] text-4xl font-black uppercase leading-[0.9] tracking-tight text-white sm:text-6xl lg:text-7xl">
+            Put your brand inside the Grand Prix weekend.
+          </h2>
+          <p className="mt-6 max-w-2xl font-[family-name:var(--font-inter)] text-base leading-relaxed text-white/68 sm:text-lg">
+            We partner with brands that want premium F1 hospitality activations: sponsored bars, after-parties, product launches, content studios, VIP hosting, gifting and relationship-building moments at Velocity Terrace events.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/sponsorship"
+              className="inline-flex items-center justify-center gap-2 rounded bg-[#F90202] px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-[#FF1A1A]"
+            >
+              Explore partnerships <ChevronRight className="h-4 w-4" />
+            </Link>
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center gap-2 rounded border border-white/15 px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white/80 transition hover:border-white/35 hover:text-white"
+            >
+              Speak to the team
+            </a>
+          </div>
+        </div>
+
+        <div className={`lg:col-span-5 ${isVisible ? 'animate-fade-in-up delay-150' : 'opacity-0'}`}>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+            {[
+              'Presenting partner',
+              'Signature bar or champagne partner',
+              'After-party partner',
+              'Creator content studio',
+              'Product launch or gifting',
+              'VIP client hosting',
+            ].map((item) => (
+              <div key={item} className="rounded-xl border border-white/10 bg-[#111111]/85 p-4 backdrop-blur">
+                <p className="font-[family-name:var(--font-barlow-condensed)] text-xl font-black uppercase text-white">
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // Quote Section
 function QuoteSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -1070,6 +1151,7 @@ export default function HomePageClient() {
       <GallerySection />
       <QuoteSection />
       <ComparisonSection />
+      <SponsorshipSection />
       <FAQSection />
       <ContactSection />
       <SiteFooter isHome />

@@ -11,6 +11,7 @@ export function getSitemapEntries(): SitemapEntry[] {
   const entries: SitemapEntry[] = [
     { url: absoluteUrl('/'), lastModified, changeFrequency: 'weekly', priority: 1 },
     { url: absoluteUrl('/about'), lastModified, changeFrequency: 'monthly', priority: 0.9 },
+    { url: absoluteUrl('/sponsorship'), lastModified, changeFrequency: 'monthly', priority: 0.9 },
     { url: absoluteUrl('/blog'), lastModified, changeFrequency: 'weekly', priority: 0.85 },
   ]
 

@@ -34,6 +34,7 @@ export function SiteHeader({
   const navItems = [
     { label: 'About', href: '/about' },
     { label: 'Blog', href: '/blog' },
+    { label: 'Partners', href: '/sponsorship' },
     { label: 'Contact', href: isHome ? '#contact' : '/#contact' },
   ]
   const racesHref = isHome ? '#races' : '/#races'
@@ -152,6 +153,7 @@ export function SiteFooter({ isHome = false }: { isHome?: boolean }) {
     { label: 'Races', href: isHome ? '#races' : '/#races' },
     { label: 'About', href: '/about' },
     { label: 'Blog', href: '/blog' },
+    { label: 'Partners', href: '/sponsorship' },
     { label: 'Contact', href: isHome ? '#contact' : '/#contact' },
   ]
 
