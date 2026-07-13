@@ -4,19 +4,19 @@ export type FaqItem = { q: string; a: string }
 export const HOME_FAQS: FaqItem[] = [
   {
     q: 'What is Velocity Terrace?',
-    a: 'Velocity Terrace is a premium Formula 1 party hospitality experience at the Monaco, Singapore, and Abu Dhabi Grands Prix. You get front-row track views, an all-day open bar, gourmet food, live DJs, and an exclusive after-party — designed to feel like a high-end race weekend party, not corporate hospitality.',
+    a: 'Velocity Terrace is a premium Formula 1 party hospitality experience at the Monaco, Singapore, and Abu Dhabi Grands Prix. You get front-row track views, an all-day open bar, gourmet food, live DJs, and an exclusive after-party designed to feel like a high-end race weekend party, not corporate hospitality.',
   },
   {
     q: 'What is included in the Velocity Terrace F1 hospitality package?',
-    a: 'Packages include trackside views over the start/finish straight, all-day open bar (champagne, premium spirits, wine, beer), gourmet dining, live DJs and entertainment, and a VIP after-party. Exact timings and inclusions vary slightly by race — see each race page for full details.',
+    a: 'Packages include trackside views over the start/finish straight, all-day open bar (champagne, premium spirits, wine, beer), gourmet dining, live DJs and entertainment, and a VIP after-party. Exact timings and inclusions vary slightly by race. See each race page for full details.',
   },
   {
     q: 'How many days is Velocity Terrace at each Grand Prix?',
-    a: 'Monaco 2027 is available as Saturday-only, Sunday-only or a full 2-day Saturday and Sunday package. Singapore and Abu Dhabi are planned as 3-day experiences from Friday through Sunday.',
+    a: 'Monaco 2027 is available as Saturday-only, Sunday-only or a full 2-day Saturday and Sunday package. Singapore (9–11 Oct 2026) offers 3-day and flexible day options. Abu Dhabi (4–6 Dec 2026) can be booked as 3-day, Saturday–Sunday, or Friday / Saturday / Sunday only.',
   },
   {
     q: 'Which F1 races does Velocity Terrace host?',
-    a: 'Velocity Terrace focuses on three Grand Prix destinations: Monaco 2027 in Monte Carlo, Singapore 2026 at Marina Bay, and Abu Dhabi at Yas Marina.',
+    a: 'Velocity Terrace focuses on three Grand Prix destinations: Monaco 2027 in Monte Carlo, Singapore 2026 at Marina Bay, and Abu Dhabi 2026 at Yas Marina.',
   },
   {
     q: 'How is Velocity Terrace different from traditional F1 hospitality?',
@@ -58,7 +58,7 @@ export const RACE_FAQS: Record<string, FaqItem[]> = {
   singapore: [
     {
       q: 'Is Velocity Terrace Singapore a 3-day experience?',
-      a: 'Yes — the full experience runs Friday through Sunday, 9–11 October 2026. Single-day and 2-day (Saturday–Sunday) packages are also available. Enquire for details.',
+      a: 'Yes. The full experience runs Friday through Sunday, 9–11 October 2026. Single-day and 2-day (Saturday–Sunday) packages are also available. Enquire for details.',
     },
     {
       q: 'Where is Velocity Terrace Singapore located?',
@@ -74,33 +74,49 @@ export const RACE_FAQS: Record<string, FaqItem[]> = {
     },
     {
       q: 'What makes Velocity Terrace Singapore different from other F1 hospitality?',
-      a: 'A rare premium rooftop hospitality product outside the Paddock Club — Marina Bay skyline views, world-class catering, open bar, live DJs and an exclusive 150-guest capacity venue designed for corporate and HNW entertaining.',
+      a: 'A rare premium rooftop hospitality product outside the Paddock Club, with Marina Bay skyline views, world-class catering, open bar, live DJs and an exclusive 150-guest capacity venue designed for corporate and HNW entertaining.',
     },
     {
       q: 'Is arrival and departure straightforward at the National Gallery?',
-      a: 'Yes — the National Gallery sits outside the primary road closure zones, ensuring a smooth, hassle-free journey so you can focus on the experience.',
+      a: 'Yes. The National Gallery sits outside the primary road closure zones, ensuring a smooth, hassle-free journey so you can focus on the experience.',
     },
     {
       q: 'Who is Velocity Terrace Singapore designed for?',
-      a: 'C-suite executives, high-net-worth individuals, corporate entertaining and global brands — particularly finance, tech and lifestyle clients looking for a premium social hosting environment.',
+      a: 'C-suite executives, high-net-worth individuals, corporate entertaining and global brands, particularly finance, tech and lifestyle clients looking for a premium social hosting environment.',
     },
     {
       q: 'Can we book Velocity Terrace Singapore as a group?',
-      a: 'Yes — tell us your group size in the enquiry and we will come back with the best options.',
+      a: 'Yes. Tell us your group size in the enquiry and we will come back with the best options.',
     },
     {
       q: 'Is there a dress code at Velocity Terrace Singapore?',
-      a: 'Smart and polished. Think luxury rooftop hospitality — comfortable, confident, and ready to be photographed.',
+      a: 'Smart and polished. Think luxury rooftop hospitality: comfortable, confident, and ready to be photographed.',
     },
   ],
   'abu-dhabi': [
     {
-      q: 'Is Velocity Terrace Abu Dhabi a 3-day package?',
-      a: 'Yes. Abu Dhabi is a 3-day Velocity Terrace package (Friday–Sunday) for the season finale at Yas Marina Circuit.',
+      q: 'Can I book Abu Dhabi as individual days?',
+      a: 'Yes. Abu Dhabi can be booked as a full 3-day Friday–Sunday package, a Saturday–Sunday package, or as Friday-only, Saturday-only or Sunday-only.',
     },
     {
-      q: 'Why book Velocity Terrace for the Abu Dhabi Grand Prix?',
-      a: 'The season finale weekend pairs front-row Yas Marina hospitality with all-day open bar, live entertainment, and after-party access across three days.',
+      q: 'What views do you get from Velocity Terrace Abu Dhabi?',
+      a: 'The trackside terrace offers sweeping views across Turns 8, 9, 10 and 11, ideal for pre-race flyovers and the post-race fireworks display.',
+    },
+    {
+      q: 'What is included in Abu Dhabi hospitality?',
+      a: 'Curated gourmet menus, a premium open bar with free-flowing beverages, live DJs and entertainment, racing simulators, VIP terrace access, and general admission to Yasalam after-race concerts on your booked day(s).',
+    },
+    {
+      q: 'Is there an age restriction?',
+      a: 'Velocity Terrace Abu Dhabi is for guests aged 16 and over.',
+    },
+    {
+      q: 'Are Yasalam concerts included?',
+      a: 'Yes. Packages include general admission to Yasalam after-race concerts for the day(s) you book.',
+    },
+    {
+      q: 'Can we book a group?',
+      a: 'Yes. Include your group size in the enquiry and the team will come back with availability and package options.',
     },
   ],
 }
@@ -108,7 +124,7 @@ export const RACE_FAQS: Record<string, FaqItem[]> = {
 export const MONACO_PROGRAMME_FAQS: FaqItem[] = [
   {
     q: 'What is the Velocity Terrace Monaco Grand Prix programme?',
-    a: 'The Monaco programme is your guest guide for the 2026 Monaco GP weekend at Velocity Terrace — schedule, food and drinks service times, Alec Monopoly DJ sets, and venue details for the 2-day hospitality experience.',
+    a: 'The Monaco programme is your guest guide for the 2026 Monaco GP weekend at Velocity Terrace, covering schedule, food and drinks service times, Alec Monopoly DJ sets, and venue details for the 2-day hospitality experience.',
   },
   {
     q: 'How many days is Velocity Terrace at Monaco?',

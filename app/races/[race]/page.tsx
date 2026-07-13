@@ -1,4 +1,4 @@
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { CrawlableFaqBlock } from '@/components/seo/crawlable-faq'
 import { RaceJsonLd } from '@/components/seo/json-ld'
 import { RACE_FAQS } from '@/lib/seo/faqs'
@@ -28,10 +28,6 @@ export default async function RacePage({
   const { race: rawRace } = await params
   if (!RACE_SLUGS.includes(rawRace as RaceSlug)) notFound()
   const race = rawRace as RaceSlug
-
-  if (race === 'abu-dhabi') {
-    redirect('/?section=contact')
-  }
 
   const faqs = RACE_FAQS[race] ?? []
 

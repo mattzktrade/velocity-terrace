@@ -19,7 +19,7 @@ function VelocityLogo({ className = 'h-9 sm:h-11' }: { className?: string }) {
 
 const raceLinks = [
   { label: 'Singapore', meta: '2026 · Marina Bay', href: '/races/singapore', accent: '#0EA5E9' },
-  { label: 'Abu Dhabi', meta: 'Yas Marina', href: '/races/abu-dhabi', accent: '#C9A84C' },
+  { label: 'Abu Dhabi', meta: 'Yas Marina · Dec 2026', href: '/races/abu-dhabi', accent: '#C9A84C' },
   { label: 'Monaco 2027', meta: 'Saturday · Sunday · 2-day', href: '/races/monaco', accent: '#F90202' },
 ]
 

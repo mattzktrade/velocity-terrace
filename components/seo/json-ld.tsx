@@ -44,7 +44,7 @@ const ORGANIZATION = {
   logo: absoluteUrl('/monaco/velocity%20logo%20white.png'),
   email: CONTACT_EMAIL,
   description:
-    'Premium Formula 1 party hospitality at Singapore, Abu Dhabi, and Monaco 2027 — front-row views, open bar, live DJs, and VIP after-parties.',
+    'Premium Formula 1 party hospitality at Singapore, Abu Dhabi, and Monaco 2027 with front-row views, open bar, live DJs, and VIP after-parties.',
   sameAs: getSocialProfileUrls(),
 }
 
@@ -133,13 +133,13 @@ const RACE_EVENTS: Record<
   }
 > = {
   monaco: {
-    name: 'Velocity Terrace — Monaco Grand Prix 2027',
+    name: 'Velocity Terrace: Monaco Grand Prix 2027',
     location: 'Monte Carlo, Monaco',
     description:
       '2027 Monaco Grand Prix hospitality packages with Saturday-only, Sunday-only and full 2-day options, front-row views, open bar, DJs and VIP after-party access.',
   },
   singapore: {
-    name: 'Velocity Terrace — Singapore 2026',
+    name: 'Velocity Terrace: Singapore 2026',
     startDate: '2026-10-09',
     endDate: '2026-10-11',
     location: 'National Gallery Singapore, Marina Bay',
@@ -147,17 +147,17 @@ const RACE_EVENTS: Record<
       'Exclusive VIP rooftop hospitality on the Padang Deck with Marina Bay skyline views, world-class catering, open bar, live entertainment and 150-guest capacity.',
   },
   'abu-dhabi': {
-    name: 'Velocity Terrace — Abu Dhabi Grand Prix 2026',
+    name: 'Velocity Terrace: Abu Dhabi Grand Prix 2026',
     startDate: '2026-12-04',
     endDate: '2026-12-06',
     location: 'Yas Marina Circuit, Abu Dhabi',
     description:
-      '3-day season finale F1 hospitality at Yas Marina with front-row views, open bar, and exclusive after-party.',
+      'Season finale hospitality at Yas Marina with Turns 8–11 views, gourmet dining, premium open bar, live entertainment, racing simulators and Yasalam concert access. Book 3-day, Sat–Sun, or individual days.',
   },
 }
 
 const MONACO_PROGRAMME_EVENT = {
-  name: 'Velocity Terrace — Monaco Grand Prix 2026',
+  name: 'Velocity Terrace: Monaco Grand Prix 2026',
   startDate: '2026-06-06',
   endDate: '2026-06-07',
   location: 'Monte Carlo, Monaco',
@@ -247,7 +247,13 @@ export function RaceJsonLd({ slug }: { slug: RaceSlug }) {
       availability: 'https://schema.org/LimitedAvailability',
       validFrom: '2026-01-01',
     },
-    image: absoluteUrl(slug === 'monaco' ? '/monaco/page4-img15.jpg' : slug === 'singapore' ? '/singapore/VT%20MBS%20view.png' : '/abudhabi.jpg'),
+    image: absoluteUrl(
+      slug === 'monaco'
+        ? '/monaco/page4-img15.jpg'
+        : slug === 'singapore'
+          ? '/singapore/VT%20MBS%20view.png'
+          : '/abu-dhabi/web/og.jpg',
+    ),
   }
 
   const webPage = {

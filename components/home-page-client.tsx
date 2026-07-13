@@ -73,7 +73,7 @@ function HeroSection() {
 
           {/* Sub-headline */}
           <p className="font-[family-name:var(--font-inter)] text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-10 animate-fade-in-up delay-200">
-            <strong className="font-medium text-white/90">Velocity Terrace</strong> is premium F1 party hospitality — front-row track views, open bar all day, live DJs and VIP after-party access for Singapore, Abu Dhabi and Monaco 2027.
+            <strong className="font-medium text-white/90">Velocity Terrace</strong> is premium F1 party hospitality with front-row track views, open bar all day, live DJs and VIP after-party access for Singapore, Abu Dhabi and Monaco 2027.
           </p>
 
           {/* CTA */}
@@ -93,7 +93,6 @@ function HeroSection() {
       <div className="relative z-10 pb-8 text-center animate-fade-in-up delay-500">
         <div className="inline-flex flex-col items-center gap-2 text-white/50">
           <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-white/50 to-transparent" />
         </div>
       </div>
 
@@ -148,7 +147,7 @@ function WhatIsSection() {
     },
     {
       title: 'A LIVE SHOW, NOT JUST LUNCH',
-      description: 'International DJs, live entertainment and a high-energy atmosphere — built for the weekend, not a formal sit-down lunch.',
+      description: 'International DJs, live entertainment and a high-energy atmosphere built for the weekend, not a formal sit-down lunch.',
     },
     {
       title: "THE NIGHT DOESN'T END",
@@ -164,7 +163,7 @@ function WhatIsSection() {
   ]
 
   return (
-    <section id="experience" ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 bg-[#0A0A0A] racing-stripes overflow-hidden">
+    <section id="experience" ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 bg-[#0A0A0A] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
           {/* Left Column - Features */}
@@ -174,25 +173,22 @@ function WhatIsSection() {
               <span className="text-[#F90202]">Velocity Terrace?</span>
             </h2>
             <p className={`font-[family-name:var(--font-inter)] text-white/70 text-base sm:text-lg leading-relaxed mb-10 max-w-2xl ${isVisible ? 'animate-fade-in-up delay-75' : 'opacity-0'}`}>
-              Velocity Terrace is premium Formula 1 party hospitality at Singapore, Abu Dhabi, and Monaco 2027 — front-row track views, open bar all day, live DJs, and a VIP after-party. It is built for guests who want the race weekend to feel like a party, not a corporate lunch.
+              Velocity Terrace is premium Formula 1 party hospitality at Singapore, Abu Dhabi, and Monaco 2027: front-row track views, open bar all day, live DJs, and a VIP after-party. It is built for guests who want the race weekend to feel like a party, not a corporate lunch.
             </p>
 
             <div className="space-y-6">
               {features.map((feature, index) => (
                 <div
                   key={feature.title}
-                  className={`flex gap-6 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+                  className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
                   style={{ animationDelay: `${(index + 1) * 0.1}s` }}
                 >
-                  <div className="w-1 bg-[#F90202] flex-shrink-0" />
-                  <div>
-                    <h3 className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xl sm:text-2xl uppercase tracking-wide text-white mb-2">
-                      {feature.title}
-                    </h3>
-                    <p className="font-[family-name:var(--font-inter)] text-white/60 text-sm sm:text-base leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </div>
+                  <h3 className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xl sm:text-2xl uppercase tracking-wide text-white mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="font-[family-name:var(--font-inter)] text-white/60 text-sm sm:text-base leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
               ))}
             </div>
@@ -258,15 +254,14 @@ function RacesSection() {
     {
       number: '02',
       name: 'ABU DHABI',
-      location: 'Yas Marina',
-      dates: 'Coming soon',
+      location: 'Yas Marina · Turns 8–11',
+      dates: 'FRI 4 – SUN 6 DEC 2026',
       year: '2026',
       accentColor: '#C9A84C',
       glowClass: 'card-glow-gold',
-      image: '/abudhabi.jpg',
-      href: '#contact',
-      ctaLabel: 'Coming Soon · Enquire',
-      comingSoon: true,
+      image: '/abu-dhabi/web/hero-track.jpg',
+      href: '/races/abu-dhabi',
+      ctaLabel: 'View Race Details',
     },
     {
       number: '03',
@@ -391,7 +386,7 @@ function BentoSection() {
           Nothing Held Back.
         </p>
 
-        {/* Bento Grid — image-led cards */}
+        {/* Bento Grid: image-led cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           {[
             {
@@ -430,7 +425,7 @@ function BentoSection() {
               image: MONACO.terraceCrowd,
               alt: 'Terrace views over the circuit',
               title: 'Front-Row Views',
-              desc: 'Start/finish straight & big screens — you feel every lap',
+              desc: 'Start/finish straight and big screens. You feel every lap.',
               titleSize: 'text-xl',
               delay: 'delay-500',
             },
@@ -440,7 +435,7 @@ function BentoSection() {
               image: MONACO.party,
               alt: 'VIP after-party at Velocity Terrace',
               title: 'VIP After Party',
-              desc: "6PM–11PM — the night doesn't end when the chequered flag drops",
+              desc: "6PM–11PM. The night doesn't end when the chequered flag drops.",
               titleSize: 'text-xl',
               delay: 'delay-600',
             },
@@ -503,7 +498,7 @@ function GallerySection() {
     return () => observer.disconnect()
   }, [])
 
-  /** Images already on homepage (hero, races, bento, quote, contact, footer) — excluded from gallery */
+  /** Images already on homepage (hero, races, bento, quote, contact, footer). Excluded from gallery. */
   const usedOnHomepage = new Set<string>([
     MONACO.heroPoster,
     MONACO.terrace,
@@ -540,6 +535,21 @@ function GallerySection() {
     { src: SINGAPORE.image2, aspect: 'aspect-[4/3]', alt: 'Velocity Terrace Singapore hospitality experience' },
   ]
 
+  const abuDhabiGallery: { src: string; aspect: string; alt: string }[] = [
+    { src: '/abu-dhabi/web/hero-track.jpg', aspect: 'aspect-[4/3]', alt: 'Trackside views from Velocity Terrace Abu Dhabi' },
+    { src: '/abu-dhabi/web/lounge-marina.jpg', aspect: 'aspect-[4/5]', alt: 'VIP lounge overlooking Yas Marina' },
+    { src: '/abu-dhabi/web/live-sax-dj.jpg', aspect: 'aspect-[4/5]', alt: 'Live DJ and saxophonist at Velocity Terrace' },
+    { src: '/abu-dhabi/web/gourmet-station.jpg', aspect: 'aspect-[4/3]', alt: 'Gourmet dining at Velocity Terrace Abu Dhabi' },
+    { src: '/abu-dhabi/web/champagne-service.jpg', aspect: 'aspect-[4/5]', alt: 'Champagne service on the terrace' },
+    { src: '/abu-dhabi/web/night-qualifying.jpg', aspect: 'aspect-[4/3]', alt: 'Night hospitality with race on the big screen' },
+    { src: '/abu-dhabi/web/racing-simulators.jpg', aspect: 'aspect-[4/5]', alt: 'Racing simulators at Velocity Terrace Abu Dhabi' },
+    { src: '/abu-dhabi/web/dancers-night.jpg', aspect: 'aspect-[4/3]', alt: 'Live dancers at Velocity Terrace Abu Dhabi' },
+    { src: '/abu-dhabi/web/celebration.jpg', aspect: 'aspect-[4/5]', alt: 'Champagne celebration at Abu Dhabi' },
+    { src: '/abu-dhabi/web/yas-hotel-view.jpg', aspect: 'aspect-[4/3]', alt: 'Guests with W Abu Dhabi Yas Island views' },
+    { src: '/abu-dhabi/web/mixologist.jpg', aspect: 'aspect-[4/5]', alt: 'Mixologist at Velocity Terrace Abu Dhabi' },
+    { src: '/abu-dhabi/web/lifestyle-guests.jpg', aspect: 'aspect-[4/3]', alt: 'Guests enjoying Velocity Terrace Abu Dhabi' },
+  ]
+
   return (
     <section id="gallery" ref={sectionRef} className="relative py-16 sm:py-24 lg:py-32 bg-[#080808]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -548,7 +558,7 @@ function GallerySection() {
             The Velocity Terrace Experience
           </h2>
           <p className="font-[family-name:var(--font-inter)] text-white/50 text-sm uppercase tracking-widest">
-            Select a race — the same energy, different cities
+            Select a race. Same energy, different cities.
           </p>
         </div>
 
@@ -614,24 +624,22 @@ function GallerySection() {
           </TabsContent>
 
           <TabsContent value="abu-dhabi">
-            <div
-              className={`flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-dashed border-white/15 bg-[#111111] px-8 py-16 text-center ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-            >
-              <p className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xs uppercase tracking-[0.3em] text-[#C9A84C] mb-4">
-                Abu Dhabi
-              </p>
-              <h3 className="font-[family-name:var(--font-barlow-condensed)] font-black text-3xl sm:text-4xl uppercase tracking-tight text-white mb-3">
-                Images coming soon
-              </h3>
-              <p className="max-w-md font-[family-name:var(--font-inter)] text-sm leading-relaxed text-white/60">
-                Our Abu Dhabi season finale gallery is on the way. Enquire now for early details on packages and availability.
-              </p>
-              <a
-                href="#contact"
-                className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-[#C9A84C] text-[#0A0A0A] font-semibold text-xs uppercase tracking-wider rounded hover:brightness-110 transition-all"
-              >
-                Enquire for details <ChevronRight className="w-4 h-4" />
-              </a>
+            <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+              {abuDhabiGallery.map((img, index) => (
+                <div
+                  key={img.src}
+                  className={`relative break-inside-avoid overflow-hidden rounded-lg group ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+                  style={{ animationDelay: `${index * 0.04}s` }}
+                >
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className={`w-full ${img.aspect} object-cover group-hover:brightness-110 group-hover:scale-[1.02] transition-all duration-300`}
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#C9A84C] rounded-lg transition-colors duration-300 pointer-events-none" />
+                </div>
+              ))}
             </div>
           </TabsContent>
         </Tabs>
@@ -818,8 +826,7 @@ function QuoteSection() {
           <p className="font-[family-name:var(--font-barlow-condensed)] font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight text-white leading-[1.05] max-w-4xl">
             This is what F1 was <span className="text-[#F90202]">always supposed</span> to feel like.
           </p>
-          <footer className="mt-8 flex items-center gap-4">
-            <div className="h-px w-12 bg-[#F90202]" />
+          <footer className="mt-8">
             <p className="font-[family-name:var(--font-inter)] text-white/80 text-sm uppercase tracking-widest">
               Guest, Monaco Grand Prix 2025
             </p>
@@ -861,7 +868,7 @@ function ComparisonSection() {
   ]
 
   const velocity = [
-    'Open bar all day — champagne, spirits, wine & beer',
+    'Open bar all day with champagne, spirits, wine and beer',
     'International DJs & live entertainment',
     'Gourmet dining & world-class catering',
     'VIP after-party 6PM–11PM',
@@ -885,9 +892,8 @@ function ComparisonSection() {
             </h3>
             <ul className="space-y-4">
               {traditional.map((item) => (
-                <li key={item} className="flex gap-3 text-white/45 font-[family-name:var(--font-inter)] text-sm sm:text-base">
-                  <span className="text-white/25 shrink-0 mt-0.5">—</span>
-                  <span>{item}</span>
+                <li key={item} className="text-white/45 font-[family-name:var(--font-inter)] text-sm sm:text-base">
+                  {item}
                 </li>
               ))}
             </ul>

@@ -4,7 +4,7 @@ import { absoluteUrl, PUBLISHED_RACE_PAGES } from './site'
 
 export type SitemapEntry = MetadataRoute.Sitemap[number]
 
-/** All indexable URLs — single source for sitemap.xml */
+/** All indexable URLs. Single source for sitemap.xml */
 export function getSitemapEntries(): SitemapEntry[] {
   const lastModified = new Date()
 

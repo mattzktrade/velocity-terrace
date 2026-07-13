@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { absoluteUrl } from '@/lib/seo/site'
 
-/** Allow major AI crawlers — improves visibility in ChatGPT, Perplexity, Claude, etc. */
+/** Allow major AI crawlers. Improves visibility in ChatGPT, Perplexity, Claude, etc. */
 const AI_CRAWLERS = [
   'GPTBot',
   'ChatGPT-User',

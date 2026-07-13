@@ -417,7 +417,7 @@ export function MonacoProgrammeClient() {
               className="font-[family-name:var(--font-barlow-condensed)] font-bold text-xs sm:text-sm uppercase tracking-[0.38em] mb-4"
               style={{ color: ACCENT }}
             >
-              — Monaco Grand Prix 2026 —
+              Monaco Grand Prix 2026
             </p>
             <h1 className="font-[family-name:var(--font-barlow-condensed)] font-black text-5xl sm:text-8xl lg:text-[112px] uppercase tracking-tight leading-[0.86] mb-6">
               <span className="block text-white">Your Weekend</span>
@@ -625,7 +625,6 @@ export function MonacoProgrammeClient() {
         </div>
       </div>
 
-      <div className="mx-auto mb-10 h-px w-[min(72rem,calc(100%-3rem))] bg-[#F90202]/55" />
       <ProgrammeFooter />
     </main>
   )

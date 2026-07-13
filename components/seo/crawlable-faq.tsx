@@ -1,7 +1,7 @@
 import type { FaqItem } from '@/lib/seo/faqs'
 
 /**
- * Server-rendered FAQ block — always in HTML for crawlers and answer engines,
+ * Server-rendered FAQ block. Always in HTML for crawlers and answer engines,
  * even when the interactive accordion is client-only.
  */
 export function CrawlableFaqBlock({

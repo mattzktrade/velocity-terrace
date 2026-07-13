@@ -394,12 +394,10 @@ export default function MonacoProgrammeMenuPage() {
 
       <section className="rounded-t-[1.75rem] bg-[#F7F3EA] px-5 py-9 text-[#0A0A0A] sm:px-8 lg:px-12">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-8 flex items-center justify-center gap-5">
-            <span className="hidden h-px w-16 bg-[#F90202]/35 sm:block" />
+          <div className="mb-8 flex items-center justify-center">
             <p className="font-[family-name:var(--font-barlow-condensed)] text-xs font-bold uppercase tracking-[0.28em] text-[#0A0A0A]/80">
               Official Monaco Weekend Menu
             </p>
-            <span className="hidden h-px w-16 bg-[#F90202]/35 sm:block" />
           </div>
 
           <div className="grid gap-5 lg:grid-cols-2">

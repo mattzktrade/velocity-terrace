@@ -109,6 +109,18 @@ html {
   width: max-content;
 }
 
+.animate-marquee-slow {
+  animation: marquee 90s linear infinite;
+  width: max-content;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-slow {
+    animation: none;
+  }
+}
+
 /* Pulse glow animation for CTA */
 @keyframes pulse-glow {
   0%, 100% {
@@ -189,16 +201,5 @@ html {
     rgba(10, 10, 10, 0.7) 0%,
     rgba(10, 10, 10, 0.5) 50%,
     rgba(10, 10, 10, 0.8) 100%
-  );
-}
-
-/* Racing stripes decoration */
-.racing-stripes {
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 10px,
-    rgba(249, 2, 2, 0.03) 10px,
-    rgba(249, 2, 2, 0.03) 20px
   );
 }

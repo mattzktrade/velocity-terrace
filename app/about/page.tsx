@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     q: 'Which races does Velocity Terrace cover?',
-    a: 'Velocity Terrace focuses on Singapore, Abu Dhabi and Monaco 2027, with Monaco available as Saturday-only, Sunday-only and full 2-day hospitality packages.',
+    a: 'Velocity Terrace focuses on Singapore 2026, Abu Dhabi 2026 (4–6 Dec) and Monaco 2027, with Monaco available as Saturday-only, Sunday-only and full 2-day hospitality packages.',
   },
   {
     q: 'Who is Velocity Terrace for?',
@@ -24,7 +24,7 @@ const faqs = [
 ]
 
 export const metadata = buildPageMetadata({
-  title: 'About Velocity Terrace — Premium F1 Party Hospitality',
+  title: 'About Velocity Terrace: Premium F1 Party Hospitality',
   description:
     'Learn what Velocity Terrace is: premium F1 party hospitality at Singapore, Abu Dhabi and Monaco 2027 with race views, open bar, food, live DJs and VIP after-party access.',
   path: '/about',
@@ -96,9 +96,9 @@ const destinations = [
   },
   {
     name: 'Abu Dhabi',
-    meta: 'Yas Marina · Season finale',
-    copy: 'A finale-weekend hospitality concept built around open bar, food, music and end-of-season celebration energy.',
-    href: '/#contact',
+    meta: 'Yas Marina · 4–6 Dec 2026',
+    copy: 'Trackside terrace hospitality with Turns 8–11 views, gourmet dining, premium open bar, live entertainment and Yasalam concert access. Book 3-day, Sat–Sun, or individual days.',
+    href: '/races/abu-dhabi',
     accent: '#C9A84C',
   },
   {

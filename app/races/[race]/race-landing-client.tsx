@@ -37,6 +37,7 @@ type RaceConfig = {
   packageDaysLabel: string
   heroSubtext: string
   whatToExpectIntro?: string
+  whatToExpectHeadline?: [string, string]
   expectationGallery?: ExpectationTile[]
   expectationFooterTile?: ExpectationTile
   marqueeItems?: string[]
@@ -75,6 +76,27 @@ const SINGAPORE_ASSETS = {
   image2: '/singapore/image-2.jpg',
 } as const
 
+const ABU_DHABI_ASSETS = {
+  heroTrack: '/abu-dhabi/web/hero-track.jpg',
+  loungeMarina: '/abu-dhabi/web/lounge-marina.jpg',
+  nightQualifying: '/abu-dhabi/web/night-qualifying.jpg',
+  yasHotel: '/abu-dhabi/web/yas-hotel-view.jpg',
+  liveSaxDj: '/abu-dhabi/web/live-sax-dj.jpg',
+  djBooth: '/abu-dhabi/web/dj-booth.jpg',
+  entertainmentScreen: '/abu-dhabi/web/entertainment-track-screen.jpg',
+  gourmet: '/abu-dhabi/web/gourmet-station.jpg',
+  champagneService: '/abu-dhabi/web/champagne-service.jpg',
+  champagneGuest: '/abu-dhabi/web/champagne-guest.jpg',
+  mixologist: '/abu-dhabi/web/mixologist.jpg',
+  simulators: '/abu-dhabi/web/racing-simulators.jpg',
+  celebration: '/abu-dhabi/web/celebration.jpg',
+  vipSofas: '/abu-dhabi/web/vip-sofas.jpg',
+  dancersNight: '/abu-dhabi/web/dancers-night.jpg',
+  lifestyle: '/abu-dhabi/web/lifestyle-guests.jpg',
+  sushi: '/abu-dhabi/web/sushi-service.jpg',
+  brandPillar: '/abu-dhabi/web/brand-pillar.jpg',
+} as const
+
 const RACES: Record<RaceSlug, RaceConfig> = {
   monaco: {
     slug: 'monaco',
@@ -86,7 +108,7 @@ const RACES: Record<RaceSlug, RaceConfig> = {
     heroVideo: MONACO_ASSETS.heroVideo,
     heroPoster: MONACO_ASSETS.heroPoster,
     heroEyebrow: 'Monaco Grand Prix 2027 · Enquiries now open',
-    heroHeadline: ['Monaco 2027,', 'secure yours.'],
+    heroHeadline: ['Saturday, Sunday or', '2-day packages.'],
     packageDaysLabel: 'Saturday, Sunday & 2-day packages',
     heroSubtext:
       'Enquire now to secure your Velocity Terrace Monaco Grand Prix 2027 package. Choose Saturday, Sunday or the full 2-day weekend, with front-row Monte Carlo views, open bar, gourmet food, live DJs and VIP after-party access.',
@@ -128,6 +150,7 @@ const RACES: Record<RaceSlug, RaceConfig> = {
     ],
     whatToExpectIntro:
       'Monaco 2027 packages are available to enquire for now. Secure Saturday, Sunday or the full 2-day weekend and our team will guide you through availability, group options and the best package for your guests.',
+    whatToExpectHeadline: ['Front-row views,', 'open bar & after-party.'],
     media: [
       { kind: 'video', src: MONACO_ASSETS.heroVideo, poster: MONACO_ASSETS.heroPoster, alt: 'Monaco race weekend highlights reel' },
       { kind: 'image', src: '/monaco/page3-img10.jpg', alt: 'Monaco circuit views from the terrace' },
@@ -193,7 +216,7 @@ const RACES: Record<RaceSlug, RaceConfig> = {
     heroHeadline: ['Rooftop luxury,', 'Marina Bay standard.'],
     packageDaysLabel: '3-day & single-day packages (Fri–Sun)',
     heroSubtext:
-      'An exclusive VIP rooftop experience on the Padang Deck of the National Gallery — premium hospitality, world-class catering, open bar, live DJs and an elite guest profile across just 150 guests.',
+      'An exclusive VIP rooftop experience on the Padang Deck of the National Gallery with premium hospitality, world-class catering, open bar, live DJs and an elite guest profile across just 150 guests.',
     scheduleBackgrounds: [
       SINGAPORE_ASSETS.outdoor,
       SINGAPORE_ASSETS.nightOutside,
@@ -223,7 +246,7 @@ const RACES: Record<RaceSlug, RaceConfig> = {
         items: [
           { time: '12:00', title: 'Final day · Settle in' },
           { time: '18:00', title: 'Main event build-up' },
-          { time: '20:00', title: 'Main event', desc: 'The headline moment — done properly from the rooftop.' },
+          { time: '20:00', title: 'Main event', desc: 'The headline moment, done properly from the rooftop.' },
           { time: '22:00', title: 'Finale celebrations' },
         ],
       },
@@ -232,20 +255,21 @@ const RACES: Record<RaceSlug, RaceConfig> = {
       'Prime rooftop views over the Marina Bay skyline',
       'World-class catering & all-day open bar',
       'Live entertainment, DJs & vibrant atmosphere',
-      'National Gallery Padang Deck — exclusive 150-guest capacity',
+      'National Gallery Padang Deck with exclusive 150-guest capacity',
       'Seamless access outside main road closures',
-      'Strategic networking with C-suite, HNW & global brands',
+      'Strategic networking with C-suite, HNW and global brands',
       'Flexible packages: 3-day, 2-day (Sat–Sun), or single-day options',
     ],
     whatToExpect: [
       'An elite hospitality venue designed for corporate entertaining and high-net-worth guests.',
       'Historic National Gallery architecture blended with Marina Bay skyline views.',
-      'A social, high-energy environment — ideal for brands, finance, tech & lifestyle clients.',
-      'Rare premium hospitality outside the Paddock Club — polished, but never corporate.',
-      'Limited capacity (150 guests) — exclusive and in high demand.',
+      'A social, high-energy environment ideal for brands, finance, tech and lifestyle clients.',
+      'Rare premium hospitality outside the Paddock Club. Polished, but never corporate.',
+      'Limited capacity (150 guests). Exclusive and in high demand.',
     ],
     whatToExpectIntro:
       'A premium rooftop setup with the energy turned up: skyline views, open bar, world-class catering, live entertainment, and after-dark moments that feel closer to a private members’ club than standard hospitality.',
+    whatToExpectHeadline: ['Marina Bay views,', 'open bar & catering.'],
     expectationGallery: [
       {
         src: SINGAPORE_ASSETS.mbsView,
@@ -304,67 +328,133 @@ const RACES: Record<RaceSlug, RaceConfig> = {
     slug: 'abu-dhabi',
     name: 'Abu Dhabi',
     city: 'Yas Marina',
+    venue: 'Velocity Trackside Terrace · Turns 8–11',
     eventName: 'Abu Dhabi Grand Prix',
     accent: '#C9A84C',
-    heroImage: '/abudhabi.jpg',
-    packageDaysLabel: '3-day package (Fri–Sun)',
-    heroSubtext: 'Three days. Season-finale energy. Front-row views. Open bar. Big parties. End the year the right way.',
+    heroImage: ABU_DHABI_ASSETS.heroTrack,
+    heroEyebrow: 'Velocity Terrace · December 4–6, 2026',
+    heroHeadline: ['Trackside terrace over', 'Turns 8–11.'],
+    packageDaysLabel: '3-day, Sat–Sun & single-day packages',
+    heroSubtext:
+      'Velocity Terrace hospitality at Yas Marina with sweeping views of Turns 8–11, gourmet dining, premium open bar, live entertainment, racing simulators and Yasalam concert access. Book the full 3-day weekend, Saturday–Sunday, or Friday, Saturday or Sunday only.',
+    scheduleBackgrounds: [
+      ABU_DHABI_ASSETS.yasHotel,
+      ABU_DHABI_ASSETS.nightQualifying,
+      ABU_DHABI_ASSETS.loungeMarina,
+    ],
     schedule: [
       {
-        dayLabel: 'Friday',
+        dayLabel: 'Friday · 4 Dec',
         items: [
-          { time: '12:00', title: 'Arrival · Welcome drinks' },
-          { time: '14:00', title: 'Practice sessions + first-day energy' },
-          { time: '19:00', title: 'Night moments begin' },
+          { time: '12:00', title: 'Doors open · welcome drinks' },
+          { time: '14:00', title: 'Practice sessions · terrace atmosphere', desc: 'Settle in with trackside views, open bar and the first-day energy of race weekend.' },
+          { time: '18:00', title: 'Live DJs · evening build', desc: 'Music, gourmet service and mixologists as the night begins.' },
+          { time: '21:00', title: 'Yasalam after-race concerts', desc: 'General admission included on your booked day(s).' },
         ],
       },
       {
-        dayLabel: 'Saturday',
+        dayLabel: 'Saturday · 5 Dec',
         items: [
-          { time: '12:00', title: 'Open bar · doors open' },
-          { time: '16:00', title: 'Qualifying build-up' },
-          { time: '18:00', title: 'Qualifying' },
-          { time: '20:00', title: 'After-hours' },
+          { time: '12:00', title: 'Open bar · hospitality begins' },
+          { time: '15:00', title: 'Qualifying build-up', desc: 'Racing simulators, screens and terrace energy as the grid takes shape.' },
+          { time: '18:00', title: 'Qualifying', desc: 'Front-row seat to the key Saturday action across Turns 8–11.' },
+          { time: '20:00', title: 'Live entertainment · Yasalam', desc: 'DJs, dancers, saxophonists and after-race concert access.' },
         ],
       },
       {
-        dayLabel: 'Sunday',
+        dayLabel: 'Sunday · 6 Dec',
         items: [
-          { time: '12:00', title: 'Final day · the finale feeling' },
-          { time: '17:00', title: 'Race build-up' },
-          { time: '19:00', title: 'Race', desc: 'Season finale energy, full send.' },
-          { time: '21:00', title: 'Finale afters' },
+          { time: '12:00', title: 'Finale day · settle in' },
+          { time: '16:00', title: 'Race build-up', desc: 'Ideal spot for pre-race flyovers before the main event.' },
+          { time: '17:00', title: 'Grand Prix', desc: 'Season finale from the trackside terrace.' },
+          { time: '19:30', title: 'Fireworks · Yasalam finales', desc: 'Post-race fireworks displays and concert access to close the year.' },
         ],
       },
     ],
     inclusions: [
-      '3-day finale-weekend hospitality (Fri–Sun)',
-      'Open bar throughout each day',
-      'Gourmet dining across the day',
-      'DJs + entertainment with end-of-season energy',
-      'Signature after-hours experience',
-      'Premium crowd and trackside atmosphere',
+      'Flexible packages: 3-day, Sat–Sun, or Friday / Saturday / Sunday only',
+      'Sweeping views of Turns 8, 9, 10 and 11',
+      'Curated food menus prepared by highly trained chefs',
+      'Premium open bar with free-flowing champagne and beverages',
+      'International mixologists',
+      'Live DJs, dancers, saxophonists and magicians',
+      'State-of-the-art racing simulators',
+      'Flatscreen TVs, comfortable sofas and exclusive VIP terrace access',
+      'General admission to Yasalam after-race concerts on your booked day(s)',
+      'Guests aged 16 and over',
     ],
     whatToExpect: [
-      'A 3-day (Fri–Sun) finale-weekend run with big end-of-season energy.',
-      'A crowd that’s there to celebrate the year and send it properly.',
-      'A high-end party vibe that still keeps the racing front-and-centre.',
+      'Book the full Fri–Sun weekend, Saturday–Sunday, or Friday, Saturday or Sunday only.',
+      'Gourmet dining and premium beverages with international mixologists throughout each day.',
+      'Wide-angled circuit views across Turns 8–11, with flyovers and post-race fireworks in the mix.',
+      'Live entertainment that keeps the terrace moving: DJs, dancers, saxophonists and more.',
+      'Racing simulators and VIP lounge amenities so the weekend feels fully immersive.',
     ],
+    whatToExpectIntro:
+      'Trackside hospitality at Yas Marina with gourmet menus, unlimited premium champagne and beverages, live entertainment, racing simulators, and a front-row seat to the key action on your booked day(s).',
+    whatToExpectHeadline: ['Trackside views,', 'open bar & Yasalam.'],
+    expectationGallery: [
+      {
+        src: ABU_DHABI_ASSETS.heroTrack,
+        alt: 'Trackside views of Yas Marina from Velocity Terrace Abu Dhabi',
+        title: 'Turns 8–11 views',
+        subtitle: 'Sweeping panoramas of the circuit, ideal for flyovers and race action.',
+      },
+      {
+        src: ABU_DHABI_ASSETS.champagneService,
+        alt: 'Champagne service at Velocity Terrace Abu Dhabi',
+        title: 'Premium open bar',
+        subtitle: 'Free-flowing champagne, beverages and international mixologists.',
+      },
+      {
+        src: ABU_DHABI_ASSETS.gourmet,
+        alt: 'Gourmet dining station at Velocity Terrace Abu Dhabi',
+        title: 'Gourmet dining',
+        subtitle: 'Curated menus prepared by highly trained chefs.',
+      },
+      {
+        src: ABU_DHABI_ASSETS.liveSaxDj,
+        alt: 'Live DJ and saxophonist at Velocity Terrace Abu Dhabi',
+        title: 'Live entertainment',
+        subtitle: 'DJs, dancers, saxophonists and magicians across the weekend.',
+      },
+    ],
+    expectationFooterTile: {
+      src: ABU_DHABI_ASSETS.simulators,
+      alt: 'Racing simulators at Velocity Terrace Abu Dhabi',
+      title: 'Racing simulators',
+      subtitle: 'State-of-the-art sims plus Yasalam concert access Friday to Sunday.',
+    },
+    marqueeItems: [
+      'ABU DHABI',
+      'YAS MARINA',
+      'TURNS 8–11',
+      'OPEN BAR',
+      'YASALAM',
+      'SEASON FINALE',
+      'VELOCITY TERRACE',
+    ],
+    mediaSectionIntro:
+      'Trackside panoramas, VIP lounge energy, gourmet service and live entertainment. A glimpse of Velocity Terrace Abu Dhabi race weekend.',
     media: [
-      { kind: 'image', src: '/abudhabi.jpg', alt: 'Abu Dhabi Grand Prix at Yas Marina' },
-      { kind: 'image', src: MONACO_ASSETS.openBar, alt: 'Open bar experience' },
-      { kind: 'image', src: MONACO_ASSETS.gourmet, alt: 'Gourmet hospitality dining' },
-      { kind: 'image', src: MONACO_ASSETS.party, alt: 'After-hours party atmosphere' },
-      { kind: 'image', src: MONACO_ASSETS.raceAction, alt: 'Trackside racing action' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.heroTrack, alt: 'Guests watching F1 from Velocity Terrace Abu Dhabi' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.loungeMarina, alt: 'VIP sofas overlooking the Yas Marina' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.liveSaxDj, alt: 'Live saxophonist and DJ at Velocity Terrace' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.gourmet, alt: 'Gourmet food station at Velocity Terrace Abu Dhabi' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.champagneService, alt: 'Champagne poured for a Velocity Terrace guest' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.nightQualifying, alt: 'Night lounge with qualifying on the big screen' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.simulators, alt: 'Racing simulators at Velocity Terrace Abu Dhabi' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.entertainmentScreen, alt: 'DJ and saxophonist with race replay on screen' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.mixologist, alt: 'International mixologist at Velocity Terrace bar' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.dancersNight, alt: 'Dancers performing at Velocity Terrace Abu Dhabi' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.celebration, alt: 'Champagne celebration on the terrace' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.yasHotel, alt: 'Guests socialising with W Abu Dhabi Yas Island views' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.vipSofas, alt: 'Comfortable VIP sofas on the trackside terrace' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.lifestyle, alt: 'Guests enjoying Velocity Terrace Abu Dhabi' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.champagneGuest, alt: 'VIP guest with champagne on the terrace' },
+      { kind: 'image', src: ABU_DHABI_ASSETS.djBooth, alt: 'DJ booth at Velocity Terrace Abu Dhabi' },
     ],
-    faqs: [
-      { q: 'Is Abu Dhabi 3 days?', a: 'Yes — Abu Dhabi is a 3-day package (Friday to Sunday).' },
-      { q: 'Are these exact times?', a: 'They’re a guide — final timings depend on the official timetable and will be confirmed closer to the event.' },
-      { q: 'Can we do group bookings?', a: 'Yes — send your group size in the enquiry and we’ll come back with options.' },
-      { q: 'What’s included in the package?', a: 'Trackside experience, open bar, gourmet food, DJs/entertainment, and after-hours energy across all 3 days. Exact details are confirmed at booking.' },
-      { q: 'Do you help with transfers / hotels?', a: 'If you need help, mention it in your enquiry and we’ll advise what’s available.' },
-      { q: 'Is it seated?', a: 'It’s a social, high-energy format rather than a formal sit-down. You’ll have space to relax, but it’s built to feel like a party.' },
-    ],
+    faqs: RACE_FAQS['abu-dhabi'],
   },
 }
 
@@ -698,6 +788,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
   const whatToExpectIntro =
     cfg.whatToExpectIntro ??
     'A premium race-weekend setup with the energy turned up: front-row views, open bar, food, music, and after-hours moments that feel closer to a private party than standard hospitality.'
+  const whatToExpectHeadline = cfg.whatToExpectHeadline ?? ['What your package', 'includes.']
   const marqueeItems =
     cfg.marqueeItems ??
     [
@@ -839,8 +930,9 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
                 What to expect
               </p>
               <h2 className="font-[family-name:var(--font-barlow-condensed)] font-black text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white leading-[0.95]">
-                Everything you need.<br />
-                <span style={{ color: cfg.accent }}>Nothing flat.</span>
+                {whatToExpectHeadline[0]}
+                <br />
+                <span style={{ color: cfg.accent }}>{whatToExpectHeadline[1]}</span>
               </h2>
               <p className="mt-5 text-white/65 font-[family-name:var(--font-inter)] leading-relaxed max-w-lg">
                 {whatToExpectIntro}
@@ -868,7 +960,7 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
                   <ul className="space-y-3">
                     {cfg.whatToExpect.map((t) => (
                       <li key={t} className="flex gap-3 text-white/70 font-[family-name:var(--font-inter)] text-sm leading-relaxed">
-                        <span className="shrink-0" style={{ color: cfg.accent }}>—</span>
+                        <span className="shrink-0 font-black" style={{ color: cfg.accent }}>✓</span>
                         <span>{t}</span>
                       </li>
                     ))}

@@ -6,15 +6,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  async redirects() {
-    return [
-      {
-        source: '/races/abu-dhabi',
-        destination: '/?section=contact',
-        permanent: false,
-      },
-    ]
-  },
 }
 
 export default nextConfig

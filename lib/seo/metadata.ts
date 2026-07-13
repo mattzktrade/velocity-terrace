@@ -53,7 +53,7 @@ export function buildPageMetadata({
       siteName: SITE_NAME,
       title,
       description,
-      images: [{ url: imageUrl, width: 1200, height: 630, alt: `${SITE_NAME} — ${title}` }],
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: `${SITE_NAME}: ${title}` }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -122,9 +122,9 @@ export const ROOT_METADATA: Metadata = {
 
 export const HOME_METADATA: Metadata = {
   ...buildPageMetadata({
-  title: 'Premium F1 Party Hospitality — Monaco 2027, Singapore & Abu Dhabi',
+  title: 'Premium F1 Party Hospitality for Monaco 2027, Singapore and Abu Dhabi',
   description:
-    'Velocity Terrace is not traditional F1 hospitality — it is a party. Enquire for Monaco Grand Prix 2027, or explore Singapore and Abu Dhabi F1 party hospitality.',
+    'Velocity Terrace is not traditional F1 hospitality. It is a party. Enquire for Monaco Grand Prix 2027, or explore Singapore and Abu Dhabi F1 party hospitality.',
   path: '/',
   keywords: [
     'F1 party hospitality',
@@ -135,7 +135,7 @@ export const HOME_METADATA: Metadata = {
   ],
   }),
   title: {
-    absolute: 'Velocity Terrace | Premium F1 Party Hospitality — Monaco 2027, Singapore & Abu Dhabi',
+    absolute: 'Velocity Terrace | Premium F1 Party Hospitality for Monaco 2027, Singapore and Abu Dhabi',
   },
 }
 
@@ -144,14 +144,14 @@ const RACE_META: Record<
   { title: string; description: string; ogImage: string; keywords: string[] }
 > = {
   monaco: {
-    title: 'Monaco Grand Prix Hospitality 2027 — Enquire Now',
+    title: 'Monaco Grand Prix Hospitality 2027: Enquire Now',
     description:
       'Enquire now to secure Velocity Terrace Monaco Grand Prix 2027 hospitality. Saturday-only, Sunday-only and full 2-day packages with front-row views, open bar, live DJs and VIP after-party access.',
     ogImage: '/monaco/page4-img15.jpg',
     keywords: ['Monaco Grand Prix hospitality 2027', 'Monaco GP 2027 VIP terrace', 'Monte Carlo F1 party'],
   },
   singapore: {
-    title: 'Velocity Terrace Singapore 2026 — Marina Bay VIP Hospitality',
+    title: 'Velocity Terrace Singapore 2026: Marina Bay VIP Hospitality',
     description:
       'Exclusive VIP rooftop hospitality at National Gallery Singapore, 9–11 October 2026. Marina Bay skyline views, world-class catering, open bar, DJs and 150-guest capacity on the Padang Deck.',
     ogImage: '/singapore/VT%20MBS%20view.png',
@@ -160,22 +160,26 @@ const RACE_META: Record<
   'abu-dhabi': {
     title: 'Abu Dhabi Grand Prix Hospitality 2026',
     description:
-      'Velocity Terrace at Abu Dhabi GP 2026 season finale. 3-day hospitality (Fri–Sun) at Yas Marina with open bar, live entertainment, front-row views & after-party.',
-    ogImage: '/abudhabi.jpg',
-    keywords: ['Abu Dhabi Grand Prix hospitality', 'Yas Marina F1 VIP', 'F1 season finale party'],
+      'Velocity Terrace at Yas Marina, 4–6 Dec 2026. Turns 8–11 views, gourmet dining, open bar, live entertainment and Yasalam access. Book 3-day, Sat–Sun, or Fri / Sat / Sun only.',
+    ogImage: '/abu-dhabi/web/og.jpg',
+    keywords: [
+      'Abu Dhabi Grand Prix hospitality',
+      'Yas Marina F1 VIP',
+      'Velocity Terrace Abu Dhabi',
+      'F1 season finale party',
+      'Yasalam hospitality',
+    ],
   },
 }
 
 export function racePageMetadata(slug: RaceSlug): Metadata {
   const meta = RACE_META[slug]
-  const noIndex = slug === 'abu-dhabi'
   return buildPageMetadata({
     title: meta.title,
     description: meta.description,
     path: `/races/${slug}`,
     ogImage: meta.ogImage,
     keywords: meta.keywords,
-    noIndex,
   })
 }
 
@@ -183,7 +187,7 @@ export function monacoProgrammeMetadata(): Metadata {
   return buildPageMetadata({
     title: 'Monaco Grand Prix Weekend Programme 2026',
     description:
-      'Velocity Terrace guest programme for the Monaco GP 2026 weekend — full schedule, opening times, Alec Monopoly DJ sets, food service times, and drinks menu.',
+      'Velocity Terrace guest programme for the Monaco GP 2026 weekend, including full schedule, opening times, Alec Monopoly DJ sets, food service times, and drinks menu.',
     path: '/monacoprogramme',
     ogImage: '/monaco/page4-img15.jpg',
     keywords: ['Monaco GP programme', 'Velocity Terrace schedule', 'Monaco Grand Prix 2026'],

@@ -1,0 +1,5 @@
+# Keep full-resolution originals local; only ship optimised web assets
+*
+!web/
+!web/**
+!.gitignore

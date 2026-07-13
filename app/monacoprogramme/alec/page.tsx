@@ -12,7 +12,7 @@ const CONTACT_EMAIL = 'info@velocity-terrace.com'
 export const metadata: Metadata = buildPageMetadata({
   title: 'Alec Monopoly at Monaco Grand Prix 2026',
   description:
-    'Alec Monopoly at Velocity Terrace Monaco GP 2026 — artist feature, DJ set timings, appearance information and weekend programme details.',
+    'Alec Monopoly at Velocity Terrace Monaco GP 2026: artist feature, DJ set timings, appearance information and weekend programme details.',
   path: '/monacoprogramme/alec',
   ogImage: '/monaco/10-2-alec-monopoly-djing37.jpg',
   keywords: ['Alec Monopoly Monaco', 'Velocity Terrace Alec Monopoly', 'Monaco GP entertainment'],
@@ -113,7 +113,6 @@ function SetCard({ day }: { day: string }) {
         <p className="font-[family-name:var(--font-barlow-condensed)] text-xl sm:text-2xl font-bold tabular-nums" style={{ color: ACCENT }}>
           17:15 – 18:15
         </p>
-        <span className="hidden sm:block h-px w-12 shrink-0" style={{ background: ACCENT }} />
         <p className="font-[family-name:var(--font-barlow-condensed)] text-lg sm:text-xl font-black uppercase text-[#0A0A0A]">
           Alec Monopoly DJ Set
         </p>
@@ -262,12 +261,10 @@ export default function MonacoProgrammeAlecPage() {
 
       <section className="rounded-t-[1.75rem] bg-[#F7F3EA] px-5 py-9 text-[#0A0A0A] sm:px-8 lg:px-12">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-8 flex items-center justify-center gap-5">
-            <span className="hidden h-px w-16 bg-[#F90202]/35 sm:block" />
+          <div className="mb-8 flex items-center justify-center">
             <p className="font-[family-name:var(--font-barlow-condensed)] text-xs font-bold uppercase tracking-[0.28em] text-[#0A0A0A]/80">
               Artist Feature
             </p>
-            <span className="hidden h-px w-16 bg-[#F90202]/35 sm:block" />
           </div>
 
           <div className="grid gap-8 border border-[#E7E1D6] bg-[#F7F3EA] p-8 lg:grid-cols-[1.15fr_0.85fr] lg:p-10">

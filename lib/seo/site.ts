@@ -1,5 +1,5 @@
 /**
- * Canonical site URL — must match your Vercel primary domain.
+ * Canonical site URL. Must match your Vercel primary domain.
  * velocity-terrace.com redirects to www on Vercel; use www to avoid GSC fetch issues.
  */
 export const SITE_URL =
@@ -22,8 +22,8 @@ export function getSocialProfileUrls(): string[] {
 
 export const RACE_SLUGS = ['monaco', 'singapore', 'abu-dhabi'] as const
 
-/** Race landing pages that are publicly available (abu-dhabi hidden until launch) */
-export const PUBLISHED_RACE_PAGES = ['singapore', 'monaco'] as const
+/** Race landing pages that are publicly available */
+export const PUBLISHED_RACE_PAGES = ['singapore', 'abu-dhabi', 'monaco'] as const
 
 export type RaceSlug = (typeof RACE_SLUGS)[number]
 
