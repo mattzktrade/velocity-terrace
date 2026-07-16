@@ -49,14 +49,17 @@ export function SiteHeader({
       </Link>
 
       <div className="hidden items-center gap-8 md:flex">
-        <div className="group relative py-3">
+        <div className="group relative flex items-center">
           <Link
             href={racesHref}
-            className="inline-flex items-center gap-1 text-xs font-medium uppercase tracking-widest text-white/70 transition-colors hover:text-white"
+            className="inline-flex items-center gap-1.5 text-xs font-medium uppercase leading-none tracking-widest text-white/70 transition-colors hover:text-white"
             aria-haspopup="true"
           >
             The Races
-            <ChevronRight className="h-3 w-3 rotate-90 transition-transform group-hover:rotate-[270deg]" />
+            <ChevronRight
+              className="size-3 shrink-0 rotate-90 transition-transform group-hover:rotate-[270deg]"
+              aria-hidden
+            />
           </Link>
           <div className="pointer-events-none absolute left-1/2 top-full z-40 w-72 -translate-x-1/2 pt-3 opacity-0 transition duration-200 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A]/95 p-2 shadow-2xl shadow-black/50 backdrop-blur-xl">
@@ -86,7 +89,7 @@ export function SiteHeader({
           <Link
             key={item.label}
             href={item.href}
-            className="text-xs font-medium uppercase tracking-widest text-white/70 transition-colors hover:text-white"
+            className="text-xs font-medium uppercase leading-none tracking-widest text-white/70 transition-colors hover:text-white"
           >
             {item.label}
           </Link>

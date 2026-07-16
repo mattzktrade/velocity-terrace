@@ -517,7 +517,7 @@ export default function SponsorshipPage() {
                 {activationCarousel.map((card, index) => (
                   <article
                     key={`${card.title}-${index}`}
-                    className="relative h-[360px] w-[260px] shrink-0 overflow-hidden rounded-2xl sm:h-[400px] sm:w-[300px]"
+                    className="relative h-[400px] w-[260px] shrink-0 overflow-hidden rounded-2xl sm:h-[440px] sm:w-[300px]"
                   >
                     <img
                       src={card.image}
@@ -525,9 +525,9 @@ export default function SponsorshipPage() {
                       className="absolute inset-0 h-full w-full object-cover"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/45 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 flex h-[150px] flex-col justify-start p-5 sm:h-[160px] sm:p-6">
-                      <h3 className="min-h-[2.5rem] font-[family-name:var(--font-barlow-condensed)] text-2xl font-black uppercase leading-none text-white sm:min-h-[2.75rem] sm:text-3xl">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/50 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 flex h-[200px] flex-col justify-start p-5 sm:h-[212px] sm:p-6">
+                      <h3 className="h-[3rem] shrink-0 font-[family-name:var(--font-barlow-condensed)] text-2xl font-black uppercase leading-none text-white sm:h-[3.75rem] sm:text-3xl">
                         {card.title}
                       </h3>
                       <p className="mt-2 line-clamp-3 font-[family-name:var(--font-inter)] text-sm leading-relaxed text-white/70">

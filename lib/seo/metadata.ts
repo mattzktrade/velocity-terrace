@@ -87,12 +87,9 @@ export const ROOT_METADATA: Metadata = {
   publisher: SITE_NAME,
   category: 'Sports & Entertainment',
   icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml', sizes: 'any' },
-      { url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' },
-    ],
-    apple: [{ url: '/apple-icon.svg', type: 'image/svg+xml', sizes: '180x180' }],
-    shortcut: '/favicon.svg',
+    icon: [{ url: '/velocity-logo-small.png', type: 'image/png', sizes: '400x485' }],
+    apple: [{ url: '/velocity-logo-small.png', type: 'image/png', sizes: '180x180' }],
+    shortcut: '/velocity-logo-small.png',
   },
   robots: INDEX_ROBOTS,
   alternates: { canonical: SITE_URL },
