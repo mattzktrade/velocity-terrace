@@ -34,6 +34,10 @@ type RaceConfig = {
   heroPoster?: string
   heroEyebrow?: string
   heroHeadline?: [string, string]
+  heroPresenter?: {
+    logo: string
+    name: string
+  }
   packageDaysLabel: string
   heroSubtext: string
   whatToExpectIntro?: string
@@ -214,6 +218,10 @@ const RACES: Record<RaceSlug, RaceConfig> = {
     heroImage: SINGAPORE_ASSETS.mbsView,
     heroEyebrow: 'Velocity Terrace · October 9–11, 2026',
     heroHeadline: ['Rooftop luxury,', 'Marina Bay standard.'],
+    heroPresenter: {
+      logo: '/partners/sy-holdings.png',
+      name: 'SY Holdings',
+    },
     packageDaysLabel: '3-day & single-day packages (Fri–Sun)',
     heroSubtext:
       'An exclusive VIP rooftop experience on the Padang Deck of the National Gallery with premium hospitality, world-class catering, open bar, live DJs and an elite guest profile across just 150 guests.',
@@ -224,30 +232,29 @@ const RACES: Record<RaceSlug, RaceConfig> = {
     ],
     schedule: [
       {
-        dayLabel: 'Friday',
+        dayLabel: 'Friday · 9 Oct',
         items: [
-          { time: '12:00', title: 'Doors open · Welcome drinks' },
-          { time: '14:00', title: 'Practice sessions · Rooftop atmosphere' },
-          { time: '18:00', title: 'Sunset over Marina Bay', desc: 'Historic architecture meets the skyline as the evening builds.' },
-          { time: '21:00', title: 'DJs · Evening entertainment' },
+          { time: '16:00', title: 'Doors open · Welcome drinks' },
+          { time: '16:30', title: 'Practice 1', desc: '16:30 – 17:30. First on-track action of the weekend from the rooftop.' },
+          { time: '20:30', title: 'Sprint Qualifying', desc: '20:30 – 21:14 under the lights as Marina Bay comes alive.' },
+          { time: '23:00', title: 'Venue closes' },
         ],
       },
       {
-        dayLabel: 'Saturday',
+        dayLabel: 'Saturday · 10 Oct',
         items: [
-          { time: '12:00', title: 'Open bar · Hospitality begins' },
-          { time: '15:00', title: 'Qualifying build-up' },
-          { time: '20:00', title: 'Qualifying under the lights', desc: 'Peak energy as the city comes alive after dark.' },
-          { time: '22:00', title: 'After-hours · Marina Bay vibe' },
+          { time: '16:30', title: 'Doors open · Hospitality begins' },
+          { time: '17:00', title: 'Sprint', desc: '17:00 – 18:00. Sprint-race energy from the Padang Deck.' },
+          { time: '21:00', title: 'Qualifying', desc: '21:00 – 22:00 under the lights.' },
+          { time: '23:00', title: 'Venue closes' },
         ],
       },
       {
-        dayLabel: 'Sunday',
+        dayLabel: 'Sunday · 11 Oct',
         items: [
-          { time: '12:00', title: 'Final day · Settle in' },
-          { time: '18:00', title: 'Main event build-up' },
-          { time: '20:00', title: 'Main event', desc: 'The headline moment, done properly from the rooftop.' },
-          { time: '22:00', title: 'Finale celebrations' },
+          { time: '17:00', title: 'Doors open · Race day hospitality' },
+          { time: '20:00', title: 'Singapore Grand Prix', desc: 'The headline moment, done properly from the rooftop.' },
+          { time: '23:00', title: 'Venue closes' },
         ],
       },
     ],
@@ -823,18 +830,40 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
 
         <div className="relative z-10 flex-1 flex items-center justify-center px-6 lg:px-12">
           <div className="text-center max-w-5xl mx-auto">
-            <div className="mb-6">
-              <p
-                className="font-[family-name:var(--font-barlow-condensed)] font-black text-lg sm:text-2xl md:text-3xl uppercase tracking-[0.14em] sm:tracking-[0.22em] px-2"
-                style={{ color: cfg.accent }}
-              >
-                {heroEyebrow}
-              </p>
-            </div>
-            <h1 className="font-[family-name:var(--font-barlow-condensed)] font-black text-5xl sm:text-7xl md:text-8xl lg:text-[110px] leading-[0.9] tracking-tight uppercase mb-8 animate-fade-in-up">
-              <span className="block text-white">{heroHeadline[0]}</span>
-              <span className="block" style={{ color: cfg.accent }}>{heroHeadline[1]}</span>
-            </h1>
+            {cfg.heroPresenter ? (
+              <div className="mb-10 animate-fade-in-up">
+                <h1 className="m-0">
+                  <img
+                    src="/monaco/velocity%20logo%20white.png"
+                    alt="Velocity Terrace"
+                    className="w-full max-w-[420px] sm:max-w-[480px] lg:max-w-[560px] h-auto mx-auto mix-blend-screen"
+                  />
+                </h1>
+                <p className="mt-8 sm:mt-10 font-[family-name:var(--font-barlow-condensed)] font-medium text-xs sm:text-sm uppercase tracking-[0.42em] text-white/70">
+                  Presented by
+                </p>
+                <img
+                  src={cfg.heroPresenter.logo}
+                  alt={cfg.heroPresenter.name}
+                  className="mt-5 sm:mt-6 h-[68px] sm:h-[84px] md:h-[108px] w-auto mx-auto object-contain"
+                />
+              </div>
+            ) : (
+              <>
+                <div className="mb-6">
+                  <p
+                    className="font-[family-name:var(--font-barlow-condensed)] font-black text-lg sm:text-2xl md:text-3xl uppercase tracking-[0.14em] sm:tracking-[0.22em] px-2"
+                    style={{ color: cfg.accent }}
+                  >
+                    {heroEyebrow}
+                  </p>
+                </div>
+                <h1 className="font-[family-name:var(--font-barlow-condensed)] font-black text-5xl sm:text-7xl md:text-8xl lg:text-[110px] leading-[0.9] tracking-tight uppercase mb-8 animate-fade-in-up">
+                  <span className="block text-white">{heroHeadline[0]}</span>
+                  <span className="block" style={{ color: cfg.accent }}>{heroHeadline[1]}</span>
+                </h1>
+              </>
+            )}
             <p className="font-[family-name:var(--font-inter)] text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto mb-10 animate-fade-in-up delay-200">
               {cfg.heroSubtext}
             </p>
@@ -880,7 +909,9 @@ export default function RaceLandingClient({ race }: { race: RaceSlug }) {
             <p className="font-[family-name:var(--font-inter)] text-white/60 max-w-2xl mx-auto">
               {cfg.slug === 'monaco'
                 ? 'A sample weekend flow based on the 2026 Velocity Terrace programme. Final 2027 timings follow the official Monaco Grand Prix timetable.'
-                : 'Timings are a guide (subject to the official timetable). The vibe is guaranteed.'}
+                : cfg.slug === 'singapore'
+                  ? 'Confirmed venue hours and official F1 session times for Singapore 2026.'
+                  : 'Timings are a guide (subject to the official timetable). The vibe is guaranteed.'}
             </p>
           </div>
 
